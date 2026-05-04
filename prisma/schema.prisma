@@ -1,0 +1,64 @@
+// MyPepFinder — research & comparison tooling (educational positioning)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Provider {
+  id                  String           @id @default(cuid())
+  name                String
+  slug                String           @unique
+  tagline             String?
+  description         String
+  websiteUrl          String
+  affiliateUrl        String?
+  sponsored           Boolean          @default(false)
+  transparencyScore   Int              @default(0)
+  pricingTransparency String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  affiliateClicks     AffiliateClick[]
+}
+
+model Peptide {
+  id               String           @id @default(cuid())
+  name             String
+  slug             String           @unique
+  researchSummary  String
+  createdAt        DateTime         @default(now())
+  affiliateClicks  AffiliateClick[]
+}
+
+model AffiliateClick {
+  id         String   @id @default(cuid())
+  providerId String
+  peptideId  String?
+  createdAt  DateTime @default(now())
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  peptide    Peptide? @relation(fields: [peptideId], references: [id], onDelete: SetNull)
+
+  @@index([providerId])
+  @@index([createdAt])
+}
+
+/// Leads for specialist conversations, emailed research reports, and homepage capture.
+model Lead {
+  id               String   @id @default(cuid())
+  email            String
+  selectedGoal     String?
+  notes            String?
+  sourcePage       String?
+  sourcePeptideId  String?
+  kind             String
+  wantsUpdates     Boolean  @default(false)
+  metadata         String?
+  createdAt        DateTime @default(now())
+
+  @@index([kind])
+  @@index([createdAt])
+}
