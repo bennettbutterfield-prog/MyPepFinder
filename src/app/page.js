@@ -45,31 +45,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="border-t border-slate-200 bg-white py-20">
+      <section
+        id="about"
+        className="border-t border-slate-200 bg-white py-10 sm:py-16 md:py-20"
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
               Trust, safety, and reviews in one workflow
             </h2>
-            <p className="mt-4 text-slate-600">
+            <p className="mt-3 text-sm leading-snug text-slate-600 sm:mt-4 sm:text-base sm:leading-normal">
               MyPepFinder helps users explore peptides by goal, then compare
               vendors in one place by price, testing purity signals, and review
               confidence—without steering to a single supplier.
             </p>
           </div>
-          <ul className="mt-14 grid gap-8 md:grid-cols-3">
+          <ul className="mt-8 grid gap-3 sm:mt-12 sm:gap-5 md:mt-14 md:grid-cols-3 md:gap-6">
             {FEATURES.map((f) => (
               <li
                 key={f.title}
-                className="rounded-2xl border border-slate-200 bg-slate-50/80 p-8 shadow-sm"
+                className="flex flex-row gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-4 shadow-sm sm:gap-4 sm:p-5 md:flex-col md:rounded-2xl md:p-7"
               >
-                <div className="mb-4 h-10 w-10 rounded-full bg-amber-400/90" />
-                <h3 className="text-lg font-semibold text-slate-900">
-                  {f.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                  {f.body}
-                </p>
+                <div className="h-8 w-8 shrink-0 rounded-full bg-amber-400/90 sm:h-9 sm:w-9 md:mb-1 md:h-10 md:w-10" />
+                <div className="min-w-0 flex-1 md:flex-none">
+                  <h3 className="text-[15px] font-semibold leading-snug text-slate-900 sm:text-base md:text-lg">
+                    {f.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600 sm:mt-2 sm:text-sm md:mt-3">
+                    {f.body}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

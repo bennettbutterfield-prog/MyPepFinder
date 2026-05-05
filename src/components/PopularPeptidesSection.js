@@ -27,19 +27,19 @@ export function PopularPeptidesSection() {
   return (
     <section
       id="explore-popular-peptides"
-      className="border-t border-slate-200 bg-slate-50 py-20"
+      className="border-t border-slate-200 bg-slate-50 py-10 sm:py-16 md:py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
             Explore popular peptides
           </h2>
-          <p className="mt-4 text-slate-600">
+          <p className="mt-2 text-sm text-slate-600 sm:mt-3 sm:text-base">
             Placeholder product cards for top-viewed compounds and blends.
           </p>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-2">
+        <div className="-mx-1 mt-6 flex gap-1.5 overflow-x-auto px-1 pb-1 sm:mx-0 sm:mt-8 sm:flex-wrap sm:justify-center sm:gap-2 sm:overflow-visible sm:pb-0 md:mt-10">
           {FILTERS.map((filter) => {
             const active = filter === activeFilter;
             return (
@@ -47,7 +47,7 @@ export function PopularPeptidesSection() {
                 key={filter}
                 type="button"
                 onClick={() => setActiveFilter(filter)}
-                className={`inline-flex min-h-[40px] items-center justify-center rounded-full px-4 text-xs font-semibold transition ${
+                className={`inline-flex shrink-0 items-center justify-center rounded-full px-2.5 py-1.5 text-[10px] font-semibold leading-tight transition sm:min-h-[40px] sm:px-4 sm:py-0 sm:text-xs ${
                   active
                     ? "border border-amber-500 bg-amber-100 text-amber-900"
                     : "border border-slate-300 bg-white text-slate-700 hover:border-slate-400"
@@ -60,37 +60,37 @@ export function PopularPeptidesSection() {
         </div>
 
         {filtered.length === 0 ? (
-          <p className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center text-sm text-slate-600">
+          <p className="mt-6 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-8 text-center text-sm text-slate-600 sm:mt-10 sm:rounded-2xl sm:px-6 sm:py-10">
             No placeholders mapped yet for this research filter.
           </p>
         ) : (
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-3 gap-1.5 sm:mt-10 sm:gap-3 md:gap-4">
             {filtered.map((p) => (
               <li
                 key={`${p.name}-${p.subtitle}`}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                className="flex flex-col rounded-lg border border-slate-200 bg-white p-1.5 shadow-sm sm:rounded-2xl sm:p-3"
               >
-                <div className="relative h-36 overflow-hidden rounded-xl border border-slate-200 bg-white">
+                <div className="relative aspect-[5/4] w-full overflow-hidden rounded-md border border-slate-200 bg-white sm:aspect-square sm:rounded-xl">
                   <Image
                     src="/mockups/mpf-vial.png"
                     alt={`${p.name} product mockup`}
                     fill
-                    className="object-contain p-2"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-contain p-0.5 sm:p-2"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1152px) 200px, 240px"
                   />
                 </div>
-                <h3 className="mt-4 text-base font-semibold text-slate-900">
+                <h3 className="mt-1 line-clamp-2 text-[10px] font-semibold leading-tight text-slate-900 sm:mt-2.5 sm:text-sm md:text-base">
                   {p.name}
                 </h3>
                 {p.subtitle ? (
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-0.5 line-clamp-2 text-[9px] leading-snug text-slate-600 max-sm:hidden sm:mt-1 sm:block sm:text-xs">
                     {p.subtitle}
                   </p>
                 ) : null}
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="mt-auto pt-1 sm:pt-3">
                   <Link
                     href={`/peptides/${p.slug}`}
-                    className="inline-flex min-h-[40px] items-center justify-center rounded-full border border-slate-300 px-4 text-xs font-semibold uppercase tracking-wide text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+                    className="flex min-h-[28px] w-full items-center justify-center rounded-full border border-slate-300 px-1 text-[9px] font-semibold uppercase tracking-wide text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 sm:min-h-[36px] sm:px-3 sm:text-xs"
                   >
                     Learn More
                   </Link>

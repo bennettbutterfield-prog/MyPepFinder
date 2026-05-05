@@ -86,7 +86,7 @@ export function GoalFinderFlow({ variant = "page" }) {
               Choose the research lane that best matches what you are reading
               about.
             </p>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-2 sm:mt-8 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {OPTIMIZATION_GOALS.map((g) => {
                 const active = goalId === g.id;
                 return (
@@ -94,26 +94,29 @@ export function GoalFinderFlow({ variant = "page" }) {
                     key={g.id}
                     type="button"
                     onClick={() => setGoalId(g.id)}
-                    className={`flex flex-col overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition hover:shadow-md ${
+                    className={`flex flex-row items-stretch overflow-hidden rounded-xl border bg-white text-left shadow-sm transition hover:shadow-md sm:flex-col sm:rounded-2xl ${
                       active
                         ? "border-amber-400 ring-2 ring-amber-400/35"
                         : "border-slate-200 hover:border-slate-300"
                     }`}
                   >
-                    <div className="flex h-36 items-center justify-center border-b border-slate-100 bg-slate-50/90">
+                    <div className="flex w-[4.25rem] shrink-0 items-center justify-center border-r border-slate-100 bg-slate-50/90 sm:h-36 sm:w-full sm:border-b sm:border-r-0">
                       <Image
                         src={GOAL_ICON_BY_ID[g.id] ?? "/goal-icons/metabolic.png"}
                         alt={`${g.label} icon`}
                         width={96}
                         height={96}
-                        className="h-24 w-24 object-contain"
+                        className="h-11 w-11 object-contain sm:h-24 sm:w-24"
                       />
                     </div>
-                    <div className="flex flex-1 flex-col p-4">
-                      <span className="text-base font-semibold text-slate-900">
+                    <div className="flex min-w-0 flex-1 flex-col justify-center px-3 py-2.5 sm:flex-1 sm:justify-start sm:p-4">
+                      <span className="text-sm font-semibold leading-snug text-slate-900 sm:text-base">
                         {g.label}
                       </span>
-                      <span className="mt-2 text-xs leading-relaxed text-slate-600">
+                      <span className="mt-0.5 text-[11px] leading-snug text-slate-600 sm:hidden">
+                        {g.shortLabel}
+                      </span>
+                      <span className="mt-2 hidden text-xs leading-relaxed text-slate-600 sm:block">
                         {g.description}
                       </span>
                     </div>
@@ -124,7 +127,7 @@ export function GoalFinderFlow({ variant = "page" }) {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="mt-6 flex w-full min-h-[52px] items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white transition hover:bg-slate-800 sm:mt-8"
+              className="mt-4 flex w-full min-h-[48px] items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white transition hover:bg-slate-800 sm:mt-8 sm:min-h-[52px]"
             >
               Continue
             </button>
