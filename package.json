@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
     "db:migrate": "prisma migrate dev",
     "db:seed": "node prisma/seed.js",
     "postinstall": "prisma generate"
@@ -16,10 +15,10 @@
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
-    "next": "14.2.18",
+    "next": "16.2.4",
     "prisma": "5.22.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "resend": "^6.12.2"
   },
   "devDependencies": {

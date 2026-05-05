@@ -1,83 +1,84 @@
-import Link from "next/link";
-import { HomeNewsletter } from "@/components/HomeNewsletter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { GoalFinderFlow } from "@/components/GoalFinderFlow";
+import { PopularPeptidesSection } from "@/components/PopularPeptidesSection";
+
+const FEATURES = [
+  {
+    title: "Trust-first vendor comparison",
+    body: "Compare sellers side by side in one place so you can quickly see pricing context, testing transparency, and confidence signals before opening vendor sites.",
+  },
+  {
+    title: "Safety and testing clarity",
+    body: "MyPepFinder highlights how vendors present purity language, COA/testing references, and documentation notes so you can spot stronger versus weaker quality signals.",
+  },
+  {
+    title: "Review-backed decision support",
+    body: "Check review volume and sentiment alongside trust framing, so your short-list is based on both price and reputation instead of marketing copy alone.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50">
-      <header className="border-b border-zinc-200 dark:border-zinc-800">
-        <div className="max-w-5xl mx-auto px-4 py-5 flex items-center justify-between gap-4">
-          <span className="font-semibold tracking-tight">MyPepFinder</span>
-          <nav className="flex gap-4 text-sm">
-            <Link href="/quiz" className="text-emerald-700 dark:text-emerald-400 font-medium">
-              Start comparison
-            </Link>
-            <Link href="/results" className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200">
-              Sample results
-            </Link>
-          </nav>
-        </div>
-      </header>
+    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
+      <SiteHeader variant="light" />
 
-      <main className="max-w-5xl mx-auto px-4 py-16 space-y-20">
-        <section className="space-y-6">
-          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-            Educational comparison
+      <section className="hero-mesh-light relative flex flex-col border-b border-slate-200/80 bg-white">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center px-4 pb-10 pt-14 text-center sm:px-6 sm:pt-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">
+            Research-grade peptide explorer
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight max-w-3xl">
-            Explore peptide research suppliers side by side—without prescriptive
-            claims.
+          <h1 className="mt-5 max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+            Find peptides that match the science you are exploring.
           </h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl leading-relaxed">
-            MyPepFinder frames discovery as research, comparison, and
-            documentation review. Rankings reflect stated transparency-style
-            criteria; sponsorship is labeled and does not change ordering.
+          <p className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-slate-600 sm:text-lg">
+            Pick what you are trying to optimise, add a few optional stats, then
+            review peptides commonly associated with that research lane—all in
+            one place.
           </p>
-          <Link
-            href="/quiz"
-            className="inline-flex items-center justify-center rounded-lg bg-emerald-700 px-6 py-3 text-white text-sm font-semibold hover:bg-emerald-800 transition-colors"
-          >
-            Begin guided comparison
-          </Link>
-        </section>
+        </div>
 
-        <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Make Smarter Comparisons
-          </h2>
-          <ul className="grid md:grid-cols-3 gap-6 text-sm text-zinc-700 dark:text-zinc-300">
-            <li className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5 bg-zinc-50 dark:bg-zinc-900/30">
-              <span className="block font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
-                Compare providers and pricing
-              </span>
-              Line up how each supplier surfaces unit pricing, fees, and
-              documentation so you can contrast options on your own terms.
-            </li>
-            <li className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5 bg-zinc-50 dark:bg-zinc-900/30">
-              <span className="block font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
-                See testing transparency
-              </span>
-              Review how testing summaries, batch references, and update logs
-              are presented—signals commonly associated with reproducible
-              research supply workflows.
-            </li>
-            <li className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5 bg-zinc-50 dark:bg-zinc-900/30">
-              <span className="block font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
-                Understand tradeoffs
-              </span>
-              Every vendor mix involves tradeoffs between catalog breadth,
-              documentation depth, and shipping logistics—explore them as
-              research questions, not recommendations.
-            </li>
+        <div className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-6">
+          <div id="peptide-finder">
+            <GoalFinderFlow variant="embedded" />
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="border-t border-slate-200 bg-white py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+              Trust, safety, and reviews in one workflow
+            </h2>
+            <p className="mt-4 text-slate-600">
+              MyPepFinder helps users explore peptides by goal, then compare
+              vendors in one place by price, testing purity signals, and review
+              confidence—without steering to a single supplier.
+            </p>
+          </div>
+          <ul className="mt-14 grid gap-8 md:grid-cols-3">
+            {FEATURES.map((f) => (
+              <li
+                key={f.title}
+                className="rounded-2xl border border-slate-200 bg-slate-50/80 p-8 shadow-sm"
+              >
+                <div className="mb-4 h-10 w-10 rounded-full bg-amber-400/90" />
+                <h3 className="text-lg font-semibold text-slate-900">
+                  {f.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {f.body}
+                </p>
+              </li>
+            ))}
           </ul>
-        </section>
+        </div>
+      </section>
 
-        <HomeNewsletter />
+      <PopularPeptidesSection />
 
-        <p className="text-xs text-zinc-500 dark:text-zinc-500 max-w-2xl">
-          Educational only. Not medical advice. Some outbound links may be
-          affiliate links; rankings remain based on stated criteria.
-        </p>
-      </main>
+      <SiteFooter />
     </div>
   );
 }

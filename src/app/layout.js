@@ -13,16 +13,16 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "MyPepFinder — peptide provider research & comparison",
+  title: "MyPepFinder — explore peptides by your research goals",
   description:
-    "Compare peptide research suppliers using documentation-forward criteria. Educational exploration, not medical advice.",
+    "Pick an optimization focus, share basic stats, and see which peptides are commonly associated with that line of research. Educational only.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased font-sans`}
       >
         {children}
       </body>
