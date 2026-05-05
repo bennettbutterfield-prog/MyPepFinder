@@ -122,31 +122,59 @@ export default async function PeptideDetailPage({ params }) {
             Placeholder comparison module for price, purity/testing language,
             review volume, and trust score.
           </p>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-slate-500">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Vendor</th>
-                  <th className="px-4 py-3 font-semibold">From Price</th>
-                  <th className="px-4 py-3 font-semibold">Purity/Test Note</th>
-                  <th className="px-4 py-3 font-semibold">Reviews</th>
-                  <th className="px-4 py-3 font-semibold">Trust</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {["Vendor A", "Vendor B", "Vendor C"].map((vendor) => (
-                  <tr key={vendor} className="bg-white">
-                    <td className="px-4 py-3 font-medium text-slate-900">
-                      {vendor}
-                    </td>
-                    <td className="px-4 py-3 text-slate-600">--</td>
-                    <td className="px-4 py-3 text-slate-600">Placeholder</td>
-                    <td className="px-4 py-3 text-slate-600">--</td>
-                    <td className="px-4 py-3 text-slate-600">--</td>
+          <p className="mt-3 text-xs text-slate-500 md:hidden">
+            Scroll sideways to see every column.
+          </p>
+          <div className="mt-2 rounded-2xl border border-slate-200 md:mt-5">
+            <div
+              className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
+              tabIndex={0}
+              role="region"
+              aria-label="Vendor comparison table"
+            >
+              <table className="w-full min-w-[34rem] text-left text-xs sm:min-w-0 sm:text-sm">
+                <thead className="bg-slate-50 text-slate-500">
+                  <tr>
+                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                      Vendor
+                    </th>
+                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                      From Price
+                    </th>
+                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                      Purity/Test
+                    </th>
+                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                      Reviews
+                    </th>
+                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                      Trust
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {["Vendor A", "Vendor B", "Vendor C"].map((vendor) => (
+                    <tr key={vendor} className="bg-white">
+                      <td className="whitespace-nowrap px-2 py-2 font-medium text-slate-900 sm:px-4 sm:py-3">
+                        {vendor}
+                      </td>
+                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                        --
+                      </td>
+                      <td className="max-w-[8rem] px-2 py-2 text-slate-600 sm:max-w-none sm:px-4 sm:py-3">
+                        Placeholder
+                      </td>
+                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                        --
+                      </td>
+                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                        --
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
@@ -161,38 +189,62 @@ export default async function PeptideDetailPage({ params }) {
           </div>
 
           {exploreData ? (
-            <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3 font-semibold">Seller</th>
-                    <th className="px-4 py-3 font-semibold">From USD</th>
-                    <th className="px-4 py-3 font-semibold">Reviews</th>
-                    <th className="px-4 py-3 font-semibold">Trust</th>
-                    <th className="px-4 py-3 font-semibold">Notes</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {exploreData.sellers.map((s) => (
-                    <tr key={s.id} className="bg-white">
-                      <td className="px-4 py-3 font-medium text-slate-900">
-                        {s.name}
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        ${s.priceFrom.toFixed(2)}
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {s.reviewAvg.toFixed(2)} ({s.reviewCount})
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {s.trustScore}
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">{s.note}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <>
+              <p className="mt-3 text-xs text-slate-500 md:hidden">
+                Scroll sideways to see every seller and column.
+              </p>
+              <div className="mt-2 rounded-2xl border border-slate-200 md:mt-5">
+                <div
+                  className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
+                  tabIndex={0}
+                  role="region"
+                  aria-label="Explore providers comparison table"
+                >
+                  <table className="w-full min-w-[36rem] text-left text-xs sm:min-w-0 sm:text-sm">
+                    <thead className="bg-slate-50 text-slate-500">
+                      <tr>
+                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                          Seller
+                        </th>
+                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                          USD
+                        </th>
+                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                          Reviews
+                        </th>
+                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                          Trust
+                        </th>
+                        <th className="px-2 py-2 font-semibold sm:px-4 sm:py-3">
+                          Notes
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {exploreData.sellers.map((s) => (
+                        <tr key={s.id} className="bg-white">
+                          <td className="whitespace-nowrap px-2 py-2 font-medium text-slate-900 sm:px-4 sm:py-3">
+                            {s.name}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                            ${s.priceFrom.toFixed(2)}
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                            {s.reviewAvg.toFixed(1)} ({s.reviewCount})
+                          </td>
+                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
+                            {s.trustScore}
+                          </td>
+                          <td className="max-w-[11rem] px-2 py-2 text-slate-600 sm:max-w-xs sm:px-4 sm:py-3">
+                            {s.note}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
           ) : (
             <p className="mt-5 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-600">
               Provider comparison placeholder coming soon for this peptide entry.
