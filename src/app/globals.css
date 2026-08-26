@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: #0f172a;
 }
 
@@ -25,8 +25,8 @@ body {
   /* Subtle wash on light backgrounds */
   .hero-mesh-light {
     background-image:
-      radial-gradient(ellipse 90% 55% at 50% -15%, rgba(251, 191, 36, 0.12), transparent),
-      radial-gradient(ellipse 70% 45% at 100% 0%, rgba(148, 163, 184, 0.14), transparent),
-      radial-gradient(ellipse 60% 40% at 0% 25%, rgba(226, 232, 240, 0.9), transparent);
+      radial-gradient(ellipse 90% 55% at 50% -15%, rgba(125, 211, 252, 0.22), transparent),
+      radial-gradient(ellipse 70% 45% at 100% 0%, rgba(167, 243, 208, 0.24), transparent),
+      radial-gradient(ellipse 60% 40% at 0% 25%, rgba(240, 253, 250, 0.95), transparent);
   }
 }

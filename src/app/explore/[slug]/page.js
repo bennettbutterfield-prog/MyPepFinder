@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
 function Stars({ value }) {
   const n = Math.round(Math.min(5, Math.max(0, value)));
   return (
-    <span className="text-amber-500" aria-label={`${value} out of 5 stars`}>
+    <span className="text-sky-500" aria-label={`${value} out of 5 stars`}>
       {"★".repeat(n)}
       <span className="text-slate-300">{"★".repeat(5 - n)}</span>
     </span>
@@ -41,16 +41,16 @@ export default async function ExploreProvidersPage({ params }) {
   const { peptideName, sellers } = data;
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
+    <div className="flex min-h-screen flex-col bg-teal-50 text-slate-900">
       <SiteHeader variant="light" />
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6 sm:py-12">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-600">
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-teal-600">
           Supplier comparison
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
           Explore providers for{" "}
-          <span className="text-amber-700">{peptideName}</span>
+          <span className="text-teal-700">{peptideName}</span>
         </h1>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-600">
           Example sellers below mix illustrative pricing, community-style
@@ -92,7 +92,7 @@ export default async function ExploreProvidersPage({ params }) {
                     </div>
                   </td>
                   <td className="px-4 py-4">
-                    <span className="inline-flex min-w-[2.5rem] items-center justify-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-amber-400">
+                    <span className="inline-flex min-w-[2.5rem] items-center justify-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-teal-400">
                       {s.trustScore}
                     </span>
                   </td>
@@ -122,7 +122,7 @@ export default async function ExploreProvidersPage({ params }) {
                   {s.reviewAvg.toFixed(2)} / 5 · {s.reviewCount.toLocaleString()}{" "}
                   ratings
                 </span>
-                <span className="ml-auto inline-flex items-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-amber-400">
+                <span className="ml-auto inline-flex items-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-teal-400">
                   Trust {s.trustScore}
                 </span>
               </div>
@@ -131,7 +131,7 @@ export default async function ExploreProvidersPage({ params }) {
           ))}
         </ul>
 
-        <p className="mt-8 rounded-xl border border-amber-200/80 bg-amber-50/90 p-4 text-xs leading-relaxed text-amber-950">
+        <p className="mt-8 rounded-xl border border-sky-200/80 bg-sky-50/90 p-4 text-xs leading-relaxed text-sky-950">
           Educational comparison only. Figures are placeholders for layout and
           discussion—not verified prices, medical advice, or ranking
           guarantees.

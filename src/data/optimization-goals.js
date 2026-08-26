@@ -32,7 +32,7 @@ export const OPTIMIZATION_GOALS = [
   {
     id: "cellular",
     label: "Cellular",
-    shortLabel: "Anti-Aging",
+    shortLabel: "Longevity",
     description:
       "Names that surface in cellular energetics, mitochondrial, and longevity-adjacent research summaries.",
   },

@@ -1,308 +1,871 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
+import { notFound } from "next/navigation";
+import {
+  buildFallbackPeptidePage,
+  getAllPeptidePageSlugs,
+  getPeptidePage,
+} from "@/data/peptide-pages";
 import {
   getPopularPeptideBySlug,
   POPULAR_PEPTIDES,
 } from "@/data/popular-peptides";
 import { getExplorePageData, getKnownExploreSlugs } from "@/data/explore-sellers";
+import {
+  getProductBySlug,
+  peptideProducts,
+  isResearchComingSoon,
+  resolveProductByAliasOrSlug,
+} from "@/data/peptide-taxonomy";
+import { GOAL_SIDEBAR, GOAL_TOOLS } from "@/data/goal-pages";
+import { GoalPageHeader } from "@/components/GoalPageHeader";
+import { HomeFooter } from "@/components/HomeFooter";
+import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { PeptideResultsChart } from "@/components/PeptideResultsChart";
+import { PeptideDosageGuide } from "@/components/PeptideDosageGuide";
 
 export const dynamicParams = false;
-const PEER_REVIEW_PLACEHOLDERS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 export function generateStaticParams() {
+  const rich = getAllPeptidePageSlugs();
   const popular = POPULAR_PEPTIDES.map((p) => p.slug);
   const library = getKnownExploreSlugs();
-  return [...new Set([...popular, ...library])].map((slug) => ({ slug }));
+  const taxonomy = peptideProducts.map((p) => p.slug);
+  const taxonomyAliases = [
+    "glow",
+    "klow",
+    "semaglutide",
+    // Former standalone catalog entries, now aliases of Selank / Semax
+    "n-acetyl-selank-amidate",
+    "n-acetyl-semax-amidate",
+  ];
+  return [
+    ...new Set([...rich, ...popular, ...library, ...taxonomy, ...taxonomyAliases]),
+  ].map((slug) => ({
+    slug,
+  }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const peptide = getDetailData(slug);
-  if (!peptide) {
-    return {
-      title: "Peptide not found",
-    };
-  }
+  const peptide = resolvePeptide(slug);
+  if (!peptide) return { title: "Peptide not found" };
   return {
-    title: `${peptide.name} | MyPepFinder`,
-    description: `Research placeholder profile for ${peptide.name}.`,
+    title: `${peptide.pageTitle || peptide.name} | MyPepFinder`,
+    description: peptide.summary,
   };
 }
 
+const TABS = [
+  { id: "overview", label: "Overview" },
+  { id: "how-it-works", label: "How It Works" },
+  { id: "results", label: "Results" },
+  { id: "research", label: "Research" },
+  { id: "side-effects", label: "Side Effects" },
+  { id: "dosage", label: "Dosage" },
+  { id: "compare", label: "Compare" },
+];
+
+const DOSAGE_GUIDE_TABS = [
+  { id: "how-it-works", label: "How It Works" },
+  { id: "results", label: "Results" },
+  { id: "dosage", label: "Dosage" },
+  { id: "dose-levels", label: "Dose Levels" },
+  { id: "side-effects", label: "Side Effects" },
+  { id: "compare", label: "Compare" },
+  { id: "faq", label: "FAQ" },
+  { id: "research", label: "Research" },
+];
+
+const MECH_TONE = {
+  purple: "border-violet-200 bg-violet-50",
+  green: "border-emerald-200 bg-emerald-50",
+  orange: "border-orange-200 bg-orange-50",
+};
+const MECH_TITLE = {
+  purple: "text-violet-700",
+  green: "text-emerald-700",
+  orange: "text-orange-700",
+};
+
 export default async function PeptideDetailPage({ params }) {
   const { slug } = await params;
-  const peptide = getDetailData(slug);
+  const peptide = resolvePeptide(slug);
   if (!peptide) notFound();
 
-  const exploreData = getExplorePageData(slug);
+  const showChart = (peptide.chartLossPct || 0) > 0;
+  const hasDosageGuide = Boolean(peptide.dosageGuide);
+  const sectionTabs = hasDosageGuide ? DOSAGE_GUIDE_TABS : TABS;
+  const comingSoon = isResearchComingSoon(slug);
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
-      <SiteHeader variant="light" />
+      <GoalPageHeader />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6 sm:py-14">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-amber-600">
-          Peptide profile
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-          {peptide.name}
-        </h1>
-        {peptide.subtitle ? (
-          <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-            {peptide.subtitle}
-          </p>
-        ) : null}
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
-          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Product image
-            </h2>
-            <div className="relative mt-4 h-80 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-              <Image
-                src="/mockups/mpf-vial.png"
-                alt={`${peptide.name} product mockup`}
-                fill
-                className="object-contain p-3"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-          </section>
-
-          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Research summary
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              {peptide.summary}
+      <div className="mx-auto flex w-full max-w-[1400px] flex-1">
+        {/* Left sidebar */}
+        <aside className="hidden w-56 shrink-0 border-r border-slate-200 bg-white lg:block xl:w-60">
+          <div className="sticky top-14 max-h-[calc(100vh-3.5rem)] overflow-y-auto px-3 py-5">
+            <p className="px-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+              Goals
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              This section is a placeholder for literature context, purity/testing
-              notes, and key terms users can scan before comparing vendors.
-            </p>
-          </section>
-        </div>
+            <ul className="mt-2 space-y-0.5">
+              {GOAL_SIDEBAR.map((g) => {
+                const active = g.slug === peptide.goalSlug;
+                return (
+                  <li key={g.slug}>
+                    <Link
+                      href={`/goals/${g.slug}`}
+                      className={`flex items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] font-medium transition ${
+                        active
+                          ? "bg-violet-50 text-violet-700"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
+                    >
+                      <span aria-hidden className="text-xs">
+                        •
+                      </span>
+                      {g.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
-          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Molecular profile
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              Placeholder for sequence class, molecular weight, receptor-pathway
-              notes, and key analytical identifiers.
+            <p className="mt-6 px-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+              Tools
             </p>
-            <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
-              Molecular profile placeholder content
-            </div>
-          </section>
-
-          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Storage requirements
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              Placeholder for handling and storage guidance (temperature range,
-              light/moisture controls, and post-reconstitution notes).
-            </p>
-            <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
-              Storage requirements placeholder content
-            </div>
-          </section>
-        </div>
-
-        <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Compare vendors
-          </h2>
-          <p className="mt-2 text-sm text-slate-600">
-            Placeholder comparison module for price, purity/testing language,
-            review volume, and trust score.
-          </p>
-          <p className="mt-3 text-xs text-slate-500 md:hidden">
-            Scroll sideways to see every column.
-          </p>
-          <div className="mt-2 rounded-2xl border border-slate-200 md:mt-5">
-            <div
-              className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
-              tabIndex={0}
-              role="region"
-              aria-label="Vendor comparison table"
-            >
-              <table className="w-full min-w-[34rem] text-left text-xs sm:min-w-0 sm:text-sm">
-                <thead className="bg-slate-50 text-slate-500">
-                  <tr>
-                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                      Vendor
-                    </th>
-                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                      From Price
-                    </th>
-                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                      Purity/Test
-                    </th>
-                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                      Reviews
-                    </th>
-                    <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                      Trust
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {["Vendor A", "Vendor B", "Vendor C"].map((vendor) => (
-                    <tr key={vendor} className="bg-white">
-                      <td className="whitespace-nowrap px-2 py-2 font-medium text-slate-900 sm:px-4 sm:py-3">
-                        {vendor}
-                      </td>
-                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                        --
-                      </td>
-                      <td className="max-w-[8rem] px-2 py-2 text-slate-600 sm:max-w-none sm:px-4 sm:py-3">
-                        Placeholder
-                      </td>
-                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                        --
-                      </td>
-                      <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                        --
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ul className="mt-2 space-y-0.5">
+              {GOAL_TOOLS.map((t) => (
+                <li key={t.label}>
+                  <Link
+                    href={t.href}
+                    className="flex items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] font-medium text-slate-600 transition hover:bg-slate-50"
+                  >
+                    <span aria-hidden>•</span>
+                    {t.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
+        </aside>
 
-        <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">
-              Explore providers
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Full provider-style placeholder comparison for this peptide.
-            </p>
-          </div>
-
-          {exploreData ? (
-            <>
-              <p className="mt-3 text-xs text-slate-500 md:hidden">
-                Scroll sideways to see every seller and column.
-              </p>
-              <div className="mt-2 rounded-2xl border border-slate-200 md:mt-5">
-                <div
-                  className="overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]"
-                  tabIndex={0}
-                  role="region"
-                  aria-label="Explore providers comparison table"
-                >
-                  <table className="w-full min-w-[36rem] text-left text-xs sm:min-w-0 sm:text-sm">
-                    <thead className="bg-slate-50 text-slate-500">
-                      <tr>
-                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                          Seller
-                        </th>
-                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                          USD
-                        </th>
-                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                          Reviews
-                        </th>
-                        <th className="whitespace-nowrap px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                          Trust
-                        </th>
-                        <th className="px-2 py-2 font-semibold sm:px-4 sm:py-3">
-                          Notes
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-200">
-                      {exploreData.sellers.map((s) => (
-                        <tr key={s.id} className="bg-white">
-                          <td className="whitespace-nowrap px-2 py-2 font-medium text-slate-900 sm:px-4 sm:py-3">
-                            {s.name}
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                            ${s.priceFrom.toFixed(2)}
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                            {s.reviewAvg.toFixed(1)} ({s.reviewCount})
-                          </td>
-                          <td className="whitespace-nowrap px-2 py-2 text-slate-600 sm:px-4 sm:py-3">
-                            {s.trustScore}
-                          </td>
-                          <td className="max-w-[11rem] px-2 py-2 text-slate-600 sm:max-w-xs sm:px-4 sm:py-3">
-                            {s.note}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className="mt-5 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-sm text-slate-600">
-              Provider comparison placeholder coming soon for this peptide entry.
-            </p>
-          )}
-        </section>
-
-        <section className="mt-8 rounded-3xl border border-slate-200 bg-slate-100 p-6 shadow-sm sm:p-8">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Peer-reviewed research
-          </h2>
-          <p className="mt-2 text-sm text-slate-600">
-            Placeholder cards for literature you want to pin to each peptide
-            profile.
-          </p>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {PEER_REVIEW_PLACEHOLDERS.map((n) => (
-              <li
-                key={n}
-                className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Journal publication
-                </p>
-                <p className="mt-2 text-sm font-semibold text-slate-900">
-                  Study title placeholder {n}
-                </p>
-                <p className="mt-3 text-xs text-slate-500">Date: --/--/----</p>
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-7">
+          <div className={comingSoon ? "opacity-60 grayscale" : undefined}>
+          {/* Breadcrumbs */}
+          <nav className="text-xs text-slate-400" aria-label="Breadcrumb">
+            <ol className="flex flex-wrap items-center gap-1.5">
+              <li>
+                <Link href="/" className="hover:text-violet-600">
+                  Home
+                </Link>
               </li>
-            ))}
-          </ul>
-        </section>
+              <li aria-hidden>›</li>
+              <li>
+                <Link href="/goals/lose-weight" className="hover:text-violet-600">
+                  Goals
+                </Link>
+              </li>
+              <li aria-hidden>›</li>
+              <li>
+                <Link
+                  href={`/goals/${peptide.goalSlug}`}
+                  className="hover:text-violet-600"
+                >
+                  {peptide.goalLabel}
+                </Link>
+              </li>
+              <li aria-hidden>›</li>
+              <li className="font-medium text-slate-600">{peptide.name}</li>
+            </ol>
+          </nav>
 
-        <p className="mt-10 text-center text-sm text-slate-600">
-          <Link
-            href="/#explore-popular-peptides"
-            className="font-medium text-amber-700 hover:text-amber-800"
+          {/* Hero */}
+          <section
+            className={`mt-4 grid gap-6 lg:items-start ${
+              peptide.heroImage
+                ? "lg:grid-cols-[0.9fr_1.1fr] lg:gap-4"
+                : "lg:grid-cols-[1.15fr_0.85fr]"
+            }`}
           >
-            ← Back to popular peptides
-          </Link>
-        </p>
-      </main>
+            <div>
+              <span className="inline-flex rounded-full bg-violet-100 px-2.5 py-1 text-[11px] font-bold text-violet-700">
+                {peptide.rankBadge}
+              </span>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                {peptide.name}
+              </h1>
+              {comingSoon ? (
+                <span className="mt-2 inline-flex rounded-full bg-slate-600 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                  Research coming soon
+                </span>
+              ) : null}
+              {hasDosageGuide ? (
+                <p className="mt-1 text-base font-semibold text-violet-700 sm:text-lg">
+                  Dosage & Dose Escalation Guide
+                </p>
+              ) : null}
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+                {peptide.summary}
+              </p>
 
-      <SiteFooter />
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                <span className="text-amber-400">★★★★★</span>
+                <span className="font-semibold text-slate-800">
+                  {peptide.rating}
+                </span>
+                <span className="text-slate-400">
+                  ({peptide.reviewCount} reviews)
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] font-semibold text-violet-700 ring-1 ring-violet-100">
+                  ◆ {peptide.researchedBadge}
+                </span>
+              </div>
+
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {peptide.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-700 ring-1 ring-violet-100"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex flex-wrap gap-2.5">
+                <Link
+                  href="/recommendations"
+                  className="inline-flex min-h-[42px] items-center justify-center rounded-lg bg-violet-600 px-4 text-sm font-semibold text-white shadow-sm shadow-violet-600/25 transition hover:bg-violet-700"
+                >
+                  Compare Providers
+                </Link>
+                <button
+                  type="button"
+                  className="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-lg border border-violet-300 bg-white px-4 text-sm font-semibold text-violet-700 transition hover:bg-violet-50"
+                >
+                  <span aria-hidden>+</span> Add to Compare
+                </button>
+              </div>
+            </div>
+
+            <div className="relative">
+              {peptide.heroImage ? (
+                <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                  <Image
+                    src={peptide.heroImage}
+                    alt={`${peptide.name} molecule`}
+                    width={peptide.heroImageWidth || 682}
+                    height={peptide.heroImageHeight || 1024}
+                    className="h-auto w-full"
+                    sizes="(max-width: 1024px) 100vw, 560px"
+                    priority
+                  />
+                </div>
+              ) : (
+                <PlaceholderImage
+                  label={`${peptide.name} molecule`}
+                  tone="violet"
+                  icon="molecule"
+                  className="h-56 w-full rounded-2xl sm:h-64"
+                />
+              )}
+              {(peptide.moleculeCallouts || []).length > 0 ? (
+                <ul className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                  {peptide.moleculeCallouts.map((c) => (
+                    <li
+                      key={c.label}
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm"
+                    >
+                      <p className="text-xs font-bold text-violet-700">
+                        {c.label}
+                      </p>
+                      <p className="mt-0.5 text-[10px] leading-snug text-slate-500">
+                        {c.body}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </section>
+
+          {/* Tabs */}
+          <nav
+            className="mt-8 flex gap-1 overflow-x-auto border-b border-slate-200"
+            aria-label="Section"
+          >
+            {sectionTabs.map((tab, i) => (
+              <a
+                key={tab.id}
+                href={`#${tab.id}`}
+                className={`shrink-0 border-b-2 px-3 py-2.5 text-[13px] font-semibold transition ${
+                  i === 0
+                    ? "border-violet-600 text-violet-700"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
+                }`}
+              >
+                {tab.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Main + right column */}
+          <div className="mt-8 grid gap-8 xl:grid-cols-[1.55fr_0.9fr]">
+            <div className="min-w-0 space-y-10">
+              {hasDosageGuide ? (
+                <>
+                  <section id="how-it-works">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      How It Works
+                    </h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      {peptide.howItWorks ||
+                        `${peptide.name} engages multiple pathways that together support appetite control, metabolic efficiency, and fat oxidation.`}
+                    </p>
+                    {peptide.mechanisms?.length ? (
+                      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                        {peptide.mechanisms.map((m) => (
+                          <div
+                            key={m.title}
+                            className={`rounded-xl border p-4 ${MECH_TONE[m.tone] || MECH_TONE.purple}`}
+                          >
+                            <p
+                              className={`text-sm font-bold ${MECH_TITLE[m.tone] || MECH_TITLE.purple}`}
+                            >
+                              {m.title}
+                            </p>
+                            <ul className="mt-2 space-y-1.5">
+                              {m.points.map((p) => (
+                                <li
+                                  key={p}
+                                  className="flex gap-1.5 text-xs text-slate-700"
+                                >
+                                  <span className="text-emerald-500">✓</span>
+                                  {p}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                    {peptide.resultBars?.length ? (
+                      <div className="mt-3">
+                        <p className="mb-2 text-center text-[11px] font-semibold uppercase tracking-wider text-violet-500">
+                          Result
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-3">
+                          {peptide.resultBars.map((r) => (
+                            <p
+                              key={r}
+                              className="rounded-xl bg-violet-600 px-2 py-3 text-center text-[11px] font-semibold text-white sm:text-xs"
+                            >
+                              {r}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </section>
+
+                  <section id="results">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      Expected Results Over Time
+                    </h2>
+                    <div className="mt-4">
+                      {showChart ? (
+                        <PeptideResultsChart
+                          name={peptide.name}
+                          lossPct={peptide.chartLossPct}
+                        />
+                      ) : null}
+                    </div>
+                  </section>
+
+                  <PeptideDosageGuide guide={peptide.dosageGuide} />
+                </>
+              ) : (
+                <>
+                  {/* Overview */}
+                  <section id="overview">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      What is {peptide.name}?
+                    </h2>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                      {peptide.about}
+                    </p>
+                    <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                      {peptide.facts.map((f) => (
+                        <li
+                          key={f.label}
+                          className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm"
+                        >
+                          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                            {f.label}
+                          </p>
+                          <p className="mt-1 text-sm font-bold text-slate-900">
+                            {f.value}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  {/* How it works */}
+                  <section id="how-it-works">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      How It Works
+                    </h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      {peptide.howItWorks ||
+                        `${peptide.name} engages multiple pathways that together support appetite control, metabolic efficiency, and fat oxidation.`}
+                    </p>
+                    {peptide.mechanisms?.length ? (
+                      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                        {peptide.mechanisms.map((m) => (
+                          <div
+                            key={m.title}
+                            className={`rounded-xl border p-4 ${MECH_TONE[m.tone] || MECH_TONE.purple}`}
+                          >
+                            <p
+                              className={`text-sm font-bold ${MECH_TITLE[m.tone] || MECH_TITLE.purple}`}
+                            >
+                              {m.title}
+                            </p>
+                            <ul className="mt-2 space-y-1.5">
+                              {m.points.map((p) => (
+                                <li
+                                  key={p}
+                                  className="flex gap-1.5 text-xs text-slate-700"
+                                >
+                                  <span className="text-emerald-500">✓</span>
+                                  {p}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                    {peptide.resultBars?.length ? (
+                      <div className="mt-3">
+                        <p className="mb-2 text-center text-[11px] font-semibold uppercase tracking-wider text-violet-500">
+                          Result
+                        </p>
+                        <div className="grid gap-3 sm:grid-cols-3">
+                          {peptide.resultBars.map((r) => (
+                            <p
+                              key={r}
+                              className="rounded-xl bg-violet-600 px-2 py-3 text-center text-[11px] font-semibold text-white sm:text-xs"
+                            >
+                              {r}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </section>
+
+                  {/* Results */}
+                  <section id="results">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      {peptide.resultsNarrative
+                        ? "Results"
+                        : "Expected Results Over Time"}
+                    </h2>
+                    <div className="mt-4">
+                      {peptide.resultsNarrative ? (
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {peptide.resultsNarrative.body}
+                          </p>
+                          {peptide.resultsNarrative.href ? (
+                            <a
+                              href={peptide.resultsNarrative.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-3 inline-flex text-sm font-semibold text-violet-700 hover:underline"
+                            >
+                              {peptide.resultsNarrative.linkLabel ||
+                                "View study"}{" "}
+                              →
+                            </a>
+                          ) : null}
+                        </div>
+                      ) : showChart ? (
+                        <PeptideResultsChart
+                          name={peptide.name}
+                          lossPct={peptide.chartLossPct}
+                        />
+                      ) : (
+                        <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
+                          Trajectory modeling for this peptide focuses on
+                          research signals rather than weight-loss curves. See
+                          comparison and research sections below.
+                        </div>
+                      )}
+                    </div>
+                  </section>
+
+                  {/* Compare table */}
+                  <section id="compare">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      How {peptide.name} Compares
+                    </h2>
+                    <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+                      <table className="w-full min-w-[560px] border-collapse text-left text-sm">
+                        <thead>
+                          <tr className="border-b border-slate-100 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                            <th className="px-3 py-3 font-semibold">Feature</th>
+                            {peptide.compare.columns.map((col, i) => (
+                              <th
+                                key={col}
+                                className={`px-3 py-3 font-semibold ${
+                                  i === peptide.compare.highlight
+                                    ? "bg-violet-50 text-violet-700"
+                                    : ""
+                                }`}
+                              >
+                                {col}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {peptide.compare.rows.map((row) => (
+                            <tr
+                              key={row.feature}
+                              className="border-b border-slate-50 last:border-0"
+                            >
+                              <td className="px-3 py-3 text-xs font-medium text-slate-600">
+                                {row.feature}
+                              </td>
+                              {row.values.map((v, i) => (
+                                <td
+                                  key={`${row.feature}-${i}`}
+                                  className={`px-3 py-3 text-xs font-semibold ${
+                                    i === peptide.compare.highlight
+                                      ? "bg-violet-50/80 text-violet-800"
+                                      : "text-slate-800"
+                                  }`}
+                                >
+                                  {v}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  {/* Side effects / dosage anchors */}
+                  <section
+                    id="side-effects"
+                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                  >
+                    <h2 className="text-lg font-bold text-slate-900">
+                      Side Effects
+                    </h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      {peptide.sideEffects ||
+                        "Commonly discussed effects in research summaries include mild gastrointestinal symptoms (nausea, reduced appetite). Always follow a qualified clinician's protocol. This page is educational only."}
+                    </p>
+                  </section>
+
+                  <section
+                    id="dosage"
+                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                  >
+                    <h2 className="text-lg font-bold text-slate-900">Dosage</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                      {peptide.dosage || (
+                        <>
+                          Research protocols often use once-weekly subcutaneous
+                          administration with gradual titration. Use the{" "}
+                          <Link
+                            href="/calculator"
+                            className="font-semibold text-violet-700 hover:underline"
+                          >
+                            Dosage Calculator
+                          </Link>{" "}
+                          to explore reconstitution math for your vial size.
+                        </>
+                      )}
+                    </p>
+                  </section>
+                </>
+              )}
+            </div>
+
+            {/* Right sidebar cards */}
+            <aside className="space-y-5 xl:sticky xl:top-[4.5rem] xl:self-start">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <h3 className="text-sm font-bold text-slate-900">Key Benefits</h3>
+                <ul className="mt-3 space-y-2">
+                  {peptide.benefits.map((b) => (
+                    <li
+                      key={b}
+                      className="flex gap-2 text-xs leading-snug text-slate-600"
+                    >
+                      <span className="mt-0.5 text-emerald-500">✓</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <h3 className="text-sm font-bold text-slate-900">
+                  {peptide.name} At A Glance
+                </h3>
+                <dl className="mt-3 space-y-2.5">
+                  {peptide.glance.map((g) => (
+                    <div
+                      key={g.label}
+                      className="flex items-start justify-between gap-3 border-b border-slate-50 pb-2 last:border-0"
+                    >
+                      <dt className="text-xs text-slate-500">{g.label}</dt>
+                      <dd
+                        className={`text-right text-xs font-bold ${
+                          g.highlight ? "text-emerald-600" : "text-slate-900"
+                        }`}
+                      >
+                        {g.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <h3 className="text-sm font-bold text-slate-900">
+                  Top Rated Providers
+                </h3>
+                <ul className="mt-3 space-y-3">
+                  {peptide.providers.map((v) => (
+                    <li
+                      key={v.name}
+                      className="flex items-center gap-2.5 rounded-lg bg-slate-100 p-2 opacity-60 grayscale"
+                      aria-disabled="true"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-[10px] font-bold text-white">
+                        {v.initials}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <p className="truncate text-xs font-semibold text-slate-900">
+                            {v.name}
+                          </p>
+                          <span className="shrink-0 rounded-full bg-slate-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
+                            Coming soon
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-slate-500">
+                          ★ {v.rating} · {v.price}
+                        </p>
+                        <p className="text-[10px] font-medium text-emerald-600">
+                          {v.tag}
+                        </p>
+                      </div>
+                      <span
+                        className="cursor-not-allowed rounded-md bg-slate-300 px-2.5 py-1.5 text-[10px] font-semibold text-slate-500"
+                        aria-disabled="true"
+                      >
+                        View
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <span
+                  className="mt-3 block cursor-not-allowed text-center text-xs font-semibold text-slate-400"
+                  aria-disabled="true"
+                >
+                  Compare All Providers →
+                </span>
+              </div>
+
+              {peptide.moleculeCardImage ? (
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                  <Image
+                    src={peptide.moleculeCardImage}
+                    alt={`${peptide.name} molecular structure`}
+                    width={peptide.moleculeCardImageWidth || 1024}
+                    height={peptide.moleculeCardImageHeight || 640}
+                    className="h-auto w-full"
+                    sizes="(max-width: 1280px) 100vw, 380px"
+                  />
+                </div>
+              ) : (peptide.reviews || []).length > 0 ? (
+                <div id="reviews" className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                  <h3 className="text-sm font-bold text-slate-900">
+                    Real User Reviews
+                  </h3>
+                  <ul className="mt-3 space-y-3">
+                    {peptide.reviews.map((r) => (
+                      <li
+                        key={r.name}
+                        className="rounded-xl border border-slate-100 bg-slate-50 p-3"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-violet-700">
+                            {r.name
+                              .split(" ")
+                              .map((p) => p[0])
+                              .join("")}
+                          </span>
+                          <div>
+                            <p className="text-xs font-semibold text-slate-900">
+                              {r.name}
+                            </p>
+                            <p className="text-[10px] font-medium text-emerald-600">
+                              {r.result}
+                            </p>
+                          </div>
+                          <span className="ml-auto text-[10px] text-amber-500">
+                            ★ {r.rating}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
+                          “{r.quote}”
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </aside>
+          </div>
+
+          {/* Latest research */}
+          {(peptide.researchNarrative || (peptide.research || []).length > 0) ? (
+            <section id="research" className="mt-12">
+              <h2 className="text-xl font-bold text-slate-900">
+                Latest Research on {peptide.name}
+              </h2>
+              {peptide.researchNarrative ? (
+                <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {peptide.researchNarrative.body}
+                  </p>
+                  {peptide.researchNarrative.href ? (
+                    <a
+                      href={peptide.researchNarrative.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex text-sm font-semibold text-violet-700 hover:underline"
+                    >
+                      {peptide.researchNarrative.linkLabel ||
+                        "View follow-up study"}{" "}
+                      →
+                    </a>
+                  ) : null}
+                </div>
+              ) : null}
+              {(peptide.research || []).length > 0 ? (
+                <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {peptide.research.map((r) => (
+                    <li key={`${r.title}-${r.href || r.cite}`}>
+                      {r.href ? (
+                        <a
+                          href={r.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-violet-200 hover:shadow-md"
+                        >
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-violet-600">
+                            {r.tag}
+                          </span>
+                          <h3 className="mt-1.5 text-sm font-semibold leading-snug text-slate-900">
+                            {r.title}
+                          </h3>
+                          <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-500">
+                            {r.summary}
+                          </p>
+                          <p className="mt-3 text-[11px] font-medium text-slate-400">
+                            {r.cite}
+                          </p>
+                          <span className="mt-2 text-[11px] font-semibold text-violet-600">
+                            Read study →
+                          </span>
+                        </a>
+                      ) : (
+                        <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-violet-600">
+                            {r.tag}
+                          </span>
+                          <h3 className="mt-1.5 text-sm font-semibold leading-snug text-slate-900">
+                            {r.title}
+                          </h3>
+                          <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-500">
+                            {r.summary}
+                          </p>
+                          <p className="mt-3 text-[11px] font-medium text-slate-400">
+                            {r.cite}
+                          </p>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </section>
+          ) : null}
+
+          {/* Newsletter */}
+          <section className="mt-12 mb-4 rounded-2xl bg-violet-50 px-5 py-5 sm:px-6">
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+              <div>
+                <p className="text-sm font-bold text-slate-900">
+                  Stay updated on the latest peptide research
+                </p>
+                <p className="mt-0.5 text-xs text-slate-500">
+                  New studies and guides delivered to your inbox.
+                </p>
+              </div>
+              <form action="#" className="flex w-full max-w-md gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
+                />
+                <button
+                  type="submit"
+                  className="rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </section>
+          </div>
+        </main>
+      </div>
+
+      <HomeFooter />
     </div>
   );
 }
 
-function getDetailData(slug) {
-  const fromPopular = getPopularPeptideBySlug(slug);
-  if (fromPopular) return fromPopular;
-  const fromExplore = getExplorePageData(slug);
-  if (!fromExplore) return null;
-  return {
-    slug,
-    name: fromExplore.peptideName,
-    subtitle: "",
-    summary:
-      "Placeholder profile for this compound. Add literature notes, purity/testing context, and vendor comparison criteria here.",
-  };
+function resolvePeptide(slug) {
+  const rich = getPeptidePage(slug);
+  if (rich) return rich;
+
+  const taxonomy =
+    getProductBySlug(slug) || resolveProductByAliasOrSlug(slug);
+  if (taxonomy) {
+    return buildFallbackPeptidePage(taxonomy.slug, taxonomy.name);
+  }
+
+  const popular = getPopularPeptideBySlug(slug);
+  if (popular) {
+    return buildFallbackPeptidePage(slug, popular.name);
+  }
+  const explore = getExplorePageData(slug);
+  if (explore) {
+    return buildFallbackPeptidePage(slug, explore.peptideName);
+  }
+  return null;
 }

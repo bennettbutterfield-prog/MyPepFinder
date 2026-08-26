@@ -73,7 +73,7 @@ export const POPULAR_PEPTIDES = [
   },
   {
     slug: "glp-1-s",
-    name: "GLP-1 S (GLP-1 RA)",
+    name: "GLP-1 Semaglutide",
     subtitle: "",
     categories: ["Metabolic Research"],
     summary:

@@ -1,86 +1,73 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-
-const FILTERS = [
-  "All",
-  "Tissue Repair Research",
-  "Dermal Research",
-  "Metabolic Research",
-  "Secretagogue Research",
-  "Cellular Research",
-  "Neuro Research",
-  "Circadian Research",
-];
+import { RESEARCH_LIBRARY_FILTERS } from "@/data/research-library";
 
 function norm(s) {
-  return s.trim().toLowerCase();
+  return String(s || "")
+    .trim()
+    .toLowerCase();
 }
 
-function matches(query, text) {
-  const q = norm(query);
-  if (!q) return true;
-  return norm(text).includes(q);
-}
-
-const CATEGORY_BY_TITLE = {
-  "AOD-9604": ["Metabolic Research"],
-  "5-Amino-1MQ": ["Metabolic Research", "Cellular Research"],
-  "Amino H2O": ["Cellular Research"],
-  "BPC-157": ["Tissue Repair Research", "Cellular Research"],
-  "BPC-157/TB-500 (Wolverine)": ["Tissue Repair Research", "Cellular Research"],
-  Cagrilintide: ["Metabolic Research"],
-  "CJC-1295 / Ipamorelin (No DAC)": ["Secretagogue Research"],
-  DSIP: ["Circadian Research", "Neuro Research"],
-  Epithalon: ["Cellular Research", "Circadian Research"],
-  "GHK-Cu": ["Dermal Research", "Cellular Research", "Tissue Repair Research"],
-  GLOW: ["Tissue Repair Research", "Dermal Research", "Cellular Research"],
-  "GLP-3 (RT)": ["Metabolic Research"],
-  Glutathione: ["Cellular Research", "Dermal Research"],
-  "IGF-1 LR3": ["Secretagogue Research"],
-  Ipamorelin: ["Secretagogue Research"],
-  KLOW: ["Tissue Repair Research", "Dermal Research", "Cellular Research"],
-  KPV: ["Tissue Repair Research", "Dermal Research", "Cellular Research"],
-  "Melanotan I": ["Dermal Research"],
-  "Melanotan II": ["Dermal Research"],
-  "MOTS-C": ["Metabolic Research", "Cellular Research"],
-  "NAD+": ["Cellular Research", "Neuro Research"],
-  "PT-141": ["Neuro Research"],
-  SELANK: ["Neuro Research", "Circadian Research"],
-  SEMAX: ["Neuro Research"],
-  "SNAP-8": ["Dermal Research"],
-  "TB-500": ["Tissue Repair Research", "Cellular Research"],
-  Tesamorlin: ["Secretagogue Research"],
-  "Thymosin Alpha-1": ["Cellular Research"],
-};
-
-function categoriesForTitle(title) {
-  return CATEGORY_BY_TITLE[title] ?? ["Cellular Research"];
+function resolveCategory(candidate) {
+  return RESEARCH_LIBRARY_FILTERS.some((f) => f.id === candidate)
+    ? candidate
+    : "all";
 }
 
 /**
- * @param {{ entries: { slug: string; title: string }[] }} props
+ * @param {{
+ *   entries: {
+ *     slug: string;
+ *     title: string;
+ *     aliases?: string[];
+ *     categories?: string[];
+ *     blurb?: string;
+ *     researchComingSoon?: boolean;
+ *     searchText?: string;
+ *   }[];
+ *   initialCategory?: string;
+ * }} props
  */
-export function ResearchLibrarySearch({ entries }) {
-  const [query, setQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
+export function ResearchLibrarySearch({ entries, initialCategory = "all" }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const activeFilter = resolveCategory(
+    searchParams.get("category") ?? initialCategory
+  );
+
+  const [query, setQuery] = useState(() => searchParams.get("q") || "");
 
   const filtered = useMemo(() => {
     const q = norm(query);
     return entries.filter((e) => {
-      const queryMatch =
-        !q ||
-        matches(query, e.title) ||
-        matches(query, e.slug) ||
-        matches(query, e.slug.replace(/-/g, " "));
+      const hay =
+        e.searchText ||
+        [e.title, e.slug, ...(e.aliases || [])].join(" ").toLowerCase();
+      const queryMatch = !q || hay.includes(q);
       if (!queryMatch) return false;
-      if (activeFilter === "All") return true;
-      return categoriesForTitle(e.title).includes(activeFilter);
+      if (activeFilter === "all") return true;
+      return (e.categories || []).includes(activeFilter);
     });
   }, [entries, query, activeFilter]);
 
-  const active = norm(query).length > 0;
+  const active = norm(query).length > 0 || activeFilter !== "all";
+
+  function setActiveFilter(nextId) {
+    const id = resolveCategory(nextId);
+    const params = new URLSearchParams(searchParams.toString());
+    if (id === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", id);
+    }
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  }
 
   return (
     <div>
@@ -114,26 +101,26 @@ export function ResearchLibrarySearch({ entries }) {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Name or shorthand…"
+          placeholder="Name, alias, or shorthand…"
           autoComplete="off"
-          className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm text-slate-900 shadow-sm outline-none ring-amber-400/0 transition placeholder:text-slate-400 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 sm:text-base"
+          className="w-full rounded-xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20 sm:text-base"
         />
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
-        {FILTERS.map((filter) => {
-          const selected = filter === activeFilter;
+        {RESEARCH_LIBRARY_FILTERS.map((filter) => {
+          const selected = filter.id === activeFilter;
           return (
             <button
-              key={filter}
+              key={filter.id}
               type="button"
-              onClick={() => setActiveFilter(filter)}
+              onClick={() => setActiveFilter(filter.id)}
               className={`inline-flex min-h-[38px] items-center justify-center rounded-full px-4 text-xs font-semibold transition ${
                 selected
-                  ? "border border-amber-500 bg-amber-100 text-amber-900"
-                  : "border border-slate-300 bg-white text-slate-700 hover:border-slate-400"
+                  ? "border border-indigo-500 bg-indigo-100 text-indigo-900"
+                  : "border border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:text-indigo-700"
               }`}
             >
-              {filter}
+              {filter.label}
             </button>
           );
         })}
@@ -152,25 +139,49 @@ export function ResearchLibrarySearch({ entries }) {
         </p>
       ) : (
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((item) => (
-            <li key={item.slug}>
-              <Link
-                href={`/peptides/${item.slug}`}
-                className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-amber-300 hover:shadow-md"
-              >
-                <span className="text-base font-semibold text-slate-900">
-                  {item.title}
-                </span>
-                <span className="mt-2 text-sm text-slate-600">
-                  Open a dedicated profile page with placeholders for research
-                  summary and vendor comparison.
-                </span>
-                <span className="mt-4 text-sm font-semibold text-amber-700">
-                  Learn more →
-                </span>
-              </Link>
-            </li>
-          ))}
+          {filtered.map((item) => {
+            const comingSoon = Boolean(item.researchComingSoon);
+            const cardClass = comingSoon
+              ? "flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-100 p-5 opacity-60 grayscale shadow-sm"
+              : "flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md";
+
+            if (comingSoon) {
+              return (
+                <li key={item.slug}>
+                  <div className={cardClass} aria-disabled="true">
+                    <span className="text-base font-semibold text-slate-600">
+                      {item.title}
+                    </span>
+                    <span className="mt-2 inline-flex w-fit rounded-full bg-slate-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                      Research coming soon
+                    </span>
+                    <span className="mt-2 text-sm leading-relaxed text-slate-500">
+                      {item.blurb}
+                    </span>
+                    <span className="mt-4 text-sm font-semibold text-slate-400">
+                      Unavailable for now
+                    </span>
+                  </div>
+                </li>
+              );
+            }
+
+            return (
+              <li key={item.slug}>
+                <Link href={`/peptides/${item.slug}`} className={cardClass}>
+                  <span className="text-base font-semibold text-slate-900">
+                    {item.title}
+                  </span>
+                  <span className="mt-2 text-sm leading-relaxed text-slate-500">
+                    {item.blurb}
+                  </span>
+                  <span className="mt-4 text-sm font-semibold text-indigo-600">
+                    Learn more →
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
