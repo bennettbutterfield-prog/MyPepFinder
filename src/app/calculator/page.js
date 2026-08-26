@@ -8,6 +8,18 @@ export const metadata = {
   title: "Peptide Dosage Calculator | MyPepFinder",
   description:
     "Calculate accurate peptide dosages, reconstitution amounts, and injection volumes based on your specific protocol.",
+  openGraph: {
+    title: "Peptide Dosage Calculator | MyPepFinder",
+    description:
+      "Calculate reconstitution amounts and injection volumes for your peptide protocol.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Peptide Dosage Calculator | MyPepFinder",
+    description:
+      "Calculate reconstitution amounts and injection volumes for your peptide protocol.",
+  },
 };
 
 const HOW_STEPS = [

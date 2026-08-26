@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "MyPepFinder — Optimize You. Research peptides. Compare providers.";
+  "Peptide Dosage Calculator — Calculate reconstitution and injection volumes | MyPepFinder";
 export const size = {
   width: 1200,
   height: 630,
@@ -56,7 +56,7 @@ export default async function Image() {
               display: "flex",
               alignItems: "center",
               gap: 12,
-              marginBottom: 40,
+              marginBottom: 36,
             }}
           >
             <div
@@ -93,28 +93,47 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              fontSize: 80,
-              fontWeight: 800,
-              lineHeight: 1.05,
-              letterSpacing: "-0.04em",
-              color: "#0f172a",
-              marginBottom: 22,
+              fontSize: 22,
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "#6366f1",
+              marginBottom: 18,
             }}
           >
-            Optimize{" "}
-            <span style={{ color: "#4f46e5", marginLeft: 16 }}>You.</span>
+            Free Tool
           </div>
 
           <div
             style={{
               display: "flex",
-              fontSize: 32,
-              fontWeight: 500,
-              lineHeight: 1.35,
-              color: "#475569",
+              fontSize: 64,
+              fontWeight: 800,
+              lineHeight: 1.08,
+              letterSpacing: "-0.04em",
+              color: "#0f172a",
+              marginBottom: 22,
+              maxWidth: 980,
+              textAlign: "center",
+              justifyContent: "center",
             }}
           >
-            Research peptides. Compare providers.
+            Peptide Dosage Calculator
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              fontSize: 28,
+              fontWeight: 500,
+              lineHeight: 1.4,
+              color: "#475569",
+              maxWidth: 820,
+              textAlign: "center",
+              justifyContent: "center",
+            }}
+          >
+            Calculate reconstitution amounts and injection volumes.
           </div>
         </div>
       </div>
