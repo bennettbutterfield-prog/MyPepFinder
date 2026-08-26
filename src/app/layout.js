@@ -13,9 +13,26 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "MyPepFinder — explore peptides by your research goals",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : "http://localhost:3000")
+  ),
+  title: "MyPepFinder — Optimize You",
   description:
-    "Pick an optimization focus, share basic stats, and see which peptides are commonly associated with that line of research. Educational only.",
+    "Research peptides. Compare providers. Optimize with confidence. Educational peptide research and comparison platform.",
+  openGraph: {
+    title: "Optimize You. | MyPepFinder",
+    description: "Research peptides. Compare providers.",
+    type: "website",
+    siteName: "MyPepFinder",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Optimize You. | MyPepFinder",
+    description: "Research peptides. Compare providers.",
+  },
 };
 
 export default function RootLayout({ children }) {
