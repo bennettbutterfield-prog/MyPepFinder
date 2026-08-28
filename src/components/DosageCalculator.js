@@ -42,13 +42,13 @@ const fieldInput =
  */
 export function DosageCalculator() {
   const [peptide, setPeptide] = useState("Retatrutide");
-  const [vialAmount, setVialAmount] = useState("10");
+  const [vialAmount, setVialAmount] = useState("");
   const [vialUnit, setVialUnit] = useState("mg");
-  const [waterMl, setWaterMl] = useState("3");
-  const [doseMg, setDoseMg] = useState("2.5");
+  const [waterMl, setWaterMl] = useState("");
+  const [doseMg, setDoseMg] = useState("");
   const [frequencyId, setFrequencyId] = useState("weekly");
   const [units, setUnits] = useState("mg / mL");
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
 
   function handleVialUnitChange(nextUnit) {
     const mg = massToMg(vialAmount, vialUnit);

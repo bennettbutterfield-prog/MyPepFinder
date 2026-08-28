@@ -102,7 +102,7 @@ export function HomeFooter() {
 
       <div className="border-t border-slate-100">
         <p className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-slate-400 sm:px-6 sm:text-left">
-          © 2024 MyPepFinder. All rights reserved.
+          © 2026 MyPepFinder
         </p>
       </div>
     </footer>
