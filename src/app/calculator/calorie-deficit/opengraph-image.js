@@ -6,14 +6,14 @@ import {
 
 export const runtime = "edge";
 export const alt =
-  "Peptide Dosage Calculator — Calculate reconstitution and injection volumes | MyPepFinder";
+  "Calorie Deficit Calculator — Weight-loss timeline, daily intake, and macros | MyPepFinder";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
   return createCalculatorOgImage({
-    title: "Peptide Dosage Calculator",
-    description: "Calculate reconstitution amounts and injection volumes.",
+    title: "Calorie Deficit Calculator",
+    description: "Plan daily intake, timeline, and macros to reach your goal weight.",
     badge: "Free Tool",
   });
 }

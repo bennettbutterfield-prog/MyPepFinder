@@ -93,18 +93,18 @@ export function DosageCalculator() {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.06)] lg:grid lg:grid-cols-2">
       {/* Card 1 — inputs */}
-      <section className="border-b border-slate-200 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+      <section className="border-b border-slate-200 p-4 sm:p-6 lg:border-b-0 lg:border-r lg:p-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
             1
           </span>
-          <h2 className="text-xl font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
             Enter Your Information
           </h2>
         </div>
 
-        <form onSubmit={handleCalculate} className="mt-6 space-y-5">
-          <div className="grid gap-4 sm:grid-cols-2">
+        <form onSubmit={handleCalculate} className="mt-5 space-y-5 sm:mt-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="peptide" className={fieldLabel}>
                 Peptide
@@ -270,12 +270,12 @@ export function DosageCalculator() {
       </section>
 
       {/* Card 2 — results */}
-      <section className="bg-white p-6 sm:p-8">
+      <section className="bg-white p-4 sm:p-6 lg:p-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
             2
           </span>
-          <h2 className="text-xl font-semibold text-slate-900">
+          <h2 className="text-lg font-semibold text-slate-900 sm:text-xl">
             Your Dosage Calculation
           </h2>
         </div>
@@ -286,11 +286,11 @@ export function DosageCalculator() {
           </p>
         ) : result ? (
           <>
-            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4">
+            <div className="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-4 sm:px-5">
               <p className="text-sm font-medium text-emerald-800">
                 Your Peptide Concentration
               </p>
-              <p className="mt-1 text-2xl font-bold tracking-tight text-emerald-700 sm:text-3xl">
+              <p className="mt-1 text-xl font-bold tracking-tight text-emerald-700 sm:text-2xl lg:text-3xl">
                 {units === "mcg / mL"
                   ? `${(result.concentrationMgPerMl * 1000).toFixed(0)} mcg / mL`
                   : formatMgPerMl(result.concentrationMgPerMl).replace(

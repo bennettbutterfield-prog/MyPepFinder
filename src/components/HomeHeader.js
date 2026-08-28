@@ -18,6 +18,7 @@ const NAV = [
 export function HomeHeader() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
   const panelRef = useRef(null);
@@ -62,12 +63,12 @@ export function HomeHeader() {
               My<span className="text-indigo-600">Pep</span>Finder
             </span>
           </span>
-          <span className="mt-0.5 block pl-9 text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+          <span className="mt-0.5 hidden pl-9 text-[9px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:block">
             Find. Compare. Optimize.
           </span>
         </Link>
 
-        <nav className="ml-2 hidden flex-1 items-center justify-center gap-5 xl:flex">
+        <nav className="ml-2 hidden flex-1 items-center justify-center gap-4 lg:flex xl:gap-5">
           {NAV.map((item) => (
             <Link
               key={item.label}
@@ -130,8 +131,39 @@ export function HomeHeader() {
               <SearchIcon />
             </button>
           )}
+
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((value) => !value)}
+            className="flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-700 lg:hidden"
+          >
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
         </div>
       </div>
+
+      {menuOpen ? (
+        <nav
+          className="border-t border-slate-100 bg-white px-4 py-3 lg:hidden"
+          aria-label="Mobile"
+        >
+          <ul className="space-y-1">
+            {NAV.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-indigo-50 hover:text-indigo-700"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : null}
     </header>
   );
 }
@@ -192,6 +224,21 @@ function CloseIcon() {
       aria-hidden
     >
       <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
     </svg>
   );
 }

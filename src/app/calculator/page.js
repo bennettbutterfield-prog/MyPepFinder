@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CalculatorHeader } from "@/components/CalculatorHeader";
 import { CalculatorFooter } from "@/components/CalculatorFooter";
+import { CalculatorToolsSidebar } from "@/components/CalculatorToolsSidebar";
 import { DosageCalculator } from "@/components/DosageCalculator";
 
 export const metadata = {
@@ -13,6 +14,7 @@ export const metadata = {
     description:
       "Calculate reconstitution amounts and injection volumes for your peptide protocol.",
     type: "website",
+    url: "/calculator",
   },
   twitter: {
     card: "summary_large_image",
@@ -53,6 +55,12 @@ const RELATED = [
     title: "Peptide Half-Life Calculator",
     body: "Estimate timing windows for common research peptides.",
     icon: "clock",
+  },
+  {
+    title: "Calorie Deficit Calculator",
+    body: "Estimate timeline, daily intake, and macros for realistic weight loss.",
+    icon: "scale",
+    href: "/calculator/calorie-deficit",
   },
   {
     title: "Body Fat % Calculator",
@@ -163,8 +171,13 @@ export default function CalculatorPage() {
         </section>
       </div>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
-        <DosageCalculator />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+          <CalculatorToolsSidebar />
+          <div className="min-w-0 flex-1">
+            <DosageCalculator />
+          </div>
+        </div>
 
         <section className="mt-14 sm:mt-16">
           <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-[1.75rem]">
@@ -297,16 +310,34 @@ export default function CalculatorPage() {
                       <RelatedIcon name={tool.icon} />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-semibold text-slate-900">
-                        {tool.title}
-                      </span>
+                      {tool.href ? (
+                        <Link
+                          href={tool.href}
+                          className="block text-sm font-semibold text-slate-900 transition hover:text-indigo-700"
+                        >
+                          {tool.title}
+                        </Link>
+                      ) : (
+                        <span className="block text-sm font-semibold text-slate-900">
+                          {tool.title}
+                        </span>
+                      )}
                       <span className="mt-0.5 block text-xs text-slate-500">
                         {tool.body}
                       </span>
                     </span>
-                    <span className="mt-1 shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                      Coming soon
-                    </span>
+                    {tool.href ? (
+                      <Link
+                        href={tool.href}
+                        className="mt-1 shrink-0 text-xs font-semibold text-indigo-600"
+                      >
+                        Open →
+                      </Link>
+                    ) : (
+                      <span className="mt-1 shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                        Coming soon
+                      </span>
+                    )}
                   </div>
                 </li>
               ))}
@@ -538,6 +569,17 @@ function RelatedIcon({ name }) {
     strokeWidth: "1.75",
     "aria-hidden": true,
   };
+  if (name === "scale") {
+    return (
+      <svg {...c}>
+        <path d="M12 3v18" />
+        <path d="M5 7h14" />
+        <path d="M7 7 5 12h4L7 7Z" />
+        <path d="M17 7l2 5h-4l2-5Z" />
+        <path d="M8 21h8" />
+      </svg>
+    );
+  }
   if (name === "body") {
     return (
       <svg {...c}>
