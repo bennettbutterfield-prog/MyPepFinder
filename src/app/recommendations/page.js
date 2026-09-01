@@ -1,105 +1,29 @@
 import Link from "next/link";
 import { GoalPageHeader } from "@/components/GoalPageHeader";
 import { HomeFooter } from "@/components/HomeFooter";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import {
+  ProviderComparisonRow,
+  ProviderProfileCard,
+} from "@/components/ProviderProfileCard";
+import {
+  formatTrustScore,
+  getEditorialRatingClass,
+  getProviderToneClass,
+  getTopProviders,
+  PEPTIDE_PROVIDERS,
+  PROVIDER_DIRECTORY,
+  TRUST_SCORE_BANDS,
+  TRUST_SCORE_METHODOLOGY,
+} from "@/data/peptide-providers";
 import { optimizationGoalById } from "@/data/optimization-goals";
 import { getPeptideRecommendations } from "@/lib/peptide-recommendations";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Providers | MyPepFinder",
-  description:
-    "Compare trusted peptide research providers by trust score and shipping.",
+  title: "Research Peptide Providers | MyPepFinder",
+  description: PROVIDER_DIRECTORY.description,
 };
-
-const PROVIDERS = [
-  {
-    initials: "PS",
-    name: "Peptide Sciences",
-    trust: "9.7",
-    rating: "4.9",
-    reviews: "2,840",
-    price: "$$",
-    priceNote: "From $149/mo",
-    tags: ["Free Shipping", "COA Available", "Verified"],
-    blurb:
-      "Frequently cited for documentation clarity, testing language, and broad catalog depth.",
-    tone: "bg-indigo-600",
-  },
-  {
-    initials: "CP",
-    name: "Core Peptides",
-    trust: "9.4",
-    rating: "4.8",
-    reviews: "1,920",
-    price: "$$",
-    priceNote: "From $129/mo",
-    tags: ["Lab Tested", "Fast Ship"],
-    blurb:
-      "Strong review volume with clear purity messaging and competitive mid-range pricing.",
-    tone: "bg-teal-600",
-  },
-  {
-    initials: "LP",
-    name: "Limitless Life",
-    trust: "9.1",
-    rating: "4.7",
-    reviews: "1,105",
-    price: "$",
-    priceNote: "From $119/mo",
-    tags: ["Fast Ship", "Budget Friendly"],
-    blurb:
-      "Popular for accessible pricing while still surfacing testing and review signals.",
-    tone: "bg-violet-600",
-  },
-  {
-    initials: "PP",
-    name: "PureRawz",
-    trust: "8.9",
-    rating: "4.6",
-    reviews: "980",
-    price: "$",
-    priceNote: "From $99/mo",
-    tags: ["Wide Catalog"],
-    blurb:
-      "Broad selection with transparent review counts—useful for side-by-side comparisons.",
-    tone: "bg-amber-500",
-  },
-  {
-    initials: "AM",
-    name: "Amino Asylum",
-    trust: "8.7",
-    rating: "4.5",
-    reviews: "760",
-    price: "$",
-    priceNote: "From $89/mo",
-    tags: ["Community Favorites"],
-    blurb:
-      "Often compared on value; check COA language and review sentiment carefully.",
-    tone: "bg-slate-700",
-  },
-  {
-    initials: "SP",
-    name: "Strate Labs",
-    trust: "8.6",
-    rating: "4.5",
-    reviews: "640",
-    price: "$$",
-    priceNote: "From $139/mo",
-    tags: ["Lab Tested"],
-    blurb:
-      "Mid-market option with testing callouts and steady review history.",
-    tone: "bg-blue-600",
-  },
-];
-
-const TRUST_BADGES = [
-  "Verified Vendors",
-  "Lab Tested",
-  "Secure Payments",
-  "Fast Shipping",
-];
 
 function parseNumber(raw) {
   const n = Number.parseFloat(String(raw ?? ""));
@@ -150,6 +74,8 @@ export default function ProvidersPage({ searchParams }) {
     }).peptides;
   }
 
+  const featuredProviders = getTopProviders(6);
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <GoalPageHeader />
@@ -167,97 +93,164 @@ export default function ProvidersPage({ searchParams }) {
           </ol>
         </nav>
 
-        <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-              Top Rated Providers
-            </p>
-            <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Compare trusted vendors
-            </h1>
-            <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
-              Review trust scores and pricing signals side by
-              side—then open a peptide profile to explore catalogs in more detail.
-            </p>
-          </div>
-          <ul className="flex flex-wrap gap-2">
-            {TRUST_BADGES.map((label) => (
-              <li
-                key={label}
-                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-100"
-              >
-                <span aria-hidden>✓</span>
-                {label}
-              </li>
-            ))}
-          </ul>
+        <header className="mt-4 max-w-3xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+            Provider Directory
+          </p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            {PROVIDER_DIRECTORY.title}
+          </h1>
+          <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+            {PROVIDER_DIRECTORY.intro}
+          </p>
+          <p className="mt-4 text-xs text-slate-400">
+            Last updated: {PROVIDER_DIRECTORY.lastUpdated} ·{" "}
+            {PROVIDER_DIRECTORY.providerCount} providers reviewed
+          </p>
+        </header>
+
+        <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4">
+          <p className="text-sm leading-relaxed text-amber-950">
+            <span className="font-semibold">Important:</span>{" "}
+            {PROVIDER_DIRECTORY.disclaimer}
+          </p>
         </div>
 
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {PROVIDERS.map((v) => (
-            <li
-              key={v.name}
-              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 opacity-60 grayscale shadow-sm"
-              aria-disabled="true"
+        <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredProviders.map((provider, index) => (
+            <Link
+              key={provider.slug}
+              href={`#${provider.slug}`}
+              className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md"
             >
-              <div className="flex items-start gap-3 p-5 pb-0">
-                <span
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white ${v.tone}`}
-                >
-                  {v.initials}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-base font-bold text-slate-900">
-                      {v.name}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white ${getProviderToneClass(provider.tone)}`}
+                  >
+                    {provider.initials}
+                  </span>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                      #{index + 1}
+                    </p>
+                    <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-700">
+                      {provider.name}
                     </h2>
-                    <span className="shrink-0 rounded-full bg-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                      Coming soon
-                    </span>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
-                  {v.trust} Trust
+                  {formatTrustScore(provider.trustScore)}
                 </span>
               </div>
-
-              <PlaceholderImage
-                label={v.name}
-                tone="slate"
-                icon="lab"
-                className="mx-5 mt-4 h-28 rounded-xl"
-              />
-
-              <div className="flex flex-1 flex-col p-5 pt-4">
-                <p className="text-xs leading-relaxed text-slate-500">
-                  {v.blurb}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {v.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 ring-1 ring-indigo-100"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4 flex items-center justify-between text-sm">
-                  <span className="font-semibold text-slate-800">
-                    {v.priceNote}
-                  </span>
-                  <span className="text-xs text-slate-400">{v.price}</span>
-                </div>
-                <span
-                  className="mt-4 inline-flex min-h-[42px] cursor-not-allowed items-center justify-center rounded-lg bg-slate-300 text-sm font-semibold text-slate-500"
-                  aria-disabled="true"
-                >
-                  Coming soon
-                </span>
-              </div>
-            </li>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">
+                {provider.comparisonBlurb}
+              </p>
+              <span
+                className={`mt-4 inline-flex w-fit rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${getEditorialRatingClass(provider.editorialRating)}`}
+              >
+                {provider.editorialRating}
+              </span>
+            </Link>
           ))}
-        </ul>
+        </section>
+
+        <section className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+          <h2 className="text-xl font-bold text-slate-900">
+            Trust Score Methodology
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Each provider receives an editorial score from 0 to 10 based on:
+          </p>
+          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            {TRUST_SCORE_METHODOLOGY.map((item) => (
+              <li
+                key={item.title}
+                className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3"
+              >
+                <p className="text-sm font-semibold text-slate-900">
+                  {item.title}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                  {item.body}
+                </p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-8 overflow-x-auto rounded-xl border border-slate-200">
+            <table className="min-w-full text-left text-sm">
+              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Score</th>
+                  <th className="px-4 py-3 font-semibold">Editorial rating</th>
+                  <th className="px-4 py-3 font-semibold">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TRUST_SCORE_BANDS.map((band) => (
+                  <tr key={band.range} className="border-t border-slate-100">
+                    <td className="px-4 py-3 font-semibold text-slate-900">
+                      {band.range}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${getEditorialRatingClass(band.rating)}`}
+                      >
+                        {band.rating}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{band.meaning}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-xl font-bold text-slate-900">Provider comparison</h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Ranked by MyPepFinder Trust Score. Select a provider to jump to the
+            full profile.
+          </p>
+
+          <div className="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <table className="min-w-full text-left text-sm">
+              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Provider</th>
+                  <th className="px-4 py-3 font-semibold">Trust score</th>
+                  <th className="px-4 py-3 font-semibold">Rating</th>
+                  <th className="px-4 py-3 font-semibold">Testing assessment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PEPTIDE_PROVIDERS.map((provider, index) => (
+                  <ProviderComparisonRow
+                    key={provider.slug}
+                    provider={provider}
+                    rank={index + 1}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mt-12 space-y-6">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">Provider profiles</h2>
+            <p className="mt-2 text-sm text-slate-500">
+              Full editorial assessments with strengths, limitations, and linked
+              sources.
+            </p>
+          </div>
+
+          {PEPTIDE_PROVIDERS.map((provider) => (
+            <ProviderProfileCard key={provider.slug} provider={provider} />
+          ))}
+        </section>
 
         {goal && peptides.length > 0 ? (
           <section className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
@@ -307,36 +300,20 @@ export default function ProvidersPage({ searchParams }) {
                     href={`/peptides/${p.exploreSlug}`}
                     className="inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-lg border border-indigo-200 bg-white px-4 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50"
                   >
-                    Compare Providers
+                    View peptide profile
                   </Link>
                 </li>
               ))}
             </ol>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Link
-                href="/research-library"
-                className="inline-flex min-h-[42px] items-center justify-center rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Explore Peptides
-              </Link>
-              <Link
-                href="/goals/lose-weight"
-                className="inline-flex min-h-[42px] items-center justify-center rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-700"
-              >
-                Browse Goals
-              </Link>
-            </div>
           </section>
         ) : (
-          <section className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-5 sm:flex-row sm:items-center">
+          <section className="mt-12 flex flex-col items-start justify-between gap-4 rounded-2xl border border-indigo-100 bg-indigo-50 px-5 py-5 sm:flex-row sm:items-center">
             <div>
               <p className="text-sm font-bold text-slate-900">
-                Not sure which provider fits your goal?
+                Looking for peptides to research?
               </p>
               <p className="mt-0.5 text-xs text-slate-500">
-                Start with a goal page or explore peptides for a focused
-                shortlist.
+                Browse by goal or open the research library for compound profiles.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -355,6 +332,19 @@ export default function ProvidersPage({ searchParams }) {
             </div>
           </section>
         )}
+
+        <section className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-base font-bold text-slate-900">
+            Editorial and legal disclaimer
+          </h2>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600">
+            {PROVIDER_DIRECTORY.legalDisclaimer} A Certificate of Analysis
+            applies only to the sample tested and cannot establish the identity,
+            content, purity, or sterility of every vial sold under a batch
+            number. Research peptides discussed here may be unapproved, poorly
+            characterized, or unsuitable for human or veterinary use.
+          </p>
+        </section>
       </main>
 
       <HomeFooter />

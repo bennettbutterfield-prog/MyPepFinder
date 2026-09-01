@@ -5,6 +5,10 @@ import { HomeFooter } from "@/components/HomeFooter";
 import { HomeHeroMan } from "@/components/HomeHeroMan";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { getPeptidePage } from "@/data/peptide-pages";
+import {
+  getProviderToneClass,
+  getTopProviders,
+} from "@/data/peptide-providers";
 
 function getArticleVisuals(tag) {
   if (tag === "Preclinical") {
@@ -157,39 +161,9 @@ const TRENDING = [
   },
 ];
 
-const PROVIDERS = [
-  {
-    initials: "PS",
-    name: "Peptide Sciences",
-    trust: "9.7",
-    price: "$$",
-    tone: "indigo",
-  },
-  {
-    initials: "CP",
-    name: "Core Peptides",
-    trust: "9.4",
-    price: "$$",
-    tone: "teal",
-  },
-  {
-    initials: "LP",
-    name: "Limitless Life",
-    trust: "9.1",
-    price: "$",
-    tone: "violet",
-  },
-  {
-    initials: "PP",
-    name: "PureRawz",
-    trust: "8.9",
-    price: "$",
-    tone: "amber",
-  },
-];
-
 
 export default function Home() {
+  const providers = getTopProviders(4);
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900">
       <HomeHeader />
@@ -380,56 +354,41 @@ export default function Home() {
                   Trusted vendors
                 </h2>
               </div>
-              <span
-                className="shrink-0 cursor-not-allowed text-sm font-semibold text-slate-400"
-                aria-disabled="true"
+              <Link
+                href="/recommendations"
+                className="shrink-0 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
               >
                 View all →
-              </span>
+              </Link>
             </div>
 
             <ul className="mt-6 space-y-3">
-              {PROVIDERS.map((v) => (
-                <li
-                  key={v.name}
-                  className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-100 p-3 opacity-60 grayscale shadow-sm"
-                  aria-disabled="true"
-                >
-                  <span
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white ${
-                      v.tone === "indigo"
-                        ? "bg-indigo-600"
-                        : v.tone === "teal"
-                          ? "bg-teal-600"
-                          : v.tone === "violet"
-                            ? "bg-violet-600"
-                            : "bg-amber-500"
-                    }`}
+              {providers.map((v) => (
+                <li key={v.slug}>
+                  <Link
+                    href={`/recommendations#${v.slug}`}
+                    className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-indigo-200 hover:shadow-md"
                   >
-                    {v.initials}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white ${getProviderToneClass(v.tone)}`}
+                    >
+                      {v.initials}
+                    </span>
+                    <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold text-slate-900">
                         {v.name}
                       </p>
-                      <span className="shrink-0 rounded-full bg-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                        Coming soon
-                      </span>
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px]">
+                        <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-semibold text-emerald-700 ring-1 ring-emerald-100">
+                          {v.trustScore.toFixed(1)} Trust Score
+                        </span>
+                        <span className="text-slate-500">{v.editorialRating}</span>
+                      </div>
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px]">
-                      <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                        {v.trust} Trust Score
-                      </span>
-                      <span className="text-slate-500">{v.price}</span>
-                    </div>
-                  </div>
-                  <span
-                    className="shrink-0 cursor-not-allowed rounded-lg bg-slate-300 px-3 py-2 text-xs font-semibold text-slate-500"
-                    aria-disabled="true"
-                  >
-                    View Profile
-                  </span>
+                    <span className="shrink-0 rounded-lg bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700">
+                      View Profile
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
