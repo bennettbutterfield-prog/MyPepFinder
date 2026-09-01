@@ -20,7 +20,8 @@ import {
 import { GOAL_SIDEBAR, GOAL_TOOLS } from "@/data/goal-pages";
 import { GoalPageHeader } from "@/components/GoalPageHeader";
 import { HomeFooter } from "@/components/HomeFooter";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { MoleculeOverviewPanel } from "@/components/MoleculeOverviewPanel";
+import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
 import { PeptideResultsChart } from "@/components/PeptideResultsChart";
 import { PeptideDosageGuide } from "@/components/PeptideDosageGuide";
 
@@ -211,13 +212,6 @@ export default async function PeptideDetailPage({ params }) {
               </p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
-                <span className="text-amber-400">★★★★★</span>
-                <span className="font-semibold text-slate-800">
-                  {peptide.rating}
-                </span>
-                <span className="text-slate-400">
-                  ({peptide.reviewCount} reviews)
-                </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] font-semibold text-violet-700 ring-1 ring-violet-100">
                   ◆ {peptide.researchedBadge}
                 </span>
@@ -234,19 +228,13 @@ export default async function PeptideDetailPage({ params }) {
                 ))}
               </ul>
 
-              <div className="mt-5 flex flex-wrap gap-2.5">
+              <div className="mt-5">
                 <Link
                   href="/recommendations"
                   className="inline-flex min-h-[42px] items-center justify-center rounded-lg bg-violet-600 px-4 text-sm font-semibold text-white shadow-sm shadow-violet-600/25 transition hover:bg-violet-700"
                 >
                   Compare Providers
                 </Link>
-                <button
-                  type="button"
-                  className="inline-flex min-h-[42px] items-center justify-center gap-1.5 rounded-lg border border-violet-300 bg-white px-4 text-sm font-semibold text-violet-700 transition hover:bg-violet-50"
-                >
-                  <span aria-hidden>+</span> Add to Compare
-                </button>
               </div>
             </div>
 
@@ -262,32 +250,30 @@ export default async function PeptideDetailPage({ params }) {
                     sizes="(max-width: 1024px) 100vw, 560px"
                     priority
                   />
+                  {(peptide.moleculeCallouts || []).length > 0 ? (
+                    <ul className="grid gap-2 border-t border-slate-200 bg-gradient-to-br from-violet-50 to-slate-50 p-3 sm:grid-cols-3 sm:p-4">
+                      {peptide.moleculeCallouts.map((c) => (
+                        <li
+                          key={c.label}
+                          className="rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm"
+                        >
+                          <p className="text-xs font-bold text-violet-700">
+                            {c.label}
+                          </p>
+                          <p className="mt-0.5 text-[10px] leading-snug text-slate-500">
+                            {c.body}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </div>
               ) : (
-                <PlaceholderImage
-                  label={`${peptide.name} molecule`}
-                  tone="violet"
-                  icon="molecule"
-                  className="h-56 w-full rounded-2xl sm:h-64"
+                <MoleculeOverviewPanel
+                  callouts={peptide.moleculeCallouts || []}
+                  label={`${peptide.name} molecule overview`}
                 />
               )}
-              {(peptide.moleculeCallouts || []).length > 0 ? (
-                <ul className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                  {peptide.moleculeCallouts.map((c) => (
-                    <li
-                      key={c.label}
-                      className="rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm"
-                    >
-                      <p className="text-xs font-bold text-violet-700">
-                        {c.label}
-                      </p>
-                      <p className="mt-0.5 text-[10px] leading-snug text-slate-500">
-                        {c.body}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </div>
           </section>
 
@@ -664,7 +650,7 @@ export default async function PeptideDetailPage({ params }) {
                           </span>
                         </div>
                         <p className="text-[10px] text-slate-500">
-                          ★ {v.rating} · {v.price}
+                          {v.price}
                         </p>
                         <p className="text-[10px] font-medium text-emerald-600">
                           {v.tag}
@@ -697,43 +683,6 @@ export default async function PeptideDetailPage({ params }) {
                     className="h-auto w-full"
                     sizes="(max-width: 1280px) 100vw, 380px"
                   />
-                </div>
-              ) : (peptide.reviews || []).length > 0 ? (
-                <div id="reviews" className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <h3 className="text-sm font-bold text-slate-900">
-                    Real User Reviews
-                  </h3>
-                  <ul className="mt-3 space-y-3">
-                    {peptide.reviews.map((r) => (
-                      <li
-                        key={r.name}
-                        className="rounded-xl border border-slate-100 bg-slate-50 p-3"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-violet-700">
-                            {r.name
-                              .split(" ")
-                              .map((p) => p[0])
-                              .join("")}
-                          </span>
-                          <div>
-                            <p className="text-xs font-semibold text-slate-900">
-                              {r.name}
-                            </p>
-                            <p className="text-[10px] font-medium text-emerald-600">
-                              {r.result}
-                            </p>
-                          </div>
-                          <span className="ml-auto text-[10px] text-amber-500">
-                            ★ {r.rating}
-                          </span>
-                        </div>
-                        <p className="mt-2 text-[11px] leading-relaxed text-slate-600">
-                          “{r.quote}”
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               ) : null}
             </aside>
@@ -825,19 +774,11 @@ export default async function PeptideDetailPage({ params }) {
                   New studies and guides delivered to your inbox.
                 </p>
               </div>
-              <form action="#" className="flex w-full max-w-md gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
-                />
-                <button
-                  type="submit"
-                  className="rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterSignupForm
+                sourcePage={`/peptides/${slug}`}
+                sourcePeptideId={slug}
+                variant="violet"
+              />
             </div>
           </section>
           </div>

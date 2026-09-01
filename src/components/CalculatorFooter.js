@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
 
 const COLUMNS = [
   {
@@ -16,14 +17,14 @@ const COLUMNS = [
       { label: "How Peptides Work", href: "#" },
       { label: "Reconstitution Guide", href: "/calculator" },
       { label: "Unit Converter", href: "/calculator" },
-      { label: "FAQ", href: "#" },
+      { label: "FAQ", href: "/faq" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "#" },
-      { label: "Contact", href: "#" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
       { label: "Providers", href: "/recommendations" },
       { label: "Careers", href: "#" },
     ],
@@ -31,8 +32,8 @@ const COLUMNS = [
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Use", href: "#" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Use", href: "/terms" },
       { label: "Disclaimer", href: "#" },
       { label: "Cookie Policy", href: "#" },
     ],
@@ -107,20 +108,12 @@ export function CalculatorFooter() {
           <p className="mt-2 text-sm leading-relaxed text-slate-500">
             Get research highlights and new calculator tools in your inbox.
           </p>
-          <form className="mt-4 flex flex-col gap-2 sm:flex-row" action="#">
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
-            />
-            <button
-              type="submit"
-              className="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
-            >
-              Subscribe
-            </button>
-          </form>
+          <NewsletterSignupForm
+            sourcePage="/calculator"
+            variant="calculator"
+            layout="stacked"
+            className="mt-4"
+          />
         </div>
       </div>
 

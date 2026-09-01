@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterStayConnected } from "@/components/FooterStayConnected";
 
 const COLUMNS = [
   {
@@ -15,17 +16,17 @@ const COLUMNS = [
     links: [
       { label: "Articles", href: "/research-library" },
       { label: "Guides", href: "/calculator" },
-      { label: "FAQ", href: "#" },
+      { label: "FAQ", href: "/faq" },
       { label: "Glossary", href: "#" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/#about" },
-      { label: "Contact", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
+      { label: "About Us", href: "/about" },
+      { label: "Contact", href: "/contact" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 ];
@@ -82,22 +83,7 @@ export function HomeFooter() {
           ))}
         </div>
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-900">
-            Stay Connected
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {["X", "IG", "YT", "DC", "Mail"].map((label) => (
-              <span
-                key={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-[10px] font-semibold text-slate-400"
-                aria-label={label}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        </div>
+        <FooterStayConnected />
       </div>
 
       <div className="border-t border-slate-100">

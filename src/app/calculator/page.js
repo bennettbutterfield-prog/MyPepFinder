@@ -4,6 +4,7 @@ import { CalculatorHeader } from "@/components/CalculatorHeader";
 import { CalculatorFooter } from "@/components/CalculatorFooter";
 import { CalculatorToolsSidebar } from "@/components/CalculatorToolsSidebar";
 import { DosageCalculator } from "@/components/DosageCalculator";
+import { peptideProducts } from "@/data/peptide-taxonomy";
 
 export const metadata = {
   title: "Peptide Dosage Calculator | MyPepFinder",
@@ -36,8 +37,8 @@ const HOW_STEPS = [
     icon: "calc",
   },
   {
-    title: "3. Draw & Inject",
-    body: "Draw the calculated volume using an insulin syringe scale.",
+    title: "3. Read Calculation",
+    body: "See the calculated concentration, volume and syringe-unit equivalent",
     icon: "syringe",
   },
   {
@@ -75,7 +76,11 @@ const RELATED = [
 ];
 
 const STATS = [
-  { value: "200+", label: "Peptides Researched", icon: "book" },
+  {
+    value: String(peptideProducts.length),
+    label: "Peptides Researched",
+    icon: "book",
+  },
   { value: "18,000+", label: "Research Studies", icon: "scope" },
   { value: "80+", label: "Trusted Providers", icon: "shield" },
   { value: "Evidence-Based", label: "Data-Driven Insights", icon: "chart" },

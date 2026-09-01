@@ -12,6 +12,7 @@ import { GoalPageHeader } from "@/components/GoalPageHeader";
 import { GoalResultsChart } from "@/components/GoalResultsChart";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { HomeFooter } from "@/components/HomeFooter";
+import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
 
 export const dynamicParams = false;
 
@@ -140,7 +141,9 @@ export default async function GoalPage({ params }) {
                 {page.description}
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {page.stats.map((s) => (
+                {page.stats
+                  .filter((s) => s.label !== "Reviews")
+                  .map((s) => (
                   <li key={s.label} className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5">
                     <p className="text-lg font-bold text-slate-900">{s.value}</p>
                     <p className="text-[11px] text-slate-500">{s.label}</p>
@@ -250,10 +253,6 @@ export default async function GoalPage({ params }) {
                           Research coming soon
                         </span>
                       ) : null}
-                      <p className="mt-0.5 text-xs text-amber-500">
-                        ★ {p.rating}{" "}
-                        <span className="text-slate-400">({p.reviews})</span>
-                      </p>
                       <div className="mt-3 rounded-xl bg-blue-50 px-3 py-2.5 text-center">
                         <p className="text-[10px] font-semibold uppercase tracking-wide text-blue-600">
                           {p.metricLabel}
@@ -384,9 +383,8 @@ export default async function GoalPage({ params }) {
                             Coming soon
                           </span>
                         </div>
-                        <p className="text-xs text-amber-500">
-                          ★ {v.rating}{" "}
-                          <span className="text-slate-500">{v.price}</span>
+                        <p className="text-xs text-slate-500">
+                          {v.price}
                         </p>
                       </div>
                     </div>
@@ -399,48 +397,8 @@ export default async function GoalPage({ params }) {
             </div>
           </section>
 
-          {/* Bottom 3-col */}
-          <section className="mt-12 grid gap-8 lg:grid-cols-3">
-            <div>
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="text-base font-bold text-slate-900">
-                  Real Results from Real People
-                </h2>
-                <button type="button" className="text-xs font-semibold text-blue-600">
-                  View all
-                </button>
-              </div>
-              <ul className="mt-4 space-y-3">
-                {page.reviews.map((r) => (
-                  <li
-                    key={r.name}
-                    className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
-                  >
-                    <PlaceholderImage
-                      label="Before / After"
-                      tone={r.tone}
-                      icon="body"
-                      className="h-24 w-full"
-                    />
-                    <div className="p-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-sm font-semibold text-slate-900">
-                          {r.name}
-                        </p>
-                        <p className="text-xs font-semibold text-emerald-600">
-                          {r.result}
-                        </p>
-                      </div>
-                      <p className="mt-0.5 text-xs text-amber-500">★ {r.rating}</p>
-                      <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                        “{r.quote}”
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+          {/* Bottom 2-col */}
+          <section className="mt-12 grid gap-8 lg:grid-cols-2">
             <div>
               <div className="flex items-center justify-between gap-2">
                 <h2 className="text-base font-bold text-slate-900">
@@ -517,19 +475,11 @@ export default async function GoalPage({ params }) {
                   New studies, guides, and calculator tools in your inbox.
                 </p>
               </div>
-              <form action="#" className="flex w-full max-w-md gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                />
-                <button
-                  type="submit"
-                  className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterSignupForm
+                sourcePage={`/goals/${slug}`}
+                selectedGoal={page.title}
+                variant="indigo"
+              />
             </div>
           </section>
         </main>

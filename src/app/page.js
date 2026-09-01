@@ -4,6 +4,29 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { HomeFooter } from "@/components/HomeFooter";
 import { HomeHeroMan } from "@/components/HomeHeroMan";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { getPeptidePage } from "@/data/peptide-pages";
+
+function getArticleVisuals(tag) {
+  if (tag === "Preclinical") {
+    return { tone: "green", icon: "molecule" };
+  }
+  if (tag === "Open Access" || tag === "Basic Science") {
+    return { tone: "teal", icon: "lab" };
+  }
+  return { tone: "indigo", icon: "lab" };
+}
+
+const retatrutideResearch = getPeptidePage("retatrutide").research;
+const bpc157Research = getPeptidePage("bpc-157").research;
+
+const ARTICLES = [
+  retatrutideResearch[0],
+  retatrutideResearch[2],
+  bpc157Research[0],
+].map((study) => ({
+  ...study,
+  ...getArticleVisuals(study.tag),
+}));
 
 const HERO_FEATURES = [
   {
@@ -25,7 +48,6 @@ const GOALS = [
     title: "Lose Weight",
     href: "/goals/lose-weight",
     peptides: 10,
-    rating: "4.6",
     research: "High Research",
     tone: "orange",
     icon: "body",
@@ -35,7 +57,6 @@ const GOALS = [
     title: "Cognition",
     href: "/goals/improve-focus",
     peptides: 11,
-    rating: "4.5",
     research: "High Research",
     tone: "indigo",
     icon: "brain",
@@ -45,7 +66,6 @@ const GOALS = [
     title: "Build Muscle",
     href: "/goals/build-muscle",
     peptides: 15,
-    rating: "4.7",
     research: "High Research",
     tone: "teal",
     icon: "body",
@@ -55,7 +75,6 @@ const GOALS = [
     title: "Recovery",
     href: "/goals/recovery",
     peptides: 17,
-    rating: "4.4",
     research: "Growing",
     tone: "green",
     icon: "lab",
@@ -65,7 +84,6 @@ const GOALS = [
     title: "Better Sleep",
     href: "/goals/better-sleep",
     peptides: 5,
-    rating: "4.6",
     research: "High Research",
     tone: "violet",
     icon: "sleep",
@@ -75,7 +93,6 @@ const GOALS = [
     title: "Hair Growth",
     href: "/goals/hair-growth",
     peptides: 8,
-    rating: "4.5",
     research: "Growing",
     tone: "rose",
     icon: "photo",
@@ -85,7 +102,6 @@ const GOALS = [
     title: "Skin Health",
     href: "/goals/skin-health",
     peptides: 7,
-    rating: "4.5",
     research: "High Research",
     tone: "pink",
     icon: "photo",
@@ -95,7 +111,6 @@ const GOALS = [
     title: "Longevity",
     href: "/goals/longevity",
     peptides: 15,
-    rating: "4.6",
     research: "High Research",
     tone: "indigo",
     icon: "lab",
@@ -109,8 +124,6 @@ const TRENDING = [
     slug: "retatrutide",
     category: "Weight Loss",
     tag: "Most Popular",
-    rating: "4.8",
-    reviews: "1,256",
     blurb:
       "Triple-agonist frequently discussed in metabolic and body-composition research contexts.",
     tone: "violet",
@@ -120,8 +133,6 @@ const TRENDING = [
     slug: "cjc-1295",
     category: "Muscle & Recovery",
     tag: "Trending",
-    rating: "4.6",
-    reviews: "892",
     blurb:
       "Growth-hormone secretagogue commonly explored for lean-mass and recovery protocols.",
     tone: "teal",
@@ -131,8 +142,6 @@ const TRENDING = [
     slug: "bpc-157",
     category: "Injury Recovery",
     tag: "Top Rated",
-    rating: "4.7",
-    reviews: "2,104",
     blurb:
       "Healing-oriented peptide widely referenced in tissue-repair research conversations.",
     tone: "green",
@@ -142,8 +151,6 @@ const TRENDING = [
     slug: "glp-1-s",
     category: "Weight Loss",
     tag: "Popular",
-    rating: "4.5",
-    reviews: "3,410",
     blurb:
       "GLP-1 pathway compound frequently compared for metabolic support research.",
     tone: "sky",
@@ -155,7 +162,6 @@ const PROVIDERS = [
     initials: "PS",
     name: "Peptide Sciences",
     trust: "9.7",
-    reviews: "2,840",
     price: "$$",
     tone: "indigo",
   },
@@ -163,7 +169,6 @@ const PROVIDERS = [
     initials: "CP",
     name: "Core Peptides",
     trust: "9.4",
-    reviews: "1,920",
     price: "$$",
     tone: "teal",
   },
@@ -171,7 +176,6 @@ const PROVIDERS = [
     initials: "LP",
     name: "Limitless Life",
     trust: "9.1",
-    reviews: "1,105",
     price: "$",
     tone: "violet",
   },
@@ -179,35 +183,11 @@ const PROVIDERS = [
     initials: "PP",
     name: "PureRawz",
     trust: "8.9",
-    reviews: "980",
     price: "$",
     tone: "amber",
   },
 ];
 
-const ARTICLES = [
-  {
-    tag: "Research",
-    title: "Retatrutide Shows Superior Weight Loss in Phase 2 Trial",
-    meta: "May 12, 2024 · 8 min read",
-    tone: "indigo",
-    icon: "lab",
-  },
-  {
-    tag: "Guide",
-    title: "How to Reconstitute Peptides: A Practical Overview",
-    meta: "Apr 28, 2024 · 6 min read",
-    tone: "teal",
-    icon: "lab",
-  },
-  {
-    tag: "Research",
-    title: "BPC-157 and Tissue Repair: What the Literature Suggests",
-    meta: "Apr 3, 2024 · 10 min read",
-    tone: "green",
-    icon: "molecule",
-  },
-];
 
 export default function Home() {
   return (
@@ -271,13 +251,6 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-
-            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 sm:text-base">
-              <span>Trusted by 18,000+ peptide researchers</span>
-              <span className="text-indigo-500" aria-hidden>
-                ★★★★★
-              </span>
-            </div>
           </div>
 
           <HomeHeroMan />
@@ -330,7 +303,6 @@ export default function Home() {
                   )}
                   <div className="flex items-center justify-between gap-1.5 px-3 py-2.5 text-[10px] text-slate-500">
                     <span className="truncate">{goal.peptides} Peptides</span>
-                    <span className="shrink-0 text-amber-500">★ {goal.rating}</span>
                     <span className="truncate text-indigo-600">
                       {goal.research}
                     </span>
@@ -387,10 +359,6 @@ export default function Home() {
                       </h3>
                       <p className="mt-0.5 text-xs text-slate-500">
                         {p.category}
-                      </p>
-                      <p className="mt-1 text-xs text-amber-500">
-                        ★ {p.rating}{" "}
-                        <span className="text-slate-400">({p.reviews})</span>
                       </p>
                       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-600">
                         {p.blurb}
@@ -453,7 +421,6 @@ export default function Home() {
                       <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-semibold text-emerald-700 ring-1 ring-emerald-100">
                         {v.trust} Trust Score
                       </span>
-                      <span className="text-slate-400">{v.reviews} reviews</span>
                       <span className="text-slate-500">{v.price}</span>
                     </div>
                   </div>
@@ -487,32 +454,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Research + Reviews */}
+      {/* Research Hub */}
       <section className="border-b border-slate-100 py-12 sm:py-14">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.35fr_1fr] lg:gap-10">
-          <div>
-            <div className="flex items-end justify-between gap-4">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                  Research Hub
-                </p>
-                <h2 className="mt-1 text-xl font-bold text-slate-900">
-                  Stay up to date with the latest science
-                </h2>
-              </div>
-              <Link
-                href="/research-library"
-                className="shrink-0 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
-              >
-                View all articles →
-              </Link>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Research Hub
+              </p>
+              <h2 className="mt-1 text-xl font-bold text-slate-900">
+                Stay up to date with the latest science
+              </h2>
             </div>
+            <Link
+              href="/research-library"
+              className="shrink-0 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
+            >
+              View all articles →
+            </Link>
+          </div>
 
-            <ul className="mt-6 grid gap-4 sm:grid-cols-3">
-              {ARTICLES.map((a) => (
-                <li
-                  key={a.title}
-                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+          <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+            {ARTICLES.map((a) => (
+              <li key={a.href}>
+                <a
+                  href={a.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-indigo-200 hover:shadow-md"
                 >
                   <PlaceholderImage
                     label={a.tag}
@@ -520,62 +489,24 @@ export default function Home() {
                     icon={a.icon}
                     className="h-28 w-full"
                   />
-                  <div className="p-3.5">
+                  <div className="flex flex-1 flex-col p-3.5">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600">
                       {a.tag}
                     </span>
                     <h3 className="mt-1 text-sm font-semibold leading-snug text-slate-900">
                       {a.title}
                     </h3>
-                    <p className="mt-2 text-[11px] text-slate-400">{a.meta}</p>
+                    <p className="mt-2 line-clamp-3 flex-1 text-[11px] leading-relaxed text-slate-500">
+                      {a.summary}
+                    </p>
+                    <p className="mt-2 text-[11px] font-medium text-slate-400">
+                      {a.cite}
+                    </p>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div id="about" className="flex flex-col justify-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-              Real Reviews. Real Results.
-            </p>
-            <h2 className="mt-1 text-xl font-bold text-slate-900">
-              Join thousands optimizing their health.
-            </h2>
-
-            <div className="mt-6 flex items-end gap-4">
-              <p className="text-5xl font-bold tracking-tight text-slate-900">
-                4.7
-              </p>
-              <div className="pb-1">
-                <p className="text-amber-400">★★★★★</p>
-                <p className="mt-0.5 text-xs text-slate-500">
-                  Based on 9,200+ reviews
-                </p>
-              </div>
-            </div>
-
-            <blockquote className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
-              <p className="text-amber-400 text-sm">★★★★★</p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                “MyPepFinder made it easy to compare providers and shortlist
-                peptides for my recovery goals. Clear, research-focused, and
-                actually useful.”
-              </p>
-              <footer className="mt-4 flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">
-                  JM
-                </span>
-                <span>
-                  <span className="block text-sm font-semibold text-slate-900">
-                    Jason M.
-                  </span>
-                  <span className="text-[11px] text-emerald-600">
-                    Verified Buyer
-                  </span>
-                </span>
-              </footer>
-            </blockquote>
-          </div>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

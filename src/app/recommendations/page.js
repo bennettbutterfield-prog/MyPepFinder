@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Providers | MyPepFinder",
   description:
-    "Compare trusted peptide research providers by trust score, reviews, and shipping.",
+    "Compare trusted peptide research providers by trust score and shipping.",
 };
 
 const PROVIDERS = [
@@ -176,7 +176,7 @@ export default function ProvidersPage({ searchParams }) {
               Compare trusted vendors
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
-              Review trust scores, community ratings, and pricing signals side by
+              Review trust scores and pricing signals side by
               side—then open a peptide profile to explore catalogs in more detail.
             </p>
           </div>
@@ -215,10 +215,6 @@ export default function ProvidersPage({ searchParams }) {
                       Coming soon
                     </span>
                   </div>
-                  <p className="mt-0.5 text-xs text-amber-500">
-                    ★ {v.rating}{" "}
-                    <span className="text-slate-400">({v.reviews} reviews)</span>
-                  </p>
                 </div>
                 <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">
                   {v.trust} Trust

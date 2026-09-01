@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { trackEvent } from "@/lib/analytics";
 
-const KINDS = new Set(["specialist", "email_report", "newsletter"]);
+const KINDS = new Set(["specialist", "email_report", "newsletter", "contact"]);
 
 export async function POST(request) {
   try {
@@ -40,6 +40,13 @@ export async function POST(request) {
       );
     }
 
+    if (kind === "contact" && (!notes || notes.length < 10)) {
+      return NextResponse.json(
+        { ok: false, error: "Please enter a message with at least 10 characters." },
+        { status: 400 },
+      );
+    }
+
     await prisma.lead.create({
       data: {
         email,
@@ -61,7 +68,10 @@ export async function POST(request) {
 
     return NextResponse.json({ ok: true });
   } catch (e) {
-    console.error(e);
-    return NextResponse.json({ ok: false }, { status: 500 });
+    console.error("[leads]", e);
+    return NextResponse.json(
+      { ok: false, error: "Unable to save submission." },
+      { status: 500 },
+    );
   }
 }

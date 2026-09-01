@@ -19,18 +19,8 @@ export async function generateMetadata({ params }) {
   if (!data) return { title: "Explore providers" };
   return {
     title: `${data.peptideName} — explore research suppliers | MyPepFinder`,
-    description: `Compare illustrative pricing, reviews, and trust-style scores for ${data.peptideName} across example suppliers.`,
+    description: `Compare illustrative pricing and trust-style scores for ${data.peptideName} across example suppliers.`,
   };
-}
-
-function Stars({ value }) {
-  const n = Math.round(Math.min(5, Math.max(0, value)));
-  return (
-    <span className="text-sky-500" aria-label={`${value} out of 5 stars`}>
-      {"★".repeat(n)}
-      <span className="text-slate-300">{"★".repeat(5 - n)}</span>
-    </span>
-  );
 }
 
 export default async function ExploreProvidersPage({ params }) {
@@ -53,10 +43,10 @@ export default async function ExploreProvidersPage({ params }) {
           <span className="text-teal-700">{peptideName}</span>
         </h1>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-600">
-          Example sellers below mix illustrative pricing, community-style
-          review summaries, and a documentation-forward trust score—so you can
-          practice comparison the same way you would on a marketplace. Nothing
-          here is an endorsement or live quote.
+          Example sellers below mix illustrative pricing and a
+          documentation-forward trust score—so you can practice comparison the
+          same way you would on a marketplace. Nothing here is an endorsement or
+          live quote.
         </p>
 
         <div className="mt-8 hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:block">
@@ -65,7 +55,6 @@ export default async function ExploreProvidersPage({ params }) {
               <tr>
                 <th className="px-4 py-3">Seller</th>
                 <th className="px-4 py-3">From (USD)</th>
-                <th className="px-4 py-3">Reviews</th>
                 <th className="px-4 py-3">Trust</th>
                 <th className="px-4 py-3">Notes</th>
               </tr>
@@ -81,15 +70,6 @@ export default async function ExploreProvidersPage({ params }) {
                   </td>
                   <td className="px-4 py-4 text-slate-800">
                     ${s.priceFrom.toFixed(2)}
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="flex flex-col gap-0.5">
-                      <Stars value={s.reviewAvg} />
-                      <span className="text-xs text-slate-500">
-                        {s.reviewAvg.toFixed(2)} / 5 · {s.reviewCount.toLocaleString()}{" "}
-                        ratings
-                      </span>
-                    </div>
                   </td>
                   <td className="px-4 py-4">
                     <span className="inline-flex min-w-[2.5rem] items-center justify-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-teal-400">
@@ -117,12 +97,7 @@ export default async function ExploreProvidersPage({ params }) {
                 USD
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-600">
-                <Stars value={s.reviewAvg} />
-                <span>
-                  {s.reviewAvg.toFixed(2)} / 5 · {s.reviewCount.toLocaleString()}{" "}
-                  ratings
-                </span>
-                <span className="ml-auto inline-flex items-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-teal-400">
+                <span className="inline-flex items-center rounded-full bg-slate-900 px-2 py-0.5 text-xs font-bold text-teal-400">
                   Trust {s.trustScore}
                 </span>
               </div>
