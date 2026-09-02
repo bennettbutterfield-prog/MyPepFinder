@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { AffiliateDisclosure } from "@/components/AffiliateDisclosure";
 import {
   getProviderLinkRel,
   getProviderWebsiteUrl,
+  isAffiliateProvider,
 } from "@/data/affiliate-links";
 import {
   formatTrustScore,
@@ -62,6 +64,11 @@ export function TopRatedProvidersPanel({
                     <p className="truncate text-sm font-bold text-slate-900 group-hover:text-violet-700">
                       {provider.name}
                     </p>
+                    {isAffiliateProvider(provider.slug) ? (
+                      <span className="mt-1 inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">
+                        Affiliate
+                      </span>
+                    ) : null}
                   </div>
                 </div>
                 <p className="mt-3 flex-1 text-xs leading-relaxed text-slate-500">
@@ -84,6 +91,7 @@ export function TopRatedProvidersPanel({
             </li>
           ))}
         </ul>
+        <AffiliateDisclosure className="mt-4 text-xs" />
       </section>
     );
   }

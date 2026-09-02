@@ -5,9 +5,11 @@ import {
   ProviderComparisonRow,
   ProviderProfileCard,
 } from "@/components/ProviderProfileCard";
+import { AffiliateDisclosure } from "@/components/AffiliateDisclosure";
 import {
   getProviderLinkRel,
   getProviderWebsiteUrl,
+  isAffiliateProvider,
 } from "@/data/affiliate-links";
 import {
   formatTrustScore,
@@ -120,6 +122,10 @@ export default function ProvidersPage({ searchParams }) {
           </p>
         </div>
 
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <AffiliateDisclosure />
+        </div>
+
         <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredProviders.map((provider, index) => (
             <a
@@ -140,9 +146,16 @@ export default function ProvidersPage({ searchParams }) {
                     <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                       #{index + 1}
                     </p>
-                    <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-700">
-                      {provider.name}
-                    </h2>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h2 className="text-base font-bold text-slate-900 group-hover:text-indigo-700">
+                        {provider.name}
+                      </h2>
+                      {isAffiliateProvider(provider.slug) ? (
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">
+                          Affiliate
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-100">

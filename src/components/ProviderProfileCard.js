@@ -6,7 +6,9 @@ import {
 import {
   getProviderLinkRel,
   getProviderWebsiteUrl,
+  isAffiliateProvider,
 } from "@/data/affiliate-links";
+import { AffiliateDisclosure } from "@/components/AffiliateDisclosure";
 
 /**
  * @param {{ provider: import("@/data/peptide-providers").PeptideProvider }} props
@@ -14,6 +16,7 @@ import {
 export function ProviderProfileCard({ provider }) {
   const ratingClass = getEditorialRatingClass(provider.editorialRating);
   const websiteUrl = getProviderWebsiteUrl(provider);
+  const isAffiliate = isAffiliateProvider(provider.slug);
 
   return (
     <article
@@ -28,7 +31,14 @@ export function ProviderProfileCard({ provider }) {
             {provider.initials}
           </span>
           <div>
-            <h2 className="text-lg font-bold text-slate-900">{provider.name}</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-lg font-bold text-slate-900">{provider.name}</h2>
+              {isAffiliate ? (
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">
+                  Affiliate
+                </span>
+              ) : null}
+            </div>
             <p className="mt-1 text-sm text-slate-500">{provider.researchUse}</p>
             <a
               href={websiteUrl}
@@ -38,6 +48,9 @@ export function ProviderProfileCard({ provider }) {
             >
               Visit website →
             </a>
+            {isAffiliate ? (
+              <AffiliateDisclosure variant="provider" className="mt-3 max-w-xl text-xs" />
+            ) : null}
           </div>
         </div>
 
@@ -152,6 +165,11 @@ export function ProviderComparisonRow({ provider, rank }) {
             >
               {provider.name}
             </a>
+            {isAffiliateProvider(provider.slug) ? (
+              <p className="mt-1 text-[11px] leading-snug text-slate-500">
+                Affiliate link
+              </p>
+            ) : null}
           </div>
         </div>
       </td>
