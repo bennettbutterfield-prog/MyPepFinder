@@ -6,6 +6,10 @@ import {
   ProviderProfileCard,
 } from "@/components/ProviderProfileCard";
 import {
+  getProviderLinkRel,
+  getProviderWebsiteUrl,
+} from "@/data/affiliate-links";
+import {
   formatTrustScore,
   getEditorialRatingClass,
   getProviderToneClass,
@@ -118,9 +122,11 @@ export default function ProvidersPage({ searchParams }) {
 
         <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featuredProviders.map((provider, index) => (
-            <Link
+            <a
               key={provider.slug}
-              href={`#${provider.slug}`}
+              href={getProviderWebsiteUrl(provider)}
+              target="_blank"
+              rel={getProviderLinkRel(provider.slug)}
               className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-3">
@@ -151,7 +157,7 @@ export default function ProvidersPage({ searchParams }) {
               >
                 {provider.editorialRating}
               </span>
-            </Link>
+            </a>
           ))}
         </section>
 
@@ -211,8 +217,8 @@ export default function ProvidersPage({ searchParams }) {
         <section className="mt-12">
           <h2 className="text-xl font-bold text-slate-900">Provider comparison</h2>
           <p className="mt-2 text-sm text-slate-500">
-            Ranked by MyPepFinder Trust Score. Select a provider to jump to the
-            full profile.
+            Ranked by MyPepFinder Trust Score. Click a provider name to visit
+            their website, or scroll down for full editorial profiles.
           </p>
 
           <div className="mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">

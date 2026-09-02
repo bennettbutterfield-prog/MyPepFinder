@@ -1,15 +1,19 @@
-import Link from "next/link";
 import {
   formatTrustScore,
   getEditorialRatingClass,
   getProviderToneClass,
 } from "@/data/peptide-providers";
+import {
+  getProviderLinkRel,
+  getProviderWebsiteUrl,
+} from "@/data/affiliate-links";
 
 /**
  * @param {{ provider: import("@/data/peptide-providers").PeptideProvider }} props
  */
 export function ProviderProfileCard({ provider }) {
   const ratingClass = getEditorialRatingClass(provider.editorialRating);
+  const websiteUrl = getProviderWebsiteUrl(provider);
 
   return (
     <article
@@ -27,9 +31,9 @@ export function ProviderProfileCard({ provider }) {
             <h2 className="text-lg font-bold text-slate-900">{provider.name}</h2>
             <p className="mt-1 text-sm text-slate-500">{provider.researchUse}</p>
             <a
-              href={provider.website}
+              href={websiteUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel={getProviderLinkRel(provider.slug)}
               className="mt-2 inline-flex text-sm font-semibold text-indigo-600 hover:text-indigo-700"
             >
               Visit website →
@@ -101,15 +105,19 @@ export function ProviderProfileCard({ provider }) {
           <h3 className="text-sm font-bold text-slate-900">Sources</h3>
           <ul className="mt-2 space-y-1.5">
             {provider.sources.map((source) => (
-              <li key={source.href}>
-                <a
-                  href={source.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
-                >
-                  {source.label}
-                </a>
+              <li key={source.label}>
+                {source.href ? (
+                  <a
+                    href={source.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
+                  >
+                    {source.label}
+                  </a>
+                ) : (
+                  <span className="text-sm text-slate-600">{source.label}</span>
+                )}
               </li>
             ))}
           </ul>
@@ -124,6 +132,7 @@ export function ProviderProfileCard({ provider }) {
  */
 export function ProviderComparisonRow({ provider, rank }) {
   const ratingClass = getEditorialRatingClass(provider.editorialRating);
+  const websiteUrl = getProviderWebsiteUrl(provider);
 
   return (
     <tr className="border-t border-slate-100">
@@ -135,12 +144,14 @@ export function ProviderComparisonRow({ provider, rank }) {
             </span>
           ) : null}
           <div>
-            <Link
-              href={`#${provider.slug}`}
-              className="font-semibold text-slate-900 hover:text-indigo-700"
+            <a
+              href={websiteUrl}
+              target="_blank"
+              rel={getProviderLinkRel(provider.slug)}
+              className="font-semibold text-indigo-600 hover:text-indigo-700"
             >
               {provider.name}
-            </Link>
+            </a>
           </div>
         </div>
       </td>

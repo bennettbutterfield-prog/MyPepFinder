@@ -24,6 +24,7 @@ import { MoleculeOverviewPanel } from "@/components/MoleculeOverviewPanel";
 import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
 import { PeptideResultsChart } from "@/components/PeptideResultsChart";
 import { PeptideDosageGuide } from "@/components/PeptideDosageGuide";
+import { TopRatedProvidersPanel } from "@/components/TopRatedProvidersPanel";
 
 export const dynamicParams = false;
 
@@ -626,53 +627,6 @@ export default async function PeptideDetailPage({ params }) {
                 </dl>
               </div>
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <h3 className="text-sm font-bold text-slate-900">
-                  Top Rated Providers
-                </h3>
-                <ul className="mt-3 space-y-3">
-                  {peptide.providers.map((v) => (
-                    <li
-                      key={v.name}
-                      className="flex items-center gap-2.5 rounded-lg bg-slate-100 p-2 opacity-60 grayscale"
-                      aria-disabled="true"
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-[10px] font-bold text-white">
-                        {v.initials}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <p className="truncate text-xs font-semibold text-slate-900">
-                            {v.name}
-                          </p>
-                          <span className="shrink-0 rounded-full bg-slate-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
-                            Coming soon
-                          </span>
-                        </div>
-                        <p className="text-[10px] text-slate-500">
-                          {v.price}
-                        </p>
-                        <p className="text-[10px] font-medium text-emerald-600">
-                          {v.tag}
-                        </p>
-                      </div>
-                      <span
-                        className="cursor-not-allowed rounded-md bg-slate-300 px-2.5 py-1.5 text-[10px] font-semibold text-slate-500"
-                        aria-disabled="true"
-                      >
-                        View
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <span
-                  className="mt-3 block cursor-not-allowed text-center text-xs font-semibold text-slate-400"
-                  aria-disabled="true"
-                >
-                  Compare All Providers →
-                </span>
-              </div>
-
               {peptide.moleculeCardImage ? (
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                   <Image
@@ -762,6 +716,8 @@ export default async function PeptideDetailPage({ params }) {
               ) : null}
             </section>
           ) : null}
+
+          <TopRatedProvidersPanel limit={4} variant="section" />
 
           {/* Newsletter */}
           <section className="mt-12 mb-4 rounded-2xl bg-violet-50 px-5 py-5 sm:px-6">

@@ -3,6 +3,8 @@
  * Source: peptide-providers.md (last updated 2026-09-01)
  */
 
+import { AMINO_CLUB_AFFILIATE_URL } from "@/data/affiliate-links";
+
 export const PROVIDER_DIRECTORY = {
   title: "Research Peptide Providers",
   description:
@@ -71,7 +73,7 @@ export const TRUST_SCORE_BANDS = [
   },
 ];
 
-/** @typedef {{ slug: string; name: string; website: string; initials: string; tone: string; trustScore: number; editorialRating: string; comparisonBlurb: string; researchUse: string; testingAssessment: string; strengths: string[]; limitations: string[]; summaryLabel: string; summary: string; sources: { label: string; href: string }[] }} PeptideProvider */
+/** @typedef {{ slug: string; name: string; website: string; initials: string; tone: string; trustScore: number; editorialRating: string; comparisonBlurb: string; researchUse: string; testingAssessment: string; strengths: string[]; limitations: string[]; summaryLabel: string; summary: string; sources: { label: string; href?: string }[] }} PeptideProvider */
 
 /** @type {PeptideProvider[]} */
 export const PEPTIDE_PROVIDERS = [
@@ -118,7 +120,7 @@ export const PEPTIDE_PROVIDERS = [
   {
     slug: "amino-club",
     name: "Amino Club",
-    website: "https://www.aminoclub.com/",
+    website: AMINO_CLUB_AFFILIATE_URL,
     initials: "AC",
     tone: "teal",
     trustScore: 9.4,
@@ -144,14 +146,8 @@ export const PEPTIDE_PROVIDERS = [
     summary:
       "Amino Club combines accessible batch records with a comparatively broad independent testing program and clear research-use positioning.",
     sources: [
-      {
-        label: "Amino Club COA library",
-        href: "https://www.aminoclub.com/us/coa",
-      },
-      {
-        label: "Amino Club quality standards",
-        href: "https://www.aminoclub.com/us/quality",
-      },
+      { label: "Amino Club COA library (public quality documentation)" },
+      { label: "Amino Club quality standards (public quality documentation)" },
     ],
   },
   {
@@ -540,6 +536,13 @@ export function getEditorialRatingClass(rating) {
 
 export function getTopProviders(limit = 3) {
   return PEPTIDE_PROVIDERS.slice(0, limit);
+}
+
+/** Top providers with Amino Club listed first (affiliate priority). */
+export function getTopProvidersForSidebar(limit = 4) {
+  const aminoClub = PEPTIDE_PROVIDERS.find((p) => p.slug === "amino-club");
+  const rest = PEPTIDE_PROVIDERS.filter((p) => p.slug !== "amino-club");
+  return [aminoClub, ...rest].filter(Boolean).slice(0, limit);
 }
 
 /** Compact card shape for peptide/goal sidebars. */
