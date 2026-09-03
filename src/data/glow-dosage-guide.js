@@ -279,7 +279,7 @@ export const GLOW_DOSAGE_GUIDE = {
   title: "GLOW Peptide Dosage: GHK-Cu + TB-500 + BPC-157 Research Protocol",
   updated: "Updated August 2026",
   callout:
-    "**Research note:** GLOW is a **fixed-ratio commercial blend** rather than a clinically studied combination. The protocols below document research-community conventions and calculate the amount of each component; they are **not** established clinical dosing guidelines. **No controlled human trial of the exact three-peptide blend was identified.**",
+    "**Research note:** GLOW is a **fixed-ratio commercial blend** rather than a clinically studied combination. The protocols below describe research-community conventions and calculate the amount of each component; they are **not** established clinical dosing guidelines. **No controlled human trial of the exact three-peptide blend was identified.**",
   intro: [
     "The standard GLOW vial contains **70 mg total peptide:** **50 mg GHK-Cu**, **10 mg BPC-157**, and **10 mg TB-500** (**5:1:1** by mass).",
     "The most common complete short protocol is approximately **2.33 mg once daily for four weeks**. With **3 mL** added to a 70 mg vial, that equals **10 U-100 units** and delivers about **1.67 mg GHK-Cu** plus **333 mcg** each of BPC-157 and TB-500.",

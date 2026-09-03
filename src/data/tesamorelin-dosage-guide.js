@@ -470,7 +470,7 @@ export const TESAMORELIN_DOSAGE_GUIDE = {
       title: "Does Tesamorelin Require Dose Escalation?",
       paragraphs: [
         "No standard FDA-approved titration schedule is used. Tesamorelin is initiated at the full formulation-specific dose: 1.28 mg daily for Egrifta WR or 1.4 mg daily for Egrifta SV.",
-        "This differs from GLP-1 medications such as semaglutide or tirzepatide, which use gradual escalation to reduce gastrointestinal adverse effects. MyPepFinder does not present a tesamorelin titration timeline based on unapproved clinic protocols.",
+        "This differs from GLP-1 medications such as semaglutide or tirzepatide, which use gradual escalation to reduce gastrointestinal adverse effects. There is no evidence-based tesamorelin titration timeline from unapproved clinic protocols.",
       ],
     },
     {

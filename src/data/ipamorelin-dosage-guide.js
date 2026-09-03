@@ -438,7 +438,7 @@ export const IPAMORELIN_DOSAGE_GUIDE = {
       id: "research-dosage",
       title: "Ipamorelin research dosage",
       paragraphs: [
-        "People searching for an “ipamorelin research dose” usually encounter fixed-dose subcutaneous protocols that look very different from the published human studies. Those protocols are worth documenting because they are widespread, but their evidentiary status must remain unmistakable.",
+        "People searching for an “ipamorelin research dose” usually encounter fixed-dose subcutaneous protocols that look very different from the published human studies. Those protocols are widely repeated online, but they are not clinical standards.",
         "Human research supports one narrow conclusion: **IV** ipamorelin produces a measurable, dose-related GH response, and short courses of weight-based IV dosing have been tested after bowel surgery. It does **not** establish that 100–300 mcg subcutaneously produces a particular clinical outcome, that bedtime administration is superior, that fasting improves effect, or that an 8–16-week cycle is safe.",
         "FDA's 2024 scientific review reported that it did **not** identify human PK/PD information for subcutaneous ipamorelin or safety data for the proposed subcutaneous route. The route used in most online protocols is a materially different exposure with unresolved bioavailability, dose-response, and safety.",
       ],
@@ -636,12 +636,12 @@ export const IPAMORELIN_DOSAGE_GUIDE = {
     },
     {
       id: "bottom-line",
-      title: "Editorial bottom line",
+      title: "Bottom line",
       paragraphs: [
         "The most defensible answer to “What is the ipamorelin dosage?” is **not a single number**. Ipamorelin has no approved dose; formal human evidence is limited to short-term, weight-based IV research; and the fixed-dose subcutaneous schedules most people encounter online remain unvalidated.",
       ],
       highlight:
-        "Show all three landscapes—clinical, preclinical, and anecdotal—without mistaking one for another.",
+        "Clinical IV research, preclinical work, and anecdotal subcutaneous protocols are three separate evidence landscapes — they are not interchangeable.",
     },
   ],
   faq: {
@@ -660,7 +660,7 @@ export const IPAMORELIN_DOSAGE_GUIDE = {
       {
         question: "Is ipamorelin dosage based on body weight?",
         answer:
-          "The formal human trials used weight-based IV dosing. No evidence-backed weight-based chart was identified for chronic subcutaneous use. Online fixed-dose and weight-tier charts should be labeled anecdotal.",
+          "The formal human trials used weight-based IV dosing. No evidence-backed weight-based chart was identified for chronic subcutaneous use. Online fixed-dose and weight-tier charts are anecdotal only.",
       },
       {
         question: "How often was ipamorelin used in clinical trials?",
@@ -690,7 +690,7 @@ export const IPAMORELIN_DOSAGE_GUIDE = {
       {
         question: "Does ipamorelin need to be used while fasting?",
         answer:
-          "Fasted timing is frequently recommended online, but the pivotal human ipamorelin studies do not establish a specific pre- or post-meal fasting window for subcutaneous use. A rule such as “two hours after food” should be presented as a protocol convention, not proven dosing science.",
+          "Fasted timing is frequently recommended online, but the pivotal human ipamorelin studies do not establish a specific pre- or post-meal fasting window for subcutaneous use. A rule such as “two hours after food” is a protocol convention, not proven dosing science.",
       },
       {
         question: "Should ipamorelin be cycled five days on and two days off?",

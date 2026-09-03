@@ -849,8 +849,7 @@ export const peptideProducts = [
       'melanocortin signaling'
     ],
     evidenceLevel: 'clinical',
-    investigational: false,
-    researchComingSoon: true
+    investigational: false
   },
   {
     id: 'retatrutide',
@@ -1309,8 +1308,14 @@ export const peptideProducts = [
   },
   {
     id: '2x-tesamorelin-ipamorelin',
-    name: '2X: Tesamorelin + Ipamorelin',
+    name: 'Tesamorelin + Ipamorelin',
     slug: '2x-tesamorelin-ipamorelin',
+    aliases: [
+      'Tesamorelin + Ipamorelin',
+      '2X: Tesamorelin + Ipamorelin',
+      'tesamorelin-ipamorelin',
+      'bimorelin'
+    ],
     productType: 'blend',
     primaryCategory: 'muscle',
     secondaryCategories: [],
@@ -1320,7 +1325,6 @@ export const peptideProducts = [
     ],
     evidenceLevel: 'limited',
     investigational: true,
-    researchComingSoon: true,
     ingredients: [
       'Tesamorelin',
       'Ipamorelin'

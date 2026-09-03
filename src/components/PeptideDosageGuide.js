@@ -197,6 +197,18 @@ import {
   CjcIpaRatioVisual,
 } from "@/components/CJCIpamorelinGuideModules";
 import {
+  TesIpaComboStatus,
+  TesIpaDoseRouteMap,
+  TesIpaEvidenceBadges,
+  TesIpaEvidenceBoundary,
+  TesIpaFormulationGuardrail,
+  TesIpaGhTimeline,
+  TesIpaMechanism,
+  TesIpaRegulatoryChecker,
+  TesIpaSafetyToggle,
+  TesIpaVatChart,
+} from "@/components/TesamorelinIpamorelinGuideModules";
+import {
   AdamaxAdverseEventTable,
   AdamaxClaimChecker,
   AdamaxClinicalVsAnecdotal,
@@ -559,6 +571,18 @@ import {
   Kisspeptin10Yeung2026,
 } from "@/components/Kisspeptin10GuideModules";
 import {
+  Pt141AdverseEventTable,
+  Pt141ApprovalBoundary,
+  Pt141ClaimChecker,
+  Pt141Comparison,
+  Pt141DoseRouteMap,
+  Pt141EvidenceLadder,
+  Pt141IdentityGate,
+  Pt141MechanismVisual,
+  Pt141OutcomeExplorer,
+  Pt141SafetyToggle,
+} from "@/components/Pt141GuideModules";
+import {
   SemaxAdverseEventTable,
   SemaxAnecdotalProtocols,
   SemaxClaimChecker,
@@ -874,6 +898,16 @@ function GuideWidget({ name }) {
   if (name === "cjc-ipa-claim-checker") return <CjcIpaClaimChecker />;
   if (name === "cjc-ipa-evidence-ladder") return <CjcIpaEvidenceLadder />;
   if (name === "cjc-ipa-adverse-events") return <CjcIpaAdverseEventTable />;
+  if (name === "tes-ipa-evidence-boundary") return <TesIpaEvidenceBoundary />;
+  if (name === "tes-ipa-combo-status") return <TesIpaComboStatus />;
+  if (name === "tes-ipa-mechanism") return <TesIpaMechanism />;
+  if (name === "tes-ipa-vat-chart") return <TesIpaVatChart />;
+  if (name === "tes-ipa-evidence-badges") return <TesIpaEvidenceBadges />;
+  if (name === "tes-ipa-dose-route-map") return <TesIpaDoseRouteMap />;
+  if (name === "tes-ipa-formulation-guardrail") return <TesIpaFormulationGuardrail />;
+  if (name === "tes-ipa-safety-toggle") return <TesIpaSafetyToggle />;
+  if (name === "tes-ipa-gh-timeline") return <TesIpaGhTimeline />;
+  if (name === "tes-ipa-regulatory-checker") return <TesIpaRegulatoryChecker />;
   if (name === "adamax-identity-gate") return <AdamaxIdentityGate />;
   if (name === "adamax-human-status") return <AdamaxHumanStatus />;
   if (name === "adamax-sc-timeline") return <AdamaxScTimeline />;
@@ -1231,6 +1265,16 @@ function GuideWidget({ name }) {
     return <Kisspeptin10EvidenceLadder />;
   if (name === "kisspeptin-10-adverse-events")
     return <Kisspeptin10AdverseEventTable />;
+  if (name === "pt-141-identity-gate") return <Pt141IdentityGate />;
+  if (name === "pt-141-approval-boundary") return <Pt141ApprovalBoundary />;
+  if (name === "pt-141-outcome-explorer") return <Pt141OutcomeExplorer />;
+  if (name === "pt-141-dose-route-map") return <Pt141DoseRouteMap />;
+  if (name === "pt-141-safety-toggle") return <Pt141SafetyToggle />;
+  if (name === "pt-141-mechanism-visual") return <Pt141MechanismVisual />;
+  if (name === "pt-141-comparison") return <Pt141Comparison />;
+  if (name === "pt-141-claim-checker") return <Pt141ClaimChecker />;
+  if (name === "pt-141-evidence-ladder") return <Pt141EvidenceLadder />;
+  if (name === "pt-141-adverse-events") return <Pt141AdverseEventTable />;
   if (name === "semax-identity-gate") return <SemaxIdentityGate />;
   if (name === "semax-concentration-compare") return <SemaxConcentrationCompare />;
   if (name === "semax-drop-calc") return <SemaxDropCalc />;

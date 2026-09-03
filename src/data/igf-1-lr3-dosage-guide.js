@@ -463,7 +463,7 @@ export const IGF1_LR3_DOSAGE_GUIDE = {
         "IGF-1 LR3 has no FDA-approved dosage and no dedicated human dose-ranging or PK study identified. The familiar 20–100 mcg daily range, post-workout timing, local IM claims, 4–6 week cycles, and 20–30 hour half-life are online conventions rather than clinical conclusions.",
       ],
       highlight:
-        "Make the absence of a human LR3 protocol—not the apparent precision of anecdotal numbers—the central finding. Mecasermin warns about IGF-1 biology but is a different molecule.",
+        "No human LR3 protocol has been established—the apparent precision of anecdotal numbers does not change that. Mecasermin warns about IGF-1 biology but is a different molecule.",
     },
   ],
   faq: {

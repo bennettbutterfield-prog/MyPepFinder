@@ -544,7 +544,7 @@ export const AOD9604_DOSAGE_GUIDE = {
         {
           title: "Why do participant totals differ?",
           paragraphs: [
-            "Documents count different populations. The OPTIONS announcement reported **536 enrolled**, the later pooled safety article described **502 obese adults**, and the LAT8881 protocol reported **377 treated with active drug** in METAOD006. These are not interchangeable denominators. MyPepFinder preserves the label attached to each number instead of presenting a single false total.",
+            "Documents count different populations. The OPTIONS announcement reported **536 enrolled**, the later pooled safety article described **502 obese adults**, and the LAT8881 protocol reported **377 treated with active drug** in METAOD006. These are not interchangeable denominators. Each number keeps its source label rather than being merged into a single false total.",
           ],
           widget: "aod-denominators",
         },

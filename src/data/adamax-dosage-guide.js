@@ -366,7 +366,7 @@ export const ADAMAX_DOSAGE_GUIDE = {
         "Adamax is an experimental designer peptide rather than an established medicine. It does not have a US prescribing label or a standardized clinical regimen. New Zealand’s medicines regulator has discussed Adamax within a broader review of unscheduled peptides, reflecting its appearance in imported designer-peptide products rather than a completed drug-development program.",
       ],
       highlight:
-        "All numerical protocols for Adamax should be labeled reported research protocols, not clinical dosing guidelines.",
+        "All numerical Adamax protocols found online are reported research conventions — not clinical dosing guidelines.",
     },
     {
       id: "human-trials",

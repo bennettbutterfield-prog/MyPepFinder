@@ -435,7 +435,7 @@ export const CJC_IPA_DOSAGE_GUIDE = {
       id: "component-research",
       title: "Human clinical research on the individual components",
       paragraphs: [
-        "Keep the **ipamorelin IV clinical table** visually and conceptually separate from any subcutaneous combination protocol table. IV weight-based acute or postoperative exposures do not validate fixed SC microgram blends.",
+        "Ipamorelin IV clinical data are separate from any subcutaneous combination protocol table. IV weight-based acute or postoperative exposures do not validate fixed SC microgram blends.",
       ],
       tables: [
         {
@@ -534,7 +534,7 @@ export const CJC_IPA_DOSAGE_GUIDE = {
       id: "research-dosage",
       title: "CJC-1295 No DAC + ipamorelin research dosage",
       paragraphs: [
-        "Searches for this combination most often lead to clinic, vendor, community, and protocol pages. Consistency makes the conventions worth documenting, but **repetition is not independent clinical validation**.",
+        "Searches for this combination most often lead to clinic, vendor, community, and protocol pages. Repeated online conventions are not independent clinical validation.",
         "**No controlled human trial of the exact combination was identified.** Component research supports only that IV ipamorelin can produce dose-related GH release and that GHRH/GHRP pathway co-stimulation can be synergistic with other agents.",
       ],
       tables: [
@@ -696,7 +696,7 @@ export const CJC_IPA_DOSAGE_GUIDE = {
       id: "evidence-ladder",
       title: "Dosage evidence ladder",
       paragraphs: [
-        "Make the absence of an exact-combination human protocol—not the apparent precision of 100/200 mcg shorthand—the central finding.",
+        "No exact-combination human protocol exists. The apparent precision of 100/200 mcg shorthand does not establish a validated dose.",
       ],
       widget: "cjc-ipa-evidence-ladder",
     },
@@ -712,7 +712,7 @@ export const CJC_IPA_DOSAGE_GUIDE = {
       id: "preclinical",
       title: "Preclinical research dosage",
       paragraphs: [
-        "No reproducible animal dosing study of the exact Modified GRF 1-29 plus ipamorelin combination was identified in the FDA reviews or the primary literature searches used for this page. Individual-component and other GHRH/GHRP combination experiments cannot be presented as exact-combination evidence.",
+        "No reproducible animal dosing study of the exact Modified GRF 1-29 plus ipamorelin combination was identified in FDA reviews or published literature searches through September 2026. Individual-component and other GHRH/GHRP combination experiments are not exact-combination evidence.",
         "Animal doses should not be converted casually into human doses. Species differences in GH pulsatility, receptor pharmacology, metabolism, and body-surface scaling make simple mcg/kg conversion misleading.",
       ],
     },
@@ -737,10 +737,8 @@ export const CJC_IPA_DOSAGE_GUIDE = {
       title: "Bottom line",
       paragraphs: [
         "CJC-1295 (No DAC) plus ipamorelin is a mechanistically plausible but clinically unvalidated pairing. Acute human research with other GHRH/GHRP combinations supports the possibility of synergistic GH release; it does not establish the marketed combination’s dose, ratio, timing, outcomes, or safety.",
-        "The most repeated online convention—about **100 mcg Modified GRF 1-29 plus 100–300 mcg ipamorelin**, once to three times daily by subcutaneous injection for 8–16 weeks—should be labeled **anecdotal research protocol**. There is no FDA-approved dose, no exact-combination human dose range, no validated titration, and no established maximum.",
+        "The most repeated online convention—about **100 mcg Modified GRF 1-29 plus 100–300 mcg ipamorelin**, once to three times daily by subcutaneous injection for 8–16 weeks—is an **anecdotal research protocol**. There is no FDA-approved dose, no exact-combination human dose range, no validated titration, and no established maximum.",
       ],
-      highlight:
-        "No controlled human trial of the exact combination was identified. Preserve that finding near the top, beside the research range, and in the FAQ.",
     },
   ],
   faq: {

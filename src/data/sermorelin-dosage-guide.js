@@ -247,7 +247,7 @@ export const SERMORELIN_DOSAGE_GUIDE = {
     "Sermorelin Dosage: Historical FDA Dosing, Human Studies, and Research Protocols",
   updated: "Updated August 2026",
   callout:
-    "**Research and regulatory notice:** There is **no currently marketed FDA-approved Sermorelin product** or current FDA-approved adult “anti-aging,” weight-loss, muscle-building, sleep, or wellness dosage. Geref products were historically FDA approved for diagnostic testing and pediatric growth failure, then discontinued. Current compounded preparations are **not** FDA approved. The doses below document historical labeling, published research, and anecdotal protocols — not individualized treatment instructions.",
+    "**Research and regulatory notice:** There is **no currently marketed FDA-approved Sermorelin product** or current FDA-approved adult “anti-aging,” weight-loss, muscle-building, sleep, or wellness dosage. Geref products were historically FDA approved for diagnostic testing and pediatric growth failure, then discontinued. Current compounded preparations are **not** FDA approved. The doses below reflect historical labeling, published research, and anecdotal protocols — not individualized treatment instructions.",
   intro: [
     "The historical pediatric Geref label recommended **0.03 mg/kg (30 mcg/kg) SC once daily at bedtime** for prepubertal children with idiopathic GH deficiency and growth failure. Diagnostic use was a **single 1 mcg/kg IV challenge**.",
     "Acute human research found measurable GH release from **0.25 mcg/kg IV**, with maximal response around **1–2 mcg/kg IV**. Adult experiments often used **0.5–2 mg** per administration — much larger than current online **100–500 mcg** bedtime schedules.",
@@ -487,7 +487,7 @@ export const SERMORELIN_DOSAGE_GUIDE = {
         "Modern pages often blur four dose categories: historical diagnostic (**1 mcg/kg IV once**), historical pediatric treatment (**30 mcg/kg SC nightly**), published adult experiments (**0.5–2 mg** in small specialized cohorts), and current compounded clinic schedules (**100–500 mcg**).",
       ],
       highlight:
-        "Present historical approval accurately without converting it into implied approval of today's compounded adult use. No controlled program has established an optimal fixed adult dose, five-on/two-off schedule, cycle length, combination ratio, or wellness outcome.",
+        "Historical pediatric FDA approval does not imply current compounded adult approval. No controlled program has established an optimal fixed adult dose, five-on/two-off schedule, cycle length, combination ratio, or wellness outcome.",
     },
   ],
   faq: {

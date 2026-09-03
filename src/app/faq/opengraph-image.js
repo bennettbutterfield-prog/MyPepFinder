@@ -1,24 +1,21 @@
 import {
   createOgAlt,
   createPageOgImage,
-  loadPublicAsset,
   ogContentType,
   ogSize,
 } from "@/lib/og-image";
 
 export const runtime = "nodejs";
-export const alt = createOgAlt("Optimize You.");
+export const alt = createOgAlt("Frequently asked questions");
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
-  const heroImage = await loadPublicAsset("/hero-man.jpg");
-
   return createPageOgImage({
-    title: "Optimize You.",
-    description: "Research peptides. Compare providers.",
-    badge: "MyPepFinder",
-    previewImage: heroImage,
+    title: "Frequently asked questions",
+    description:
+      "Answers about MyPepFinder, peptide research, calculators, and safety.",
+    badge: "Help Center",
     accent: "indigo",
   });
 }

@@ -538,7 +538,7 @@ export const RETATRUTIDE_DOSAGE_GUIDE = {
         "They nevertheless provide a more current picture of retatrutide's efficacy and safety as development progresses.",
       ],
       notes: [
-        "**Important:** some Phase 3 results remain topline company-reported findings pending complete peer-reviewed publication. MyPepFinder distinguishes these from published peer-reviewed Phase 2 evidence.",
+        "**Important:** some Phase 3 results remain topline company-reported findings pending complete peer-reviewed publication. These are kept distinct from published peer-reviewed Phase 2 evidence.",
       ],
     },
     {
@@ -756,7 +756,7 @@ export const RETATRUTIDE_DOSAGE_GUIDE = {
       "**Ongoing regulatory development**, with no FDA-approved retatrutide product or prescribing information currently available.",
     ],
     paragraphsAfter: [
-      "MyPepFinder separates **published evidence, clinical-trial protocols and preliminary/topline results** so that research-stage findings are not presented as established prescribing guidance.",
+      "**Published evidence, clinical-trial protocols, and preliminary/topline results** are kept separate so research-stage findings are not mistaken for established prescribing guidance.",
     ],
   },
   safety: {

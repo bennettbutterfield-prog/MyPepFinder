@@ -49,11 +49,11 @@ export const POPULAR_PEPTIDES = [
   },
   {
     slug: "2x-tesamorelin-ipamorelin",
-    name: '"2X"',
-    subtitle: "Tesamorelin | Ipamorelin",
+    name: "Tesamorelin + Ipamorelin",
+    subtitle: "GHRH + GHSR1a blend",
     categories: ["Secretagogue Research"],
     summary:
-      "Blend placeholder for secretagogue-oriented protocol discussions and comparative notes.",
+      "Evidence-based guide: 0 combination trials; tesamorelin-alone VAT data; ipamorelin IV pharmacology only.",
   },
   {
     slug: "cjc-1295-no-dac-ipamorelin-5-5",

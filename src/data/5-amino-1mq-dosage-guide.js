@@ -462,7 +462,7 @@ export const AMINO1MQ_DOSAGE_GUIDE = {
       title: "5-Amino-1MQ Dosage",
       paragraphs: [
         "**There is no established human dosage.** No FDA-approved dose, phase 1 dose-escalation study, maximum tolerated human dose, or peer-reviewed human pharmacokinetic study has established how much 5-Amino-1MQ a person can safely take.",
-        "Online protocols commonly describe oral amounts and treatment “cycles,” but those numbers are not supported by controlled human trials. They should be labeled **anecdotal commercial protocols**, not recommended dosage.",
+        "Online protocols commonly describe oral amounts and treatment “cycles,” but those numbers are not supported by controlled human trials. They are **anecdotal commercial protocols**, not recommended dosage.",
       ],
       subsections: [
         {
@@ -557,7 +557,7 @@ export const AMINO1MQ_DOSAGE_GUIDE = {
       id: "dose-escalation",
       title: "Why No Dose-Escalation Chart Is Provided",
       paragraphs: [
-        "A titration chart would imply a human protocol that does not exist. There are no verified human starting-dose groups, escalation intervals, maintenance doses, or stopping rules. MyPepFinder does not convert vendor schedules into a clinical-looking timeline.",
+        "No verified human starting-dose groups, escalation intervals, maintenance doses, or stopping rules exist. Vendor titration schedules are not established clinical protocols.",
         "The legitimate dose-response information belongs in the preclinical study tables, with species, route, salt form, and duration visible.",
       ],
     },

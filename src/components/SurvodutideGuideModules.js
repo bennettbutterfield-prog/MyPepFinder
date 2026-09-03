@@ -412,7 +412,7 @@ export function SurvoAdverseEventTable() {
   return (
     <ModuleShell
       kicker="Side-effect comparison"
-      title="Preserve 3.6 mg and 6.0 mg arms separately"
+      title="Keep 3.6 mg and 6.0 mg trial arms separate"
     >
       <div className="space-y-2 border-b border-slate-100 px-4 py-3">
         <ChipGroup

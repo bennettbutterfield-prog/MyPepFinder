@@ -366,9 +366,8 @@ export function Aod9604Denominators() {
         ))}
       </div>
       <p className="border-t border-slate-100 px-4 py-3 text-[11px] leading-relaxed text-slate-600">
-        These are not interchangeable denominators. MyPepFinder preserves the
-        label attached to each number instead of presenting a single false
-        total.
+        These are not interchangeable denominators. Each number keeps its source
+        label rather than being merged into a single false total.
       </p>
     </ModuleShell>
   );

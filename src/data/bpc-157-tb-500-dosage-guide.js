@@ -860,7 +860,7 @@ export const BPC_TB_DOSAGE_GUIDE = {
       title: "Bottom line",
       paragraphs: [
         "The Wolverine Stack is not one standardized product. A scientifically interpretable formulation must separately verify **BPC-157** and **Ac-LKKTETQ**, their salt forms, peptide-equivalent amounts, ratio, impurities, and post-reconstitution stability.",
-        "The strongest direct combination evidence is the 2026 rat Achilles-repair study: **BPC-157 10 µg/kg/day plus TB-500 60 µg/kg/day, IP once daily for 30 days** — with **no additive benefit over monotherapy**. Community protocols use different identities, ratios, routes, and schedules and should be presented as anecdotal conventions, not clinical dosing.",
+        "The strongest direct combination evidence is the 2026 rat Achilles-repair study: **BPC-157 10 µg/kg/day plus TB-500 60 µg/kg/day, IP once daily for 30 days** — with **no additive benefit over monotherapy**. Community protocols use different identities, ratios, routes, and schedules and are anecdotal conventions, not clinical dosing.",
       ],
       highlight:
         "Confirm Ac-LKKTETQ identity (not full-length Tβ4), vial ratio (1:1 vs 1:2), and whether the product is a blend or separate vials — before trusting any unit chart. This stack is ≠ GLOW/KLOW.",

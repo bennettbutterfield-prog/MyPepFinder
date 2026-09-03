@@ -1106,7 +1106,7 @@ export const ARA290_DOSAGE_GUIDE = {
         "The evidence is promising rather than conclusive. Objective corneal and skin nerve markers improved at 4 mg, but symptom results were less consistent, the largest study included only 64 participants, and the longest published course had eight completers.",
       ],
       highlight:
-        "Preserve the human-trial protocol, reconstitution math, negative and positive outcomes, and the real adverse-event record — without converting an investigational dose into a universal treatment claim.",
+        "Human-trial protocols, reconstitution math, and adverse-event records are separate from universal treatment claims.",
     },
   ],
   faq: {

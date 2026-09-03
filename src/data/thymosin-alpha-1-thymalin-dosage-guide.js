@@ -850,7 +850,7 @@ export const TA1_THYMALIN_DOSAGE_GUIDE = {
       id: "anti-doping",
       title: "WADA and tested sport",
       paragraphs: [
-        "Neither Thymosin Alpha-1 nor Thymalin was found by name on the **2026 WADA Prohibited List** reviewed for this page. Unlike BPC-157 or prohibited thymosin-beta-4-related categories, this pair is not specifically identified in that list text.",
+        "Neither Thymosin Alpha-1 nor Thymalin was found by name on the **2026 WADA Prohibited List** as of September 2026. Unlike BPC-157 or prohibited thymosin-beta-4-related categories, this pair is not specifically identified in that list text.",
         "That is **not** athlete-specific clearance. Anti-doping interpretation can depend on pharmacological category, national approval, product contents, route, TUE rules, and contamination. Thymalin’s heterogeneous composition means an athlete cannot infer every constituent from the product name — obtain a current written determination from the responsible authority before exposure.",
       ],
     },
@@ -944,7 +944,7 @@ export const TA1_THYMALIN_DOSAGE_GUIDE = {
       {
         question: "Are Thymosin Alpha-1 and Thymalin allowed in tested sport?",
         answer:
-          "Neither is named specifically in the 2026 WADA list reviewed for this page, but that is not athlete-specific clearance. Thymalin’s uncertain composition and contamination risk make authoritative review essential.",
+          "Neither is named specifically in the 2026 WADA list as of September 2026, but that is not athlete-specific clearance. Thymalin’s uncertain composition and contamination risk make authoritative review essential.",
       },
     ],
   },

@@ -916,7 +916,6 @@ const TEMPLATES = {
         chartLossLbs: 0,
         chartLossPct: 0,
         tone: "amber",
-        researchComingSoon: true,
       },
       {
         rank: 2,

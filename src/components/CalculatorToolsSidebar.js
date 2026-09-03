@@ -26,82 +26,46 @@ export function CalculatorToolsSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-full shrink-0 lg:w-56 xl:w-60">
-      <p className="hidden text-xs font-bold uppercase tracking-wide text-slate-500 lg:block">
-        Calculator Tools
-      </p>
-
-      <nav
-        className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:hidden"
-        aria-label="Calculator tools"
-      >
-        {TOOLS.map((tool) => {
-          const active =
-            tool.href === "/calculator"
-              ? pathname === "/calculator"
-              : pathname.startsWith(tool.href);
-          return (
-            <Link
-              key={tool.id}
-              href={tool.href}
-              className={`inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                active
-                  ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
-                  : "border-slate-200 bg-white text-slate-700"
+    <nav
+      className="flex flex-wrap gap-2 sm:gap-3"
+      aria-label="Calculator tools"
+    >
+      {TOOLS.map((tool) => {
+        const active =
+          tool.href === "/calculator"
+            ? pathname === "/calculator"
+            : pathname.startsWith(tool.href);
+        return (
+          <Link
+            key={tool.id}
+            href={tool.href}
+            className={`inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition sm:flex-none sm:justify-start sm:px-5 ${
+              active
+                ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                : "border-slate-200 bg-white text-slate-700 hover:border-indigo-100 hover:bg-indigo-50/40"
+            }`}
+          >
+            <span
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                active ? "bg-white/15 text-white" : "bg-slate-100 text-slate-600"
               }`}
             >
               <ToolIcon name={tool.icon} />
-              {tool.shortLabel}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <nav
-        className="mt-3 hidden space-y-2 lg:block"
-        aria-label="Calculator tools"
-      >
-        {TOOLS.map((tool) => {
-          const active =
-            tool.href === "/calculator"
-              ? pathname === "/calculator"
-              : pathname.startsWith(tool.href);
-          return (
-            <Link
-              key={tool.id}
-              href={tool.href}
-              className={`flex items-start gap-3 rounded-xl border px-3.5 py-3 transition ${
-                active
-                  ? "border-indigo-200 bg-indigo-50 shadow-sm"
-                  : "border-slate-200 bg-white hover:border-indigo-100 hover:bg-indigo-50/40"
-              }`}
-            >
+            </span>
+            <span className="min-w-0 text-left">
+              <span className="block truncate">{tool.label}</span>
               <span
-                className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
-                  active
-                    ? "bg-indigo-600 text-white"
-                    : "bg-slate-100 text-slate-600"
+                className={`mt-0.5 hidden text-xs font-normal leading-snug sm:block ${
+                  active ? "text-indigo-100" : "text-slate-500"
                 }`}
               >
-                <ToolIcon name={tool.icon} />
+                {tool.description}
               </span>
-              <span className="min-w-0">
-                <span
-                  className={`block text-sm font-semibold ${
-                    active ? "text-indigo-900" : "text-slate-900"
-                  }`}
-                >
-                  {tool.label}
-                </span>
-                <span className="mt-0.5 block text-xs leading-snug text-slate-500">
-                  {tool.description}
-                </span>
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
+            </span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }
 

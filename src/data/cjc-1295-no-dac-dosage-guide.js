@@ -426,7 +426,7 @@ export const CJC1295_NODAC_DOSAGE_GUIDE = {
       id: "research-dosage",
       title: "CJC-1295 No DAC research dosage",
       paragraphs: [
-        "Searches overwhelmingly return community, vendor, clinic, and protocol pages rather than formal dose-finding research. Protocols are consistent enough to document as a research-culture phenomenon—but repetition is not independent scientific validation.",
+        "Searches overwhelmingly return community, vendor, clinic, and protocol pages rather than formal dose-finding research. Repeated online protocols are not independent scientific validation.",
         "For the exact no-DAC molecule, available evidence does **not** establish a human dose, frequency, half-life, therapeutic window, maximum exposure, treatment duration, or optimal combination.",
       ],
       tables: [
@@ -663,12 +663,12 @@ export const CJC1295_NODAC_DOSAGE_GUIDE = {
     },
     {
       id: "bottom-line",
-      title: "Editorial bottom line",
+      title: "Bottom line",
       paragraphs: [
-        "The most accurate answer to “What is the CJC-1295 No DAC dosage?” is that **no clinically established dose exists**. The 100–300 mcg per-administration range and 1–3× daily schedule are genuine online conventions worth documenting—but they are not human trial protocols.",
+        "The most accurate answer to “What is the CJC-1295 No DAC dosage?” is that **no clinically established dose exists**. The 100–300 mcg per-administration range and 1–3× daily schedule are genuine online conventions — not human trial protocols.",
       ],
       highlight:
-        "Keep DAC studies, sermorelin studies, and one-substitution GHRH analog studies clearly separated so the no-DAC evidence is not made to look stronger than it is.",
+        "DAC, sermorelin, and one-substitution GHRH analog studies are separate evidence files and do not strengthen Modified GRF 1-29 dosing claims.",
     },
   ],
   faq: {

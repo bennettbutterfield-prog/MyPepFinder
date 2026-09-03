@@ -177,11 +177,9 @@ export default function CalculatorPage() {
       </div>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+        <div className="flex flex-col gap-5">
           <CalculatorToolsSidebar />
-          <div className="min-w-0 flex-1">
-            <DosageCalculator />
-          </div>
+          <DosageCalculator />
         </div>
 
         <section className="mt-14 sm:mt-16">

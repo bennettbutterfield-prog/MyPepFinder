@@ -625,6 +625,12 @@ export default async function PeptideDetailPage({ params }) {
                     </div>
                   ))}
                 </dl>
+                <Link
+                  href="/recommendations"
+                  className="mt-4 flex min-h-[42px] w-full items-center justify-center rounded-lg bg-violet-600 px-3 py-2.5 text-center text-xs font-semibold leading-snug text-white shadow-sm shadow-violet-600/20 transition hover:bg-violet-700"
+                >
+                  Compare Best Research {peptide.name} Providers
+                </Link>
               </div>
 
               {peptide.moleculeCardImage ? (

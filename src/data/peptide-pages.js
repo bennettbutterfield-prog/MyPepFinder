@@ -22,6 +22,7 @@ import { HEXARELIN_DOSAGE_GUIDE } from "@/data/hexarelin-dosage-guide";
 import { SERMORELIN_DOSAGE_GUIDE } from "@/data/sermorelin-dosage-guide";
 import { IGF1_LR3_DOSAGE_GUIDE } from "@/data/igf-1-lr3-dosage-guide";
 import { CJC_IPA_DOSAGE_GUIDE } from "@/data/cjc-1295-no-dac-ipamorelin-dosage-guide";
+import { TES_IPA_DOSAGE_GUIDE } from "@/data/tesamorelin-ipamorelin-dosage-guide";
 import { ADAMAX_DOSAGE_GUIDE } from "@/data/adamax-dosage-guide";
 import { KLOW_DOSAGE_GUIDE } from "@/data/klow-dosage-guide";
 import { GLOW_DOSAGE_GUIDE } from "@/data/glow-dosage-guide";
@@ -43,6 +44,7 @@ import { CARTALAX_DOSAGE_GUIDE } from "@/data/cartalax-dosage-guide";
 import { ARA290_DOSAGE_GUIDE } from "@/data/ara-290-dosage-guide";
 import { KPV_DOSAGE_GUIDE } from "@/data/kpv-dosage-guide";
 import { KISSPEPTIN_10_DOSAGE_GUIDE } from "@/data/kisspeptin-10-dosage-guide";
+import { PT141_DOSAGE_GUIDE } from "@/data/pt-141-dosage-guide";
 import { MELANOTAN_1_DOSAGE_GUIDE } from "@/data/melanotan-1-dosage-guide";
 import { MELANOTAN_2_DOSAGE_GUIDE } from "@/data/melanotan-2-dosage-guide";
 import { SNAP8_DOSAGE_GUIDE } from "@/data/snap-8-dosage-guide";
@@ -4439,6 +4441,173 @@ export const PEPTIDE_PAGES = {
       },
     ],
   }),
+  "2x-tesamorelin-ipamorelin": makePeptide({
+    slug: "2x-tesamorelin-ipamorelin",
+    name: "Tesamorelin + Ipamorelin",
+    pageTitle:
+      "Tesamorelin + Ipamorelin: Benefits, Dosage, Results & Safety Evidence",
+    goalSlug: "build-muscle",
+    goalLabel: "Build Muscle",
+    rankBadge: "Combination · 0 Human Trials",
+    summary:
+      "Tesamorelin plus ipamorelin is marketed for visceral fat, muscle, and recovery — but no human trial has tested the combination. See tesamorelin-alone VAT evidence, ipamorelin IV pharmacology, FDA status, and why online SC protocols are unvalidated.",
+    rating: "4.4",
+    reviewCount: "520",
+    researchedBadge: "Tesamorelin Approved (Narrow) · Combo Untested",
+    tags: [
+      "GHRH + GHSR1a",
+      "0 Combination Trials",
+      "Egrifta WR/SV",
+      "IV Ipamorelin Only",
+    ],
+    dosageGuide: TES_IPA_DOSAGE_GUIDE,
+    moleculeCallouts: [
+      {
+        label: "0 combo trials",
+        body: "No published or registered human study administering tesamorelin and ipamorelin together was located.",
+      },
+      {
+        label: "Tesamorelin alone",
+        body: "EGRIFTA WR/SV approved only for excess abdominal fat in adults with HIV-associated lipodystrophy — VAT −18% / −14% at week 26.",
+      },
+      {
+        label: "No combo dose",
+        body: "Online 1–2 mg + 100–300 mcg SC pairings are anecdotal — not validated combination regimens.",
+      },
+    ],
+    about:
+      "Tesamorelin and ipamorelin stimulate the growth-hormone axis through complementary receptors — GHRH versus GHSR1a — but no controlled human trial has evaluated them together. Tesamorelin has phase 3 evidence for visceral-fat reduction in HIV lipodystrophy; ipamorelin has IV acute GH pharmacology only. Combining them does not extend EGRIFTA approval or establish a safe dose, ratio, or chronic SC safety profile.",
+    facts: [
+      { label: "Combination trials", value: "0 located", icon: "flask" },
+      { label: "Tesamorelin FDA use", value: "HIV lipodystrophy VAT", icon: "type" },
+      { label: "Ipamorelin evidence", value: "IV GH PK/PD only", icon: "clock" },
+      { label: "Approved combo dose", value: "None", icon: "weight" },
+    ],
+    benefits: [
+      "Separates tesamorelin-alone, ipamorelin-alone, and combination evidence lanes",
+      "Phase 3 VAT outcomes with population and route labels — not transferred to the blend",
+      "EGRIFTA WR vs SV non-substitutability guardrail",
+      "Dose-and-route map keeps IV ipamorelin separate from SC market protocols",
+      "Component safety tables without invented combination adverse-event rates",
+      "Regulatory and WADA status for products vs unapproved blends",
+    ],
+    howItWorks:
+      "Tesamorelin mimics GHRH and activates pituitary GHRH receptors; ipamorelin activates GHSR1a through ghrelin-receptor signaling. Both converge on somatotroph GH release and downstream IGF-1. Dual-pathway stimulation could alter pulse timing or magnitude, but the combined human pharmacodynamic response has not been measured.",
+    mechanisms: [
+      {
+        title: "Tesamorelin (GHRH)",
+        tone: "purple",
+        points: [
+          "GHRH receptor → endogenous GH pulses",
+          "FDA VAT outcome in HIV lipodystrophy",
+          "Weight neutral — not general obesity therapy",
+        ],
+      },
+      {
+        title: "Ipamorelin (GHSR1a)",
+        tone: "blue",
+        points: [
+          "Ghrelin-receptor secretagogue",
+          "IV acute GH release in healthy men",
+          "No validated chronic SC efficacy or safety",
+        ],
+      },
+      {
+        title: "Combination (untested)",
+        tone: "orange",
+        points: [
+          "Mechanistic rationale only",
+          "No PK/PD, ratio, or outcome trial",
+          "May amplify IGF-1 / glucose concerns",
+        ],
+      },
+    ],
+    resultBars: [
+      "Combination Trial: None",
+      "Tesamorelin VAT: −18% / −14%",
+      "Ipamorelin: IV GH Only",
+    ],
+    chartLossPct: 0,
+    chartLossLbs: 0,
+    sideEffects:
+      "Combination adverse-event rates are unknown. Tesamorelin trials reported injection-site reactions, edema, arthralgia, elevated IGF-1 (36% >+3 SDS at week 26), and glucose intolerance signals. Ipamorelin's postoperative IV trial showed numerical imbalances in hypokalemia, insomnia, and hyperglycemia with two fatal SAEs of unclear causality. Active malignancy contraindicates tesamorelin. WADA prohibits GH-releasing factors and secretagogues.",
+    dosage:
+      "There is no approved or clinically validated tesamorelin–ipamorelin combination dose, ratio, schedule, titration, or cycle. EGRIFTA WR (1.28 mg SC daily) and EGRIFTA SV (1.4 mg SC daily) apply only to labeled HIV-lipodystrophy products — not blends. Ipamorelin human research used IV weight-based infusions only. Online SC pairings (~1–2 mg tesamorelin + 100–300 mcg ipamorelin) are anecdotal market conventions.",
+    glance: [
+      { label: "Human combination trials", value: "0 located", highlight: true },
+      { label: "Tesamorelin FDA indication", value: "HIV lipodystrophy VAT only" },
+      { label: "Ipamorelin FDA status", value: "Not approved" },
+      { label: "Tesamorelin VAT (alone)", value: "−18% / −14% at week 26" },
+      { label: "Body weight (tesamorelin)", value: "Essentially neutral" },
+      { label: "Validated combo dose", value: "None" },
+      { label: "EGRIFTA WR/SV", value: "Not substitutable" },
+      { label: "WADA", value: "GHRF + GHS prohibited" },
+    ],
+    compare: {
+      title: "Compare related options",
+      columns: ["This combo", "Tesamorelin alone", "CJC-1295 + ipamorelin"],
+      highlight: 0,
+      rows: [
+        {
+          feature: "Direct human combo trial",
+          values: ["None located", "N/A", "None identified"],
+        },
+        {
+          feature: "Strongest evidence",
+          values: [
+            "Component trials only",
+            "Phase 3 VAT in HIV lipodystrophy",
+            "Adjacent GHRH/GHRP class data",
+          ],
+        },
+        {
+          feature: "Key limit",
+          values: [
+            "No dose, PK, or chronic safety data",
+            "Not general fat loss or bodybuilding",
+            "CJC identity confusion; no exact trial",
+          ],
+        },
+      ],
+    },
+    research: [
+      {
+        tag: "FDA",
+        title: "EGRIFTA WR prescribing information",
+        summary: "Approved VAT indication; IGF-1 and glucose monitoring.",
+        cite: "FDA, 2025",
+        href: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/022505s020lbl.pdf",
+      },
+      {
+        tag: "Phase 3",
+        title: "Tesamorelin pivotal trials NCT00123253 / NCT00435136",
+        summary: "VAT −18% / −14% at week 26 — tesamorelin alone.",
+        cite: "ClinicalTrials.gov",
+        href: "https://clinicaltrials.gov/study/NCT00123253",
+      },
+      {
+        tag: "PK/PD",
+        title: "Ipamorelin PK/PD in healthy volunteers",
+        summary: "IV acute GH response; ~2 h terminal half-life.",
+        cite: "Gobburu et al., 1999",
+        href: "https://pubmed.ncbi.nlm.nih.gov/10496658/",
+      },
+      {
+        tag: "Trial",
+        title: "Ipamorelin for postoperative ileus",
+        summary: "Negative overall efficacy; not a body-composition study.",
+        cite: "Beck et al., 2014",
+        href: "https://pubmed.ncbi.nlm.nih.gov/25331030/",
+      },
+      {
+        tag: "FDA",
+        title: "Warning letter — tesamorelin–ipamorelin blend",
+        summary: "Marketed 10 mg/3 mg product cited as unapproved new drug.",
+        cite: "FDA, August 2026",
+        href: "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/warning-letters/royal-peptides-llc-734884-08242026",
+      },
+    ],
+  }),
   "cjc-1295-no-dac-ipamorelin": makePeptide({
     slug: "cjc-1295-no-dac-ipamorelin",
     name: "CJC-1295 (No DAC) + Ipamorelin",
@@ -8353,6 +8522,176 @@ export const PEPTIDE_PAGES = {
       },
     ],
   }),
+  "pt-141": makePeptide({
+    slug: "pt-141",
+    name: "PT-141 (Bremelanotide)",
+    pageTitle:
+      "PT-141 (Bremelanotide) Benefits, Dosage, Side Effects & Results",
+    goalSlug: "sexual-health",
+    goalLabel: "Libido",
+    rankBadge: "Vyleesi 1.75 mg · FDA HSDD · Nausea 40%",
+    summary:
+      "Evidence-based PT-141 / bremelanotide guide covering FDA-approved Vyleesi 1.75 mg SC for premenopausal acquired generalized HSDD, RECONNECT phase 3 desire/distress results (SSE not improved), 40% nausea rate, male preliminary data, compounded-product distinction, and comparison with flibanserin and PDE5 inhibitors.",
+    rating: "4.6",
+    reviewCount: "890",
+    researchedBadge: "FDA-Approved Vyleesi · Narrow HSDD Indication · Not for Men",
+    tags: [
+      "Bremelanotide",
+      "Vyleesi 1.75 mg",
+      "HSDD Only",
+      "Nausea 40%",
+      "≠ Compounded PT-141",
+    ],
+    dosageGuide: PT141_DOSAGE_GUIDE,
+    moleculeCallouts: [
+      {
+        label: "Approval",
+        body: "Vyleesi autoinjector · premenopausal acquired generalized HSDD only — not men, ED, or enhancement.",
+      },
+      {
+        label: "Approved dose",
+        body: "1.75 mg SC · ≥45 min before activity · max 1/24 h · ≤8/month · stop at 8 wk if no benefit.",
+      },
+      {
+        label: "Phase 3 signal",
+        body: "Desire + distress improved modestly · satisfying sexual events did not · nausea 40% vs 1.3% placebo.",
+      },
+    ],
+    about:
+      "PT-141 is the development name for bremelanotide, a synthetic cyclic heptapeptide melanocortin-receptor agonist. Its FDA-approved form, Vyleesi, is a fixed 1.75 mg/0.3 mL subcutaneous autoinjector for acquired, generalized hypoactive sexual desire disorder in premenopausal women. Two 24-week RECONNECT trials found statistically significant but modest improvements in desire and distress scores; satisfying sexual events did not improve. Nausea occurred in 40% of treated participants. Early male erectile-response studies exist but no approved male dose or indication.",
+    facts: [
+      { label: "Approved product", value: "Vyleesi 1.75 mg", icon: "type" },
+      { label: "Route", value: "Subcutaneous autoinjector", icon: "flask" },
+      { label: "Half-life", value: "~2.7 hours", icon: "clock" },
+      { label: "Phase 3 nausea", value: "40.0% vs 1.3%", icon: "weight" },
+    ],
+    benefits: [
+      "Separates PT-141, bremelanotide, Vyleesi, and compounded products",
+      "RECONNECT phase 3 outcomes with placebo-adjusted effect sizes",
+      "Approved dose, frequency limits, and no-titration label facts",
+      "Full phase 3 adverse-event rates vs placebo",
+      "Early male SC/intranasal evidence without dose extrapolation",
+      "Comparison with flibanserin, PDE5 inhibitors, and Melanotan II",
+    ],
+    howItWorks:
+      "Bremelanotide activates melanocortin receptors — MC1R and MC4R most relevant at therapeutic exposure. MC4R-expressing neurons in brain regions involved in motivation and sexual response supply a plausible central pathway. MC1R activation explains hyperpigmentation risk. Unlike sildenafil/tadalafil, bremelanotide is not a PDE5 inhibitor. The exact therapeutic mechanism for HSDD improvement remains unknown per FDA labeling.",
+    mechanisms: [
+      {
+        title: "Therapeutic branch",
+        tone: "purple",
+        points: [
+          "MC4R central signaling",
+          "Modest desire/distress improvement",
+          "SSE not improved in phase 3",
+        ],
+      },
+      {
+        title: "Safety branch",
+        tone: "orange",
+        points: [
+          "MC1R → melanin production",
+          "Focal hyperpigmentation risk",
+          "Daily dosing ↑ pigmentation sharply",
+        ],
+      },
+      {
+        title: "Not PDE5",
+        tone: "blue",
+        points: [
+          "Central melanocortin agonist",
+          "≠ sildenafil/tadalafil pathway",
+          "Male data preliminary only",
+        ],
+      },
+    ],
+    resultBars: [
+      "Desire: Improved Modestly",
+      "Distress: Improved Modestly",
+      "Satisfying Events: Not Improved",
+    ],
+    chartLossPct: 0,
+    chartLossLbs: 0,
+    sideEffects:
+      "Pooled phase 3 (premenopausal HSDD): nausea 40.0% vs 1.3% placebo (8% discontinued for nausea); flushing 20.3%; injection-site reactions 13.2%; headache 11.3%; vomiting 4.8%. Each dose can temporarily raise BP (~+6/+3 mmHg) and lower heart rate. Contraindicated in uncontrolled hypertension and known cardiovascular disease. Focal hyperpigmentation in 1% with intermittent use; 38% after 8 consecutive daily doses. Slows gastric emptying — avoid oral naltrexone. Not recommended in pregnancy.",
+    dosage:
+      "FDA-approved Vyleesi: **1.75 mg bremelanotide** subcutaneously as needed, at least **45 minutes** before anticipated sexual activity. No more than **one dose per 24 hours**; more than **eight doses per month** is not recommended. **No titration** — fixed-dose autoinjector. Discontinue after **eight weeks** if symptoms have not improved. Compounded 1–2 mg protocols are anecdotal and not established equivalent to Vyleesi.",
+    glance: [
+      { label: "Approved product", value: "Vyleesi 1.75 mg SC", highlight: true },
+      { label: "Approved population", value: "Premenopausal acquired generalized HSDD" },
+      { label: "Not approved for", value: "Men · postmenopausal · ED · enhancement" },
+      { label: "Phase 3 desire", value: "+0.3–0.4 vs placebo (both trials)" },
+      { label: "Satisfying events", value: "No significant improvement" },
+      { label: "Nausea", value: "40.0% vs 1.3% placebo" },
+      { label: "Half-life", value: "~2.7 hours" },
+    ],
+    compare: {
+      columns: ["Vyleesi (bremelanotide)", "Flibanserin (Addyi)", "Sildenafil/tadalafil"],
+      highlight: 0,
+      rows: [
+        {
+          feature: "Mechanism",
+          values: [
+            "Melanocortin agonist (central)",
+            "Serotonergic (exact HSDD MOA unknown)",
+            "PDE5 inhibition (peripheral)",
+          ],
+        },
+        {
+          feature: "Approved use",
+          values: [
+            "Premenopausal HSDD (on demand SC)",
+            "Women under 65 with HSDD (daily oral)",
+            "Erectile dysfunction in men",
+          ],
+        },
+        {
+          feature: "Key limitation",
+          values: [
+            "Nausea 40% · BP effects · not for men",
+            "Hypotension/syncope · daily CNS exposure",
+            "Desire not primary endpoint",
+          ],
+        },
+      ],
+    },
+    research: [
+      {
+        tag: "Phase 3",
+        title: "Kingsberg 2019 RECONNECT trials",
+        summary: "Desire and distress improved; SSE did not.",
+        cite: "Obstet Gynecol",
+        href: "https://pubmed.ncbi.nlm.nih.gov/31599840/",
+      },
+      {
+        tag: "Label",
+        title: "Vyleesi prescribing information",
+        summary: "1.75 mg SC · HSDD indication · safety.",
+        cite: "DailyMed",
+        href: "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=f1d0c1b5-2f39-4bad-a6a4-0066e3ad5dcf",
+      },
+      {
+        tag: "Phase 2b",
+        title: "Clayton 2016 dose finding",
+        summary: "0.75–1.75 mg SC · 1.75 mg selected for phase 3.",
+        cite: "Women's Health",
+        href: "https://pubmed.ncbi.nlm.nih.gov/27181790/",
+      },
+      {
+        tag: "Male · Early",
+        title: "Rosen 2004 subcutaneous PT-141",
+        summary: "Objective erectile response above 1 mg — small study.",
+        cite: "Int J Impot Res",
+        href: "https://pubmed.ncbi.nlm.nih.gov/14999221/",
+      },
+      {
+        tag: "Long-term",
+        title: "Simon 2019 open-label extension",
+        summary: "Up to 52 additional weeks · open-label.",
+        cite: "Obstet Gynecol",
+        href: "https://pubmed.ncbi.nlm.nih.gov/31599847/",
+      },
+    ],
+  }),
   semax: makePeptide({
     slug: "semax",
     name: "Semax",
@@ -9014,6 +9353,9 @@ const PEPTIDE_PAGE_ALIASES = {
   "igf1-lr3": "igf-1-lr3",
   "igf-1-lr3-dosage": "igf-1-lr3",
   "cjc-1295-ipamorelin": "cjc-1295-no-dac-ipamorelin",
+  "tesamorelin-ipamorelin": "2x-tesamorelin-ipamorelin",
+  "2x-tesamorelin-ipamorelin-dosage": "2x-tesamorelin-ipamorelin",
+  bimorelin: "2x-tesamorelin-ipamorelin",
   "cjc-1295-no-dac-ipamorelin-dosage": "cjc-1295-no-dac-ipamorelin",
   "cjc-ipa-no-dac": "cjc-1295-no-dac-ipamorelin",
   "ipamorelin-cjc-1295": "cjc-1295-no-dac-ipamorelin",
@@ -9137,6 +9479,10 @@ const PEPTIDE_PAGE_ALIASES = {
   "kisspeptin-10-dosage": "kisspeptin-10",
   "kissapeptin-10": "kisspeptin-10",
   "kissapeptin": "kisspeptin-10",
+  bremelanotide: "pt-141",
+  vyleesi: "pt-141",
+  "pt-141-dosage": "pt-141",
+  "pt-141-10-mg": "pt-141",
   afamelanotide: "melanotan-1",
   scenesse: "melanotan-1",
   "mt-1": "melanotan-1",

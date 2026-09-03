@@ -596,7 +596,7 @@ export const THYMALIN_DOSAGE_GUIDE = {
       id: "anti-doping",
       title: "Sports and anti-doping considerations",
       paragraphs: [
-        "Thymalin was **not named** on the **2026 WADA** list reviewed for this page — that is **not** athlete clearance. Heterogeneous composition and undisclosed constituents create extra risk. Athletes need written product-specific guidance.",
+        "Thymalin was **not named** on the **2026 WADA** list as of September 2026 — that is **not** athlete clearance. Heterogeneous composition and undisclosed constituents create extra risk. Athletes need written product-specific guidance.",
       ],
     },
     {

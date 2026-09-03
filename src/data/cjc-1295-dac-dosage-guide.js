@@ -452,7 +452,7 @@ export const CJC1295_DAC_DOSAGE_GUIDE = {
       id: "research-dosage",
       title: "CJC-1295 DAC research dosage",
       paragraphs: [
-        "People searching for a “CJC-1295 DAC research dose” usually encounter fixed weekly protocols rather than weight-based clinical dosing. These conventions are widespread enough to document, but they should not be portrayed as clinically derived.",
+        "People searching for a “CJC-1295 DAC research dose” usually encounter fixed weekly protocols rather than weight-based clinical dosing. These conventions are widely repeated online, but they are not clinically derived.",
         "Human trials support that subcutaneous CJC-1295 DAC has a long half-life, accumulates with repeat dosing, and increases GH and IGF-1. They do **not** show that 0.5, 1, or 2 mg per week improves body composition, recovery, strength, sleep, or healthy-aging outcomes.",
         "For an 80 kg participant, even the lowest **20 mcg/kg** clinical repeat dose equals **1.6 mg**, while **30–60 mcg/kg** equals **2.4–4.8 mg**. That does not make online doses safer or ineffective—it means their effects have not been established by the original trials.",
       ],
@@ -617,7 +617,7 @@ export const CJC1295_DAC_DOSAGE_GUIDE = {
     },
     {
       id: "bottom-line",
-      title: "Editorial bottom line",
+      title: "Bottom line",
       paragraphs: [
         "The most defensible answer to “What is the CJC-1295 DAC dosage?” is that **no approved treatment dose exists**. Human research establishes a long half-life, dose-dependent GH/IGF-1 elevation, and accumulation at weight-based subcutaneous exposures. Smaller fixed weekly protocols online are real conventions—but not validated substitutes for trial doses—and must never be mixed with the short-acting “CJC-1295 no DAC” protocol landscape.",
       ],

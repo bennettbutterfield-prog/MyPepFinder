@@ -95,11 +95,9 @@ export default function CalorieDeficitCalculatorPage() {
       </div>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+        <div className="flex flex-col gap-5">
           <CalculatorToolsSidebar />
-          <div className="min-w-0 flex-1">
-            <CalorieDeficitCalculator />
-          </div>
+          <CalorieDeficitCalculator />
         </div>
 
         <section className="mt-14 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">

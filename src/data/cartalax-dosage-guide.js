@@ -1152,7 +1152,7 @@ export const CARTALAX_DOSAGE_GUIDE = {
       {
         question: "Is 10 mg daily a traditional Russian Cartalax protocol?",
         answer:
-          "That statement is repeated online, but a primary human study of pure AED using 10 mg subcutaneously for 10 days was not identified. The claim should be labeled insufficiently sourced.",
+          "That statement is repeated online, but a primary human study of pure AED using 10 mg subcutaneously for 10 days was not identified. The claim is insufficiently sourced.",
       },
       {
         question: "Does Cartalax dosing depend on body weight?",

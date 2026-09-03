@@ -208,7 +208,7 @@ export const NAD_PLUS_CLAIMS = [
     claim: "NAD+ doses equal NR or NMN doses",
     verdict: "False",
     detail:
-      "NR and NMN are precursors with separate pathways and evidence. Their results cannot be presented as direct NAD+ dosing.",
+      "NR and NMN are precursors with separate pathways and evidence. Their results are not direct NAD+ dosing evidence.",
   },
   {
     id: "antiaging",
@@ -609,7 +609,7 @@ export const NAD_PLUS_DOSAGE_GUIDE = {
       {
         question: "Is NAD+ the same as NR or NMN?",
         answer:
-          "No. NR and NMN are precursors. Their doses and results cannot be presented as direct NAD+ evidence.",
+          "No. NR and NMN are precursors. Their doses and results are not direct NAD+ evidence.",
       },
       {
         question: "Is there a validated subcutaneous NAD+ dose?",

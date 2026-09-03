@@ -508,7 +508,7 @@ export const HEXARELIN_DOSAGE_GUIDE = {
         "Hexarelin has a real but narrow human evidence base: saturable acute GH release, attenuation with repeated dosing, no 24-h GH advantage from a third daily dose in one small study, and no significant IGF-1 or body-composition improvement after 16 weeks BID in older adults.",
       ],
       highlight:
-        "Fixed 100–200 mcg online protocols remain anecdotal. Report them separately from clinical research—do not treat numerical overlap as clinical validation.",
+        "Fixed 100–200 mcg online protocols remain anecdotal. They are not validated by clinical research, and numerical overlap with trial language is not clinical validation.",
     },
   ],
   faq: {

@@ -294,7 +294,7 @@ export const PEPTIDE_PROVIDERS = [
     ],
     summaryLabel: "Strong laboratory documentation with marketing caveats.",
     summary:
-      "NextGen's reported QC panel is comprehensive, but MyPepFinder recommends separating its analytical evidence from broader product-performance claims.",
+      "NextGen's reported QC panel is comprehensive, but its analytical evidence should be weighed separately from broader product-performance claims.",
     sources: [
       {
         label: "NextGen Peptides COA library",

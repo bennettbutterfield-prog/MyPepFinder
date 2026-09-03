@@ -279,7 +279,7 @@ export const KLOW_DOSAGE_GUIDE = {
     "KLOW Peptide Dosage: KPV + GHK-Cu + TB-500 + BPC-157 Research Protocol",
   updated: "Updated August 2026",
   callout:
-    "**Research note:** KLOW is a **fixed-ratio commercial blend** rather than a clinically studied combination. The protocols below document research-community conventions and calculate the amount of each component; they are **not** established clinical dosing guidelines. **No controlled human trial of the exact four-peptide blend was identified.**",
+    "**Research note:** KLOW is a **fixed-ratio commercial blend** rather than a clinically studied combination. The protocols below describe research-community conventions and calculate the amount of each component; they are **not** established clinical dosing guidelines. **No controlled human trial of the exact four-peptide blend was identified.**",
   intro: [
     "The standard KLOW vial contains **80 mg total peptide:** **50 mg GHK-Cu** plus **10 mg each** of KPV, BPC-157, and TB-500 (**5:1:1:1** by mass).",
     "Every draw preserves that ratio. **2 mg** total = **1.25 mg GHK-Cu** + **250 mcg** each of the other three; **4 mg** total = **2.5 mg GHK-Cu** + **500 mcg** each. The most coherent complete community protocol is front-loaded: **4 mg five times weekly (weeks 1–4)**, then **2 mg three times weekly (weeks 5–12)**, then a **4–8-week** break.",
@@ -562,7 +562,7 @@ export const KLOW_DOSAGE_GUIDE = {
       title: "Alternative daily step-up research protocol",
       paragraphs: [
         "Some protocol pages use gradual daily titration (often assuming **3 mL** diluent ≈ 26.67 mg/mL). Weeks 1–8 use **252 mg** total blend (≈3.15 vials); adding weeks 9–12 raises the total to **364 mg** (≈4.55 vials).",
-        "No comparative study shows that this additional exposure improves outcomes. The **6 mg daily** phase should be labeled a **higher-exposure community protocol**, not a standard clinical target.",
+        "No comparative study shows that this additional exposure improves outcomes. The **6 mg daily** phase is a **higher-exposure community protocol**, not a standard clinical target.",
       ],
       tables: [
         {
