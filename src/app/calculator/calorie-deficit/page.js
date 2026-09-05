@@ -98,6 +98,12 @@ export default function CalorieDeficitCalculatorPage() {
         <div className="flex flex-col gap-5">
           <CalculatorToolsSidebar />
           <CalorieDeficitCalculator />
+          <Link
+            href="/recommendations"
+            className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700 sm:w-auto sm:self-center sm:px-8"
+          >
+            Explore Top Ranked Providers
+          </Link>
         </div>
 
         <section className="mt-14 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">

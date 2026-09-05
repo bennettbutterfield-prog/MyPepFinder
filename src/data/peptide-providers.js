@@ -3,7 +3,11 @@
  * Source: peptide-providers.md (last updated 2026-09-01)
  */
 
-import { AMINO_CLUB_AFFILIATE_URL } from "@/data/affiliate-links";
+import {
+  AMINO_CLUB_AFFILIATE_URL,
+  NEXTGEN_PEPTIDES_AFFILIATE_URL,
+  nextGenAffiliateUrl,
+} from "@/data/affiliate-links";
 
 export const PROVIDER_DIRECTORY = {
   title: "Research Peptide Providers",
@@ -270,7 +274,7 @@ export const PEPTIDE_PROVIDERS = [
   {
     slug: "nextgen-peptides",
     name: "NextGen Peptides",
-    website: "https://ngpeptide.com/",
+    website: NEXTGEN_PEPTIDES_AFFILIATE_URL,
     initials: "NG",
     tone: "sky",
     trustScore: 8.7,
@@ -298,11 +302,11 @@ export const PEPTIDE_PROVIDERS = [
     sources: [
       {
         label: "NextGen Peptides COA library",
-        href: "https://ngpeptide.com/coa-library/",
+        href: nextGenAffiliateUrl("/coa-library/"),
       },
       {
         label: "NextGen Peptides testing disclosures",
-        href: "https://ngpeptide.com/about/",
+        href: nextGenAffiliateUrl("/about/"),
       },
     ],
   },

@@ -123,7 +123,11 @@ export function ProviderProfileCard({ provider }) {
                   <a
                     href={source.href}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel={
+                      isAffiliate
+                        ? "noopener noreferrer sponsored"
+                        : "noopener noreferrer"
+                    }
                     className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
                   >
                     {source.label}
