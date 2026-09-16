@@ -1,4 +1,5 @@
 import {
+  formatProviderMetric,
   formatTrustScore,
   getEditorialRatingClass,
   getProviderToneClass,
@@ -32,6 +33,11 @@ export function ProviderProfileCard({ provider }) {
           </span>
           <div>
             <div className="flex flex-wrap items-center gap-2">
+              {provider.rank ? (
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-600">
+                  #{provider.rank}
+                </span>
+              ) : null}
               <h2 className="text-lg font-bold text-slate-900">{provider.name}</h2>
               {isAffiliate ? (
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">
@@ -39,6 +45,9 @@ export function ProviderProfileCard({ provider }) {
                 </span>
               ) : null}
             </div>
+            <p className="mt-1 text-sm font-medium text-indigo-700">
+              {provider.rankBadge}
+            </p>
             <p className="mt-1 text-sm text-slate-500">{provider.researchUse}</p>
             <a
               href={websiteUrl}
@@ -48,15 +57,30 @@ export function ProviderProfileCard({ provider }) {
             >
               Visit website →
             </a>
+            {provider.discountCode ? (
+              <p className="mt-2 text-xs text-slate-600">
+                Code{" "}
+                <span className="font-bold text-slate-900">
+                  {provider.discountCode}
+                </span>
+                {provider.discountNote ? ` — ${provider.discountNote}` : null}
+              </p>
+            ) : null}
             {isAffiliate ? (
-              <AffiliateDisclosure variant="provider" className="mt-3 max-w-xl text-xs" />
+              <AffiliateDisclosure
+                variant="provider"
+                className="mt-3 max-w-xl text-xs"
+              />
             ) : null}
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-bold text-slate-700 ring-1 ring-slate-200">
+            {provider.priceTier}
+          </span>
           <span className="rounded-full bg-emerald-50 px-3 py-1 text-sm font-bold text-emerald-700 ring-1 ring-emerald-100">
-            {formatTrustScore(provider.trustScore)}
+            {formatProviderMetric(provider)}
           </span>
           <span
             className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ${ratingClass}`}
@@ -67,14 +91,43 @@ export function ProviderProfileCard({ provider }) {
       </div>
 
       <div className="space-y-5 p-5 sm:p-6">
+        {provider.customerReviews ? (
+          <section>
+            <h3 className="text-sm font-bold uppercase tracking-wide text-slate-900">
+              Customer reviews
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              {provider.customerReviews}
+            </p>
+          </section>
+        ) : null}
+
         <section>
           <h3 className="text-sm font-bold uppercase tracking-wide text-slate-900">
-            Testing assessment
+            Testing and COAs
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             {provider.testingAssessment}
           </p>
         </section>
+
+        {provider.pricingShipping?.length ? (
+          <section>
+            <h3 className="text-sm font-bold uppercase tracking-wide text-slate-900">
+              Price, shipping and minimum orders
+            </h3>
+            <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-slate-600">
+              {provider.pricingShipping.map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span aria-hidden className="text-slate-400">
+                    •
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <section className="rounded-xl border border-emerald-100 bg-emerald-50/50 p-4">
@@ -123,11 +176,7 @@ export function ProviderProfileCard({ provider }) {
                   <a
                     href={source.href}
                     target="_blank"
-                    rel={
-                      isAffiliate
-                        ? "noopener noreferrer sponsored"
-                        : "noopener noreferrer"
-                    }
+                    rel="noopener noreferrer"
                     className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
                   >
                     {source.label}
@@ -177,8 +226,11 @@ export function ProviderComparisonRow({ provider, rank }) {
           </div>
         </div>
       </td>
+      <td className="px-4 py-3 font-semibold text-slate-700">
+        {provider.priceTier}
+      </td>
       <td className="px-4 py-3 font-semibold text-emerald-700">
-        {formatTrustScore(provider.trustScore)}
+        {formatTrustScore(provider.trustScore, provider)}
       </td>
       <td className="px-4 py-3">
         <span

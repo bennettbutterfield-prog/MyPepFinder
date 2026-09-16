@@ -439,9 +439,9 @@ function ProviderCardsPreview() {
       }}
     >
       {[
-        { initials: "AC", name: "Amino Club", score: "9.4" },
-        { initials: "KP", name: "Koi Peptides", score: "9.6" },
-        { initials: "PP", name: "Prime Peptides", score: "9.1" },
+        { initials: "AC", name: "Amino Club", score: "4.6" },
+        { initials: "RV", name: "RIVN Research", score: "4.9" },
+        { initials: "MH", name: "Mile High", score: "4.8" },
       ].map((provider) => (
         <div
           key={provider.name}

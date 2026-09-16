@@ -6,7 +6,7 @@ import {
   isAffiliateProvider,
 } from "@/data/affiliate-links";
 import {
-  formatTrustScore,
+  formatProviderMetric,
   getEditorialRatingClass,
   getProviderToneClass,
   getTopProvidersForSidebar,
@@ -76,7 +76,7 @@ export function TopRatedProvidersPanel({
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                    {formatTrustScore(provider.trustScore)}
+                    {formatProviderMetric(provider)}
                   </span>
                   <span
                     className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1 ${getEditorialRatingClass(provider.editorialRating)}`}
@@ -120,7 +120,7 @@ export function TopRatedProvidersPanel({
                   {provider.name}
                 </p>
                 <p className="text-[10px] text-slate-500">
-                  {formatTrustScore(provider.trustScore)} Trust Score
+                  {formatProviderMetric(provider)}
                 </p>
                 <p className="text-[10px] font-medium text-emerald-600">
                   {provider.summaryLabel || provider.editorialRating}

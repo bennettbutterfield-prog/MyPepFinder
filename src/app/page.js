@@ -380,7 +380,9 @@ export default function Home() {
                       </p>
                       <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px]">
                         <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                          {v.trustScore.toFixed(1)} Trust Score
+                          {v.trustpilotRating != null
+                            ? `${v.trustpilotRating.toFixed(1)}/5 Trustpilot`
+                            : "Trustpilot unverified"}
                         </span>
                         <span className="text-slate-500">{v.editorialRating}</span>
                       </div>

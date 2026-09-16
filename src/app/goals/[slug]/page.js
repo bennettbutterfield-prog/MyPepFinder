@@ -9,7 +9,6 @@ import {
   getGoalPage,
 } from "@/data/goal-pages";
 import { GoalPageHeader } from "@/components/GoalPageHeader";
-import { GoalResultsChart } from "@/components/GoalResultsChart";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { HomeFooter } from "@/components/HomeFooter";
 import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
@@ -56,9 +55,6 @@ export default async function GoalPage({ params }) {
   if (!page) notFound();
 
   const top = page.peptides[0];
-  const showWeightChart =
-    slug === "lose-weight" ||
-    page.peptides.some((p) => (p.chartLossPct || 0) > 0);
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900">
@@ -339,62 +335,6 @@ export default async function GoalPage({ params }) {
               View All {page.totalPeptides} Peptides
               <span className="text-slate-400">→</span>
             </Link>
-          </section>
-
-          {/* Chart + providers */}
-          <section className="mt-10 grid gap-6 xl:grid-cols-[1.4fr_0.75fr]">
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">
-                Expected Results Over Time
-              </h2>
-              <div className="mt-4">
-                {showWeightChart ? (
-                  <GoalResultsChart peptides={page.peptides} />
-                ) : (
-                  <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center text-sm text-slate-500">
-                    Trajectory chart tailored for this goal is coming soon.
-                    Compare peptide cards above for research signals.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-bold text-slate-900">
-                Top Rated Providers
-              </h2>
-              <ul className="mt-4 space-y-3">
-                {page.providers.map((v) => (
-                  <li
-                    key={v.name}
-                    className="rounded-xl border border-slate-200 bg-slate-100 p-3 opacity-60 grayscale shadow-sm"
-                    aria-disabled="true"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-xs font-bold text-white">
-                        {v.initials}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <p className="truncate text-sm font-semibold text-slate-900">
-                            {v.name}
-                          </p>
-                          <span className="shrink-0 rounded-full bg-slate-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                            Coming soon
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-500">
-                          {v.price}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="mt-2 text-[11px] font-medium text-emerald-600">
-                      {v.tag}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </section>
 
           {/* Bottom 2-col */}

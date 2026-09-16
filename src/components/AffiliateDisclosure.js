@@ -10,10 +10,12 @@ export function AffiliateDisclosure({ variant = "page", className = "" }) {
   if (variant === "provider") {
     return (
       <p
-        className={`leading-relaxed text-slate-600 ${className}`.trim()}
+        className={
+          className || "leading-relaxed text-slate-600"
+        }
         role="note"
       >
-        <span className="font-semibold text-slate-800">Affiliate link:</span>{" "}
+        <span className="font-medium text-slate-600">Affiliate link:</span>{" "}
         {AFFILIATE_PROVIDER_DISCLOSURE.replace(/^Affiliate link: /, "")}
       </p>
     );
@@ -21,10 +23,10 @@ export function AffiliateDisclosure({ variant = "page", className = "" }) {
 
   return (
     <p
-      className={`text-sm leading-relaxed text-slate-600 ${className}`.trim()}
+      className={className || "text-sm leading-relaxed text-slate-600"}
       role="note"
     >
-      <span className="font-semibold text-slate-800">Affiliate disclosure:</span>{" "}
+      <span className="font-medium text-slate-600">Affiliate disclosure:</span>{" "}
       {AFFILIATE_PAGE_DISCLOSURE}
     </p>
   );
