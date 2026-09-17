@@ -118,7 +118,7 @@ export default async function GoalPage({ params }) {
               </li>
               <li aria-hidden>›</li>
               <li>
-                <Link href="/goals/lose-weight" className="hover:text-blue-600">
+                <Link href="/goals" className="hover:text-blue-600">
                   Goals
                 </Link>
               </li>

@@ -40,6 +40,7 @@ const STATIC_ROUTES = [
   { path: "/calculator", changeFrequency: "monthly", priority: 0.9 },
   { path: "/calculator/calorie-deficit", changeFrequency: "monthly", priority: 0.85 },
   { path: "/recommendations", changeFrequency: "weekly", priority: 0.85 },
+  { path: "/goals", changeFrequency: "weekly", priority: 0.85 },
   { path: "/about", changeFrequency: "monthly", priority: 0.6 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.6 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.5 },

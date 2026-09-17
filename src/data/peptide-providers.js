@@ -15,8 +15,9 @@ export const PROVIDER_DIRECTORY = {
     "Compare Amino Club, RIVN Research, Mile High Compounds and Peptora on prices, value, Trustpilot reviews and published batch testing.",
   lastUpdated: "September 16, 2026",
   providerCount: 4,
+  finnrickUrl: "https://www.finnrick.com/vendors",
   intro:
-    "Finnrick lists 1,828 peptide vendors. Finding a supplier is easy. Deciding which one deserves your business takes more work. Our focus is US-based businesses with conventional checkout, public testing documentation and a credible customer service record.",
+    "With 1,828 peptide vendors available (Finnrick) finding a supplier is easy. Deciding which one deserves your business takes more work. Our focus is US-based businesses with conventional checkout, public testing documentation and a credible customer service record.",
   lead:
     "Amino Club is our overall value pick, followed by RIVN Research, Mile High Compounds and Peptora. Amino Club leads on affordability; RIVN has the highest verified Trustpilot rating of the four. These are four selected providers, not the result of auditing every vendor in Finnrick's directory.",
   disclaimer:
@@ -137,7 +138,7 @@ export const COMPARISON_ROWS = [
   {
     factor: "Bulk / special-order",
     values: [
-      "Bulk program: 10 units per product minimum",
+      "40% off every unit at 10+; 50% off everything at 50+",
       "Promotional requirements vary",
       "Quantity discounts start at 4 vials of the same compound",
       "Not published",
@@ -268,11 +269,11 @@ export const PEPTIDE_PROVIDERS = [
       "Delivery: Standard shipping takes 1–4 business days. Paid 2-day and overnight options are available.",
       "Shipment protection: Included with every order.",
       "Minimum purchase: No dollar minimum published in the pages reviewed.",
-      "Bulk orders: A separate program requires 10 units per product.",
+      "Bulk orders: 40% off every unit at 10+; 50% off everything at 50+.",
     ],
     discountCode: "MYPEPFINDER",
     strengths: [
-      "Affordable pricing relative to the other three providers.",
+      "Affordable pricing relative to the other three providers, with 40% off every unit at 10+ and 50% off everything at 50+.",
       "Easy-to-search certificate library with batch numbers and dates.",
       "Named testing laboratory (ILS Laboratories) on published lot summaries.",
       "Repeated customer examples of replacement handling for damaged shipments.",
@@ -284,7 +285,7 @@ export const PEPTIDE_PROVIDERS = [
     ],
     summaryLabel: "Best overall value.",
     summary:
-      "Amino Club makes the strongest case for buyers who want competitive prices without giving up access to batch reports or a substantial customer review history.",
+      "Amino Club makes the strongest case for buyers who want competitive prices without giving up access to batch reports or a substantial customer review history. Bulk pricing takes 40% off every unit at 10+ and 50% off everything at 50+.",
     sources: [
       {
         label: "Trustpilot profile",

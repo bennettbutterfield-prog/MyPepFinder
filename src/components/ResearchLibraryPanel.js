@@ -88,13 +88,13 @@ function ResearchLibrarySearchFallback({ entries, initialCategory = "all" }) {
           );
         })}
       </div>
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <ul className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
         {filtered.map((item) => {
           const comingSoon = Boolean(item.researchComingSoon);
           return (
             <li key={item.slug}>
               <div
-                className={`flex h-full flex-col rounded-2xl border border-slate-200 p-5 shadow-sm ${
+                className={`flex h-full flex-col rounded-xl border border-slate-200 p-3 shadow-sm sm:rounded-2xl sm:p-5 ${
                   comingSoon
                     ? "bg-slate-100 opacity-60 grayscale"
                     : "bg-white"
@@ -102,7 +102,7 @@ function ResearchLibrarySearchFallback({ entries, initialCategory = "all" }) {
               >
                 <div className="flex items-start justify-between gap-2">
                   <span
-                    className={`text-base font-semibold ${
+                    className={`line-clamp-2 text-sm font-semibold leading-snug sm:text-base ${
                       comingSoon ? "text-slate-600" : "text-slate-900"
                     }`}
                   >
@@ -110,11 +110,11 @@ function ResearchLibrarySearchFallback({ entries, initialCategory = "all" }) {
                   </span>
                 </div>
                 {comingSoon ? (
-                  <span className="mt-2 inline-flex w-fit rounded-full bg-slate-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-flex w-fit rounded-full bg-slate-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white sm:mt-2 sm:px-2.5 sm:py-1 sm:text-[10px]">
                     Research coming soon
                   </span>
                 ) : null}
-                <span className="mt-2 text-sm leading-relaxed text-slate-500">
+                <span className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-slate-500 sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-relaxed">
                   {item.blurb}
                 </span>
               </div>

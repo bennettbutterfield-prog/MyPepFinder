@@ -49,7 +49,7 @@ export default async function ResearchLibraryPage({ searchParams }) {
             </p>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7 lg:p-8">
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-7 lg:p-8">
             <ResearchLibraryPanel initialCategory={initialCategory} />
           </div>
 
@@ -59,7 +59,7 @@ export default async function ResearchLibraryPage({ searchParams }) {
             </p>
             <div className="flex flex-wrap gap-2">
               <Link
-                href="/goals/lose-weight"
+                href="/goals"
                 className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white transition hover:bg-indigo-700"
               >
                 Browse Goals

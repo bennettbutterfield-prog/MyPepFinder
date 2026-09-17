@@ -138,28 +138,28 @@ export function ResearchLibrarySearch({ entries, initialCategory = "all" }) {
           Try another spelling or clear the search to see all compounds.
         </p>
       ) : (
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <ul className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((item) => {
             const comingSoon = Boolean(item.researchComingSoon);
             const cardClass = comingSoon
-              ? "flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-100 p-5 opacity-60 grayscale shadow-sm"
-              : "flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md";
+              ? "flex h-full flex-col rounded-xl border border-slate-200 bg-slate-100 p-3 opacity-60 grayscale shadow-sm sm:rounded-2xl sm:p-5"
+              : "flex h-full flex-col rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-indigo-200 hover:shadow-md sm:rounded-2xl sm:p-5";
 
             if (comingSoon) {
               return (
                 <li key={item.slug}>
                   <div className={cardClass} aria-disabled="true">
-                    <span className="text-base font-semibold text-slate-600">
+                    <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-600 sm:text-base">
                       {item.title}
                     </span>
-                    <span className="mt-2 inline-flex w-fit rounded-full bg-slate-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                    <span className="mt-1.5 inline-flex w-fit rounded-full bg-slate-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white sm:mt-2 sm:px-2.5 sm:py-1 sm:text-[10px]">
                       Research coming soon
                     </span>
-                    <span className="mt-2 text-sm leading-relaxed text-slate-500">
+                    <span className="mt-1.5 hidden text-sm leading-relaxed text-slate-500 sm:mt-2 sm:block">
                       {item.blurb}
                     </span>
-                    <span className="mt-4 text-sm font-semibold text-slate-400">
-                      Unavailable for now
+                    <span className="mt-2 text-xs font-semibold text-slate-400 sm:mt-4 sm:text-sm">
+                      Unavailable
                     </span>
                   </div>
                 </li>
@@ -169,13 +169,13 @@ export function ResearchLibrarySearch({ entries, initialCategory = "all" }) {
             return (
               <li key={item.slug}>
                 <Link href={`/peptides/${item.slug}`} className={cardClass}>
-                  <span className="text-base font-semibold text-slate-900">
+                  <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900 sm:text-base">
                     {item.title}
                   </span>
-                  <span className="mt-2 text-sm leading-relaxed text-slate-500">
+                  <span className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-slate-500 sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-relaxed">
                     {item.blurb}
                   </span>
-                  <span className="mt-4 text-sm font-semibold text-indigo-600">
+                  <span className="mt-2 text-xs font-semibold text-indigo-600 sm:mt-4 sm:text-sm">
                     Learn more →
                   </span>
                 </Link>

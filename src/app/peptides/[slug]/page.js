@@ -165,7 +165,7 @@ export default async function PeptideDetailPage({ params }) {
               </li>
               <li aria-hidden>›</li>
               <li>
-                <Link href="/goals/lose-weight" className="hover:text-violet-600">
+                <Link href="/goals" className="hover:text-violet-600">
                   Goals
                 </Link>
               </li>

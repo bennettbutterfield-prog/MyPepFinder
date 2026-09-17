@@ -105,7 +105,15 @@ export default function ProvidersPage({ searchParams }) {
             {PROVIDER_DIRECTORY.title}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-[15px]">
-            {PROVIDER_DIRECTORY.intro}
+            With 1,828 peptide vendors available (<a
+              href={PROVIDER_DIRECTORY.finnrickUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-indigo-600 underline decoration-indigo-200 underline-offset-2 hover:text-indigo-700"
+            >Finnrick</a>) finding a supplier is easy. Deciding which one
+            deserves your business takes more work. Our focus is US-based
+            businesses with conventional checkout, public testing documentation
+            and a credible customer service record.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
             {PROVIDER_DIRECTORY.lead}
@@ -437,7 +445,7 @@ export default function ProvidersPage({ searchParams }) {
             </div>
             <div className="flex flex-wrap gap-2">
               <Link
-                href="/goals/lose-weight"
+                href="/goals"
                 className="inline-flex min-h-[40px] items-center justify-center rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-700"
               >
                 Browse Goals
