@@ -3,7 +3,6 @@ import {
   getPeptidePage,
 } from "@/data/peptide-pages";
 import { getPopularPeptideBySlug } from "@/data/popular-peptides";
-import { getExplorePageData } from "@/data/explore-sellers";
 import {
   getProductBySlug,
   resolveProductByAliasOrSlug,
@@ -22,11 +21,6 @@ export function resolvePeptideForOg(slug) {
   const popular = getPopularPeptideBySlug(slug);
   if (popular) {
     return buildFallbackPeptidePage(slug, popular.name);
-  }
-
-  const explore = getExplorePageData(slug);
-  if (explore) {
-    return buildFallbackPeptidePage(slug, explore.peptideName);
   }
 
   return null;

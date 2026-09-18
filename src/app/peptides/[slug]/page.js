@@ -10,7 +10,6 @@ import {
   getPopularPeptideBySlug,
   POPULAR_PEPTIDES,
 } from "@/data/popular-peptides";
-import { getExplorePageData, getKnownExploreSlugs } from "@/data/explore-sellers";
 import {
   getProductBySlug,
   peptideProducts,
@@ -31,7 +30,6 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   const rich = getAllPeptidePageSlugs();
   const popular = POPULAR_PEPTIDES.map((p) => p.slug);
-  const library = getKnownExploreSlugs();
   const taxonomy = peptideProducts.map((p) => p.slug);
   const taxonomyAliases = [
     "glow",
@@ -42,7 +40,7 @@ export function generateStaticParams() {
     "n-acetyl-semax-amidate",
   ];
   return [
-    ...new Set([...rich, ...popular, ...library, ...taxonomy, ...taxonomyAliases]),
+    ...new Set([...rich, ...popular, ...taxonomy, ...taxonomyAliases]),
   ].map((slug) => ({
     slug,
   }));
@@ -765,10 +763,6 @@ function resolvePeptide(slug) {
   const popular = getPopularPeptideBySlug(slug);
   if (popular) {
     return buildFallbackPeptidePage(slug, popular.name);
-  }
-  const explore = getExplorePageData(slug);
-  if (explore) {
-    return buildFallbackPeptidePage(slug, explore.peptideName);
   }
   return null;
 }

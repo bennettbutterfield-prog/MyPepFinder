@@ -1,6 +1,5 @@
 import { getAllPeptidePageSlugs } from "@/data/peptide-pages";
 import { getAllGoalSlugs } from "@/data/goal-pages";
-import { getKnownExploreSlugs } from "@/data/explore-sellers";
 import { POPULAR_PEPTIDES } from "@/data/popular-peptides";
 import { peptideProducts } from "@/data/peptide-taxonomy";
 
@@ -27,7 +26,6 @@ export function getPeptideProfileSlugs() {
     ...new Set([
       ...getAllPeptidePageSlugs(),
       ...POPULAR_PEPTIDES.map((p) => p.slug),
-      ...getKnownExploreSlugs(),
       ...peptideProducts.map((p) => p.slug),
       ...TAXONOMY_ALIASES,
     ]),
@@ -75,12 +73,5 @@ export function buildSitemapEntries() {
     priority: 0.75,
   }));
 
-  const exploreEntries = getKnownExploreSlugs().map((slug) => ({
-    url: `${baseUrl}/explore/${slug}`,
-    lastModified,
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }));
-
-  return [...staticEntries, ...goalEntries, ...peptideEntries, ...exploreEntries];
+  return [...staticEntries, ...goalEntries, ...peptideEntries];
 }

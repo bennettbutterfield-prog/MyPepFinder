@@ -67,7 +67,7 @@ const BASE_BY_GOAL = {
         "Discussed in small-molecule and peptide crossover conversations about adipocyte energetics in preclinical models.",
     },
     {
-      exploreSlug: "glp-1-class-research",
+      exploreSlug: "cagrilintide",
       name: "Cagrilintide / GLP-1 class analogs",
       tagline: "Incretin-axis research",
       context:
@@ -104,7 +104,7 @@ const BASE_BY_GOAL = {
         "Referenced where skeletal muscle hypertrophy signaling is modeled in vitro or in animal systems.",
     },
     {
-      exploreSlug: "ipamorelin-cjc-1295",
+      exploreSlug: "cjc-1295-no-dac-ipamorelin",
       name: "Ipamorelin / CJC-1295 (no DAC)",
       tagline: "Pulsatile GH secretagogue pairing",
       context:
@@ -217,7 +217,7 @@ const BASE_BY_GOAL = {
         "Frequently used as a comparator peptide in secretagogue-focused protocol writeups.",
     },
     {
-      exploreSlug: "ipamorelin-cjc-1295",
+      exploreSlug: "cjc-1295-no-dac-ipamorelin",
       name: "Ipamorelin / CJC-1295 (no DAC)",
       tagline: "Pulsatile GH secretagogue pairing",
       context:
