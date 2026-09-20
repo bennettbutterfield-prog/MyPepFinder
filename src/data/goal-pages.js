@@ -131,7 +131,6 @@ export const GOAL_SIDEBAR = [
   { slug: "improve-focus", label: "Cognition", icon: "brain" },
   { slug: "better-sleep", label: "Better Sleep", icon: "moon" },
   { slug: "hair-growth", label: "Hair Growth", icon: "hair" },
-  { slug: "recovery", label: "Recovery", icon: "bandage" },
   { slug: "skin-health", label: "Skin Health", icon: "droplet" },
   { slug: "sexual-health", label: "Libido", icon: "heart" },
   { slug: "longevity", label: "Longevity", icon: "clock" },
@@ -474,10 +473,8 @@ const PAGES = {
       },
     ],
     resources: [
-      { title: "Secretagogue Stack Basics", href: "#" },
       { title: "Dosage Calculator", href: "/calculator" },
       { title: "Compare Providers", href: "/recommendations" },
-      { title: "Recovery Goal Guide", href: "/goals/recovery" },
     ],
     chartMode: "gain",
   },

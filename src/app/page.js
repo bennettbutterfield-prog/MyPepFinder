@@ -76,15 +76,6 @@ const GOALS = [
     image: "/goal-icons/build-muscle.jpg",
   },
   {
-    title: "Recovery",
-    href: "/goals/recovery",
-    peptides: 17,
-    research: "Growing",
-    tone: "green",
-    icon: "lab",
-    image: "/goal-icons/recovery.jpg",
-  },
-  {
     title: "Better Sleep",
     href: "/goals/better-sleep",
     peptides: 5,

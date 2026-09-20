@@ -33,7 +33,7 @@ const OFFERINGS = [
   },
   {
     title: "Goal-based guides",
-    body: "Explore peptides organized by what you want to improve — weight, recovery, cognition, sleep, and more.",
+    body: "Explore peptides organized by what you want to improve — weight, muscle, cognition, sleep, and more.",
     href: "/goals/lose-weight",
     cta: "Browse goals",
   },

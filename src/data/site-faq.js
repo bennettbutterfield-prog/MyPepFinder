@@ -47,7 +47,7 @@ export const SITE_FAQ_SECTIONS = [
       {
         question: "How do I find peptides for my goal?",
         answer:
-          "Start from the home page goal cards — such as weight loss, recovery, cognition, or sleep — or open the Research Library to browse by category. Each peptide page includes mechanisms, research links, and related goals where applicable.",
+          "Start from the home page goal cards — such as weight loss, cognition, or sleep — or open the Research Library to browse by category. Each peptide page includes mechanisms, research links, and related goals where applicable.",
       },
       {
         question: "What is the Research Library?",
@@ -57,7 +57,7 @@ export const SITE_FAQ_SECTIONS = [
       {
         question: "What are goal pages?",
         answer:
-          "Goal pages group peptides and educational content around a specific outcome — for example, losing weight or improving recovery. They help you compare compounds studied in that area without reading every profile individually.",
+          "Goal pages group peptides and educational content around a specific outcome — for example, losing weight or building muscle. They help you compare compounds studied in that area without reading every profile individually.",
       },
       {
         question: "How do provider comparisons work?",

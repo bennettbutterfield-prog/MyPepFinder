@@ -13,14 +13,13 @@ import {
 export const metadata = {
   title: "Peptide Goals | MyPepFinder",
   description:
-    "Browse peptides by research goal, including weight loss, muscle, recovery, sleep, hair, skin, cognition, and longevity.",
+    "Browse peptides by research goal, including weight loss, muscle, sleep, hair, skin, cognition, and longevity.",
 };
 
 const GOAL_TONES = {
   "lose-weight": "orange",
   "improve-focus": "indigo",
   "build-muscle": "teal",
-  recovery: "green",
   "better-sleep": "violet",
   "hair-growth": "rose",
   "skin-health": "pink",

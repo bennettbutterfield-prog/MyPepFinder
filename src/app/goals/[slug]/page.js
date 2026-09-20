@@ -395,12 +395,6 @@ export default async function GoalPage({ params }) {
                   </li>
                 ))}
               </ul>
-              <Link
-                href="/research-library"
-                className="mt-3 flex min-h-[42px] items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-700 hover:bg-slate-100"
-              >
-                View All Resources
-              </Link>
             </div>
           </section>
 

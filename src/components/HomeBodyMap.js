@@ -41,17 +41,6 @@ const NODES = [
     href: "/goals/lose-weight",
   },
   {
-    id: "recovery",
-    label: "Recovery",
-    sub: "Healing, Reduce Inflammation",
-    color: "#ea580c",
-    soft: "#ffedd5",
-    x: 90,
-    y: 68,
-    target: { x: 58, y: 72 },
-    href: "/goals/recovery",
-  },
-  {
     id: "hair",
     label: "Hair",
     sub: "Hair Growth, Prevent Loss",

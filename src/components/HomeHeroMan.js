@@ -37,13 +37,6 @@ const CALLOUTS = [
     href: "/goals/lose-weight",
     style: { top: "40%", left: "0%" },
   },
-  {
-    id: "recovery",
-    label: "Recovery",
-    sub: "Heal & Rebuild",
-    href: "/goals/recovery",
-    style: { bottom: "14%", right: "6%" },
-  },
 ];
 
 /**
