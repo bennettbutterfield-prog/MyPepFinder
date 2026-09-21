@@ -163,7 +163,6 @@ const PAGES = {
     stats: [
       { value: "12", label: "Peptides" },
       { value: "45", label: "Research Studies" },
-      { value: "15", label: "Provider Partners" },
     ],
     benefits: [
       { label: "Reduces Appetite", tone: "blue", icon: "appetite" },
@@ -327,7 +326,6 @@ const PAGES = {
     stats: [
       { value: "22", label: "Peptides" },
       { value: "38", label: "Research Studies" },
-      { value: "12", label: "Provider Partners" },
     ],
     benefits: [
       { label: "Supports Recovery", tone: "orange", icon: "bandage" },
@@ -503,7 +501,6 @@ const TEMPLATES = {
     stats: [
       { value: "14", label: "Peptides" },
       { value: "29", label: "Research Studies" },
-      { value: "10", label: "Provider Partners" },
     ],
     benefits: [
       { label: "Mental Clarity", tone: "blue", icon: "brain" },

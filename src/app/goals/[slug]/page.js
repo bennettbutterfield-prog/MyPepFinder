@@ -138,7 +138,7 @@ export default async function GoalPage({ params }) {
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {page.stats
-                  .filter((s) => s.label !== "Reviews")
+                  .filter((s) => s.label !== "Reviews" && s.label !== "Provider Partners")
                   .map((s) => (
                   <li key={s.label} className="rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5">
                     <p className="text-lg font-bold text-slate-900">{s.value}</p>
