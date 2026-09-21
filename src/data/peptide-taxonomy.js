@@ -35,6 +35,9 @@
  * @property {boolean} investigational
  * @property {string[]} [ingredients]
  * @property {string} [notes]
+ * @property {boolean} [researchComingSoon]
+ * @property {boolean} [notAPeptide]
+ * @property {"research-compound"|"mixture"|"product-form"} [compoundKind]
  */
 
 /** @type {PeptideCategory[]} */
@@ -130,14 +133,14 @@ export const peptideCategories = [
       "Explore peptides and metabolic compounds studied for appetite, body weight, glucose regulation, energy expenditure and body composition.",
     seoTitle: "Weight-Loss Peptides: GLP-1 and Metabolic Research",
     seoDescription:
-      "Compare weight-loss research compounds including Retatrutide, GLP-1 Semaglutide, Tirzepatide, Cagrilintide, Survodutide and AOD-9604.",
+      "Compare weight-loss research compounds including Retatrutide, Semaglutide, Tirzepatide, Cagrilintide, Survodutide and AOD-9604.",
     keywords: [
       "weight loss peptides",
       "GLP-1 peptides",
       "metabolic peptides",
       "Retatrutide",
       "Semaglutide",
-      "GLP-1 Semaglutide",
+      "Semaglutide",
       "Cagrilintide",
       "Survodutide",
       "AOD-9604",
@@ -247,6 +250,8 @@ export const peptideProducts = [
     ],
     evidenceLevel: 'preclinical',
     investigational: true,
+    notAPeptide: true,
+    compoundKind: 'research-compound',
     notes: 'Small molecule rather than a conventional peptide.'
   },
   {
@@ -383,9 +388,10 @@ export const peptideProducts = [
   },
   {
     id: 'cjc-1295-no-dac',
-    name: 'CJC-1295 (No DAC)',
+    name: 'CJC-1295 (No DAC / Modified GRF 1–29)',
     slug: 'cjc-1295-no-dac',
     aliases: [
+      'CJC-1295 (No DAC)',
       'Modified GRF 1-29',
       'Mod GRF 1-29'
     ],
@@ -527,12 +533,13 @@ export const peptideProducts = [
   },
   {
     id: 'glp-1-s',
-    name: 'GLP-1 Semaglutide',
+    name: 'Semaglutide',
     slug: 'glp-1-s',
     aliases: [
       'Semaglutide',
       'GLP-1 S',
-      'GLP-1 Semaglutide'
+      'GLP-1 Semaglutide',
+      'GLP-1'
     ],
     productType: 'compound',
     primaryCategory: 'weight-loss',
@@ -548,11 +555,12 @@ export const peptideProducts = [
   },
   {
     id: 'glp-1-t',
-    name: 'GLP-2 Tirzepatide',
+    name: 'Tirzepatide',
     slug: 'glp-1-t',
     aliases: [
       'Tirzepatide',
       'GLP-2',
+      'GLP-2 Tirzepatide',
       'GLP-1 T'
     ],
     productType: 'compound',
@@ -773,6 +781,8 @@ export const peptideProducts = [
     ],
     evidenceLevel: 'mixed',
     investigational: true,
+    notAPeptide: true,
+    compoundKind: 'research-compound',
     notes: 'Coenzyme rather than a peptide.'
   },
   {
@@ -853,7 +863,7 @@ export const peptideProducts = [
   },
   {
     id: 'retatrutide',
-    name: 'GLP-3 Retatrutide',
+    name: 'Retatrutide',
     slug: 'retatrutide',
     productType: 'compound',
     primaryCategory: 'weight-loss',
@@ -870,6 +880,7 @@ export const peptideProducts = [
     aliases: [
       'Retatrutide',
       'GLP-3',
+      'GLP-3 Retatrutide',
       'GLP-3 (RT)'
     ]
   },
@@ -953,6 +964,8 @@ export const peptideProducts = [
     ],
     evidenceLevel: 'preclinical',
     investigational: true,
+    notAPeptide: true,
+    compoundKind: 'research-compound',
     notes: 'Small molecule rather than a peptide.'
   },
   {
@@ -1052,7 +1065,7 @@ export const peptideProducts = [
   },
   {
     id: 'thymagen',
-    name: 'Thymagen',
+    name: 'Thymagen (Thymogen)',
     slug: 'thymagen',
     aliases: [
       'Thymogen',
@@ -1392,6 +1405,7 @@ export const peptideProducts = [
     evidenceLevel: 'limited',
     investigational: true,
     notes: 'Topical powder format of GHK-Cu.',
+    compoundKind: 'product-form',
     primaryCategory: 'hair',
     secondaryCategories: []
   },
@@ -1412,6 +1426,7 @@ export const peptideProducts = [
     ],
     evidenceLevel: 'limited',
     investigational: true,
+    compoundKind: 'mixture',
     primaryCategory: 'longevity',
     secondaryCategories: []
   }

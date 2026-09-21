@@ -26,6 +26,7 @@ function resolveCategory(candidate) {
  *     categories?: string[];
  *     blurb?: string;
  *     researchComingSoon?: boolean;
+ *     compoundKindLabel?: string | null;
  *     searchText?: string;
  *   }[];
  *   initialCategory?: string;
@@ -172,6 +173,11 @@ export function ResearchLibrarySearch({ entries, initialCategory = "all" }) {
                   <span className="line-clamp-2 text-sm font-semibold leading-snug text-slate-900 sm:text-base">
                     {item.title}
                   </span>
+                  {item.compoundKindLabel ? (
+                    <span className="mt-1.5 inline-flex w-fit rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-semibold text-slate-600 sm:text-[10px]">
+                      {item.compoundKindLabel}
+                    </span>
+                  ) : null}
                   <span className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-slate-500 sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-relaxed">
                     {item.blurb}
                   </span>

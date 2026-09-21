@@ -142,7 +142,7 @@ const TRENDING = [
     tone: "green",
   },
   {
-    name: "GLP-1 Semaglutide",
+    name: "Semaglutide",
     slug: "glp-1-s",
     category: "Weight Loss",
     tag: "Popular",

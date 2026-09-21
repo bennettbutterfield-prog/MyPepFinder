@@ -14,7 +14,7 @@ import {
 
 const PEPTIDES = [
   "Retatrutide",
-  "GLP-1 Semaglutide",
+  "Semaglutide",
   "Tirzepatide",
   "BPC-157",
   "TB-500",

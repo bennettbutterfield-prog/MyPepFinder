@@ -3,6 +3,11 @@ import {
   peptideProducts,
   getProductCategories,
 } from "@/data/peptide-taxonomy";
+import {
+  getCompoundKindLabel,
+  getPeptideOverview,
+  getPeptideOverviewLead,
+} from "@/data/peptide-overviews";
 
 /** Category filters shown in the research library (excludes empty catalogs). */
 export const RESEARCH_LIBRARY_FILTERS = [
@@ -43,7 +48,10 @@ export function getResearchLibraryIndexEntries() {
   return peptideProducts
     .map((product) => {
       const categories = getProductCategories(product);
-      const blurb = formatResearchFocusSentence(product);
+      const overview = getPeptideOverview(product.slug);
+      const blurb =
+        getPeptideOverviewLead(product.slug) ||
+        formatResearchFocusSentence(product);
       return {
         slug: product.slug,
         title: product.name,
@@ -51,6 +59,10 @@ export function getResearchLibraryIndexEntries() {
         categories,
         blurb,
         researchComingSoon: Boolean(product.researchComingSoon),
+        compoundKind: overview?.compoundKind || product.compoundKind || null,
+        compoundKindLabel: getCompoundKindLabel(
+          overview?.compoundKind || product.compoundKind
+        ),
         searchText: [
           product.name,
           product.slug,

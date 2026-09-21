@@ -2156,7 +2156,7 @@ export const PEPTIDE_PAGES = {
   }),
   "cjc-1295-no-dac": makePeptide({
     slug: "cjc-1295-no-dac",
-    name: "CJC-1295 (No DAC)",
+    name: "CJC-1295 (No DAC / Modified GRF 1–29)",
     pageTitle:
       "CJC-1295 No DAC Dosage: Modified GRF 1-29 Research Evidence",
     goalSlug: "build-muscle",
@@ -7227,7 +7227,7 @@ export const PEPTIDE_PAGES = {
   }),
   thymagen: makePeptide({
     slug: "thymagen",
-    name: "Thymagen",
+    name: "Thymagen (Thymogen)",
     pageTitle:
       "Thymagen (Thymogen) Dosage: Human Trials, Timogen Labels, and Research Protocol",
     goalSlug: "longevity",
@@ -9549,5 +9549,15 @@ export function buildFallbackPeptidePage(slug, name) {
     chartLossLbs: 0,
     goalSlug: "lose-weight",
     goalLabel: "Goals",
+    facts: [],
+    mechanisms: [],
+    resultBars: [],
+    benefits: [],
+    glance: [],
+    moleculeCallouts: [],
+    compare: { columns: [], rows: [], highlight: 0 },
+    howItWorks: null,
+    about: null,
+    isFallback: true,
   });
 }

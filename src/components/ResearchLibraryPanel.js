@@ -113,6 +113,10 @@ function ResearchLibrarySearchFallback({ entries, initialCategory = "all" }) {
                   <span className="mt-1.5 inline-flex w-fit rounded-full bg-slate-600 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white sm:mt-2 sm:px-2.5 sm:py-1 sm:text-[10px]">
                     Research coming soon
                   </span>
+                ) : item.compoundKindLabel ? (
+                  <span className="mt-1.5 inline-flex w-fit rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-semibold text-slate-600 sm:text-[10px]">
+                    {item.compoundKindLabel}
+                  </span>
                 ) : null}
                 <span className="mt-1.5 line-clamp-2 text-[11px] leading-snug text-slate-500 sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-relaxed">
                   {item.blurb}

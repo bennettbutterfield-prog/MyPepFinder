@@ -23,7 +23,13 @@ import { MoleculeOverviewPanel } from "@/components/MoleculeOverviewPanel";
 import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
 import { PeptideResultsChart } from "@/components/PeptideResultsChart";
 import { PeptideDosageGuide } from "@/components/PeptideDosageGuide";
+import { PeptidePlainEnglishOverview } from "@/components/PeptidePlainEnglishOverview";
 import { TopRatedProvidersPanel } from "@/components/TopRatedProvidersPanel";
+import {
+  getCompoundKindLabel,
+  getPeptideOverview,
+  getPeptideOverviewLead,
+} from "@/data/peptide-overviews";
 
 export const dynamicParams = false;
 
@@ -50,9 +56,10 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const peptide = resolvePeptide(slug);
   if (!peptide) return { title: "Peptide not found" };
+  const overviewLead = getPeptideOverviewLead(slug) || getPeptideOverviewLead(peptide.slug);
   return {
     title: `${peptide.pageTitle || peptide.name} | MyPepFinder`,
-    description: peptide.summary,
+    description: overviewLead || peptide.summary,
   };
 }
 
@@ -67,6 +74,7 @@ const TABS = [
 ];
 
 const DOSAGE_GUIDE_TABS = [
+  { id: "overview", label: "Overview" },
   { id: "how-it-works", label: "How It Works" },
   { id: "results", label: "Results" },
   { id: "dosage", label: "Dosage" },
@@ -94,9 +102,17 @@ export default async function PeptideDetailPage({ params }) {
   if (!peptide) notFound();
 
   const showChart = (peptide.chartLossPct || 0) > 0;
+  const hasResults = showChart || Boolean(peptide.resultsNarrative);
   const hasDosageGuide = Boolean(peptide.dosageGuide);
-  const sectionTabs = hasDosageGuide ? DOSAGE_GUIDE_TABS : TABS;
+  const sectionTabs = (hasDosageGuide ? DOSAGE_GUIDE_TABS : TABS).filter(
+    (tab) => tab.id !== "results" || hasResults
+  );
   const comingSoon = isResearchComingSoon(slug);
+  const overview =
+    getPeptideOverview(slug) || getPeptideOverview(peptide.slug);
+  const overviewLead =
+    getPeptideOverviewLead(slug) || getPeptideOverviewLead(peptide.slug);
+  const compoundKindLabel = getCompoundKindLabel(overview?.compoundKind);
 
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
@@ -207,13 +223,18 @@ export default async function PeptideDetailPage({ params }) {
                 </p>
               ) : null}
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-[15px]">
-                {peptide.summary}
+                {overviewLead || peptide.summary}
               </p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
                 <span className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-[11px] font-semibold text-violet-700 ring-1 ring-violet-100">
                   ◆ {peptide.researchedBadge}
                 </span>
+                {compoundKindLabel ? (
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200">
+                    {compoundKindLabel}
+                  </span>
+                ) : null}
               </div>
 
               <ul className="mt-3 flex flex-wrap gap-1.5">
@@ -301,13 +322,19 @@ export default async function PeptideDetailPage({ params }) {
             <div className="min-w-0 space-y-10">
               {hasDosageGuide ? (
                 <>
+                  <PeptidePlainEnglishOverview
+                    slug={slug}
+                    fallbackSlug={peptide.slug}
+                    name={peptide.name}
+                  />
                   <section id="how-it-works">
                     <h2 className="text-xl font-bold text-slate-900">
                       How It Works
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {peptide.howItWorks ||
-                        `${peptide.name} engages multiple pathways that together support appetite control, metabolic efficiency, and fat oxidation.`}
+                        overview?.overview ||
+                        `${peptide.name} is an investigational research compound reviewed for educational comparison.`}
                     </p>
                     {peptide.mechanisms?.length ? (
                       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -355,48 +382,59 @@ export default async function PeptideDetailPage({ params }) {
                     ) : null}
                   </section>
 
-                  <section id="results">
-                    <h2 className="text-xl font-bold text-slate-900">
-                      Expected Results Over Time
-                    </h2>
-                    <div className="mt-4">
-                      {showChart ? (
+                  {showChart ? (
+                    <section id="results">
+                      <h2 className="text-xl font-bold text-slate-900">
+                        Expected Results Over Time
+                      </h2>
+                      <div className="mt-4">
                         <PeptideResultsChart
                           name={peptide.name}
                           lossPct={peptide.chartLossPct}
                         />
-                      ) : null}
-                    </div>
-                  </section>
+                      </div>
+                    </section>
+                  ) : null}
 
                   <PeptideDosageGuide guide={peptide.dosageGuide} />
                 </>
               ) : (
                 <>
-                  {/* Overview */}
-                  <section id="overview">
-                    <h2 className="text-xl font-bold text-slate-900">
-                      What is {peptide.name}?
-                    </h2>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      {peptide.about}
-                    </p>
-                    <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                      {peptide.facts.map((f) => (
-                        <li
-                          key={f.label}
-                          className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm"
-                        >
-                          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
-                            {f.label}
-                          </p>
-                          <p className="mt-1 text-sm font-bold text-slate-900">
-                            {f.value}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
+                  {overview ? (
+                    <PeptidePlainEnglishOverview
+                      slug={slug}
+                      fallbackSlug={peptide.slug}
+                      name={peptide.name}
+                    />
+                  ) : (
+                    <section id="overview">
+                      <h2 className="text-xl font-bold text-slate-900">
+                        What is {peptide.name}?
+                      </h2>
+                      <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                        {peptide.about}
+                      </p>
+                    </section>
+                  )}
+                  {peptide.facts?.length ? (
+                    <section>
+                      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                        {peptide.facts.map((f) => (
+                          <li
+                            key={f.label}
+                            className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm"
+                          >
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                              {f.label}
+                            </p>
+                            <p className="mt-1 text-sm font-bold text-slate-900">
+                              {f.value}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ) : null}
 
                   {/* How it works */}
                   <section id="how-it-works">
@@ -405,7 +443,8 @@ export default async function PeptideDetailPage({ params }) {
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {peptide.howItWorks ||
-                        `${peptide.name} engages multiple pathways that together support appetite control, metabolic efficiency, and fat oxidation.`}
+                        overview?.overview ||
+                        `${peptide.name} is an investigational research compound reviewed for educational comparison.`}
                     </p>
                     {peptide.mechanisms?.length ? (
                       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -453,48 +492,44 @@ export default async function PeptideDetailPage({ params }) {
                     ) : null}
                   </section>
 
-                  {/* Results */}
-                  <section id="results">
-                    <h2 className="text-xl font-bold text-slate-900">
-                      {peptide.resultsNarrative
-                        ? "Results"
-                        : "Expected Results Over Time"}
-                    </h2>
-                    <div className="mt-4">
-                      {peptide.resultsNarrative ? (
-                        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {peptide.resultsNarrative.body}
-                          </p>
-                          {peptide.resultsNarrative.href ? (
-                            <a
-                              href={peptide.resultsNarrative.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-3 inline-flex text-sm font-semibold text-violet-700 hover:underline"
-                            >
-                              {peptide.resultsNarrative.linkLabel ||
-                                "View study"}{" "}
-                              →
-                            </a>
-                          ) : null}
-                        </div>
-                      ) : showChart ? (
-                        <PeptideResultsChart
-                          name={peptide.name}
-                          lossPct={peptide.chartLossPct}
-                        />
-                      ) : (
-                        <div className="rounded-xl border border-dashed border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
-                          Trajectory modeling for this peptide focuses on
-                          research signals rather than weight-loss curves. See
-                          comparison and research sections below.
-                        </div>
-                      )}
-                    </div>
-                  </section>
+                  {hasResults ? (
+                    <section id="results">
+                      <h2 className="text-xl font-bold text-slate-900">
+                        {peptide.resultsNarrative
+                          ? "Results"
+                          : "Expected Results Over Time"}
+                      </h2>
+                      <div className="mt-4">
+                        {peptide.resultsNarrative ? (
+                          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                            <p className="text-sm leading-relaxed text-slate-600">
+                              {peptide.resultsNarrative.body}
+                            </p>
+                            {peptide.resultsNarrative.href ? (
+                              <a
+                                href={peptide.resultsNarrative.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 inline-flex text-sm font-semibold text-violet-700 hover:underline"
+                              >
+                                {peptide.resultsNarrative.linkLabel ||
+                                  "View study"}{" "}
+                                →
+                              </a>
+                            ) : null}
+                          </div>
+                        ) : (
+                          <PeptideResultsChart
+                            name={peptide.name}
+                            lossPct={peptide.chartLossPct}
+                          />
+                        )}
+                      </div>
+                    </section>
+                  ) : null}
 
                   {/* Compare table */}
+                  {peptide.compare?.columns?.length ? (
                   <section id="compare">
                     <h2 className="text-xl font-bold text-slate-900">
                       How {peptide.name} Compares
@@ -545,6 +580,7 @@ export default async function PeptideDetailPage({ params }) {
                       </table>
                     </div>
                   </section>
+                  ) : null}
 
                   {/* Side effects / dosage anchors */}
                   <section
@@ -556,7 +592,9 @@ export default async function PeptideDetailPage({ params }) {
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {peptide.sideEffects ||
-                        "Commonly discussed effects in research summaries include mild gastrointestinal symptoms (nausea, reduced appetite). Always follow a qualified clinician's protocol. This page is educational only."}
+                        (peptide.isFallback
+                          ? "Human safety data are limited for this compound. This page is educational only and is not a treatment guide."
+                          : "Commonly discussed effects in research summaries include mild gastrointestinal symptoms (nausea, reduced appetite). Always follow a qualified clinician's protocol. This page is educational only.")}
                     </p>
                   </section>
 
@@ -568,8 +606,9 @@ export default async function PeptideDetailPage({ params }) {
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {peptide.dosage || (
                         <>
-                          Research protocols often use once-weekly subcutaneous
-                          administration with gradual titration. Use the{" "}
+                          {peptide.isFallback
+                            ? "No established human dosage is presented here. Use the "
+                            : "Research protocols often use once-weekly subcutaneous administration with gradual titration. Use the "}
                           <Link
                             href="/calculator"
                             className="font-semibold text-violet-700 hover:underline"
@@ -587,6 +626,7 @@ export default async function PeptideDetailPage({ params }) {
 
             {/* Right sidebar cards */}
             <aside className="space-y-5 xl:sticky xl:top-[4.5rem] xl:self-start">
+              {peptide.benefits?.length ? (
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <h3 className="text-sm font-bold text-slate-900">Key Benefits</h3>
                 <ul className="mt-3 space-y-2">
@@ -601,7 +641,9 @@ export default async function PeptideDetailPage({ params }) {
                   ))}
                 </ul>
               </div>
+              ) : null}
 
+              {peptide.glance?.length ? (
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <h3 className="text-sm font-bold text-slate-900">
                   {peptide.name} At A Glance
@@ -630,6 +672,7 @@ export default async function PeptideDetailPage({ params }) {
                   Compare Best Research {peptide.name} Providers
                 </Link>
               </div>
+              ) : null}
 
               {peptide.moleculeCardImage ? (
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
