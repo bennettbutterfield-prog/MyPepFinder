@@ -138,6 +138,7 @@ export const GOAL_SIDEBAR = [
 
 export const GOAL_TOOLS = [
   { label: "Peptide Finder", href: "/research-library", icon: "search" },
+  { label: "Peptide Quiz", href: "/quiz", icon: "search" },
   { label: "Dosage Calculator", href: "/calculator", icon: "calc" },
 ];
 

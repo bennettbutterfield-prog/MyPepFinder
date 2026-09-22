@@ -7,6 +7,7 @@ const COLUMNS = [
     links: [
       { label: "Peptides", href: "/research-library" },
       { label: "Goals", href: "/goals" },
+      { label: "Quiz", href: "/quiz" },
       { label: "Providers", href: "/recommendations" },
       { label: "Research", href: "/research-library" },
     ],

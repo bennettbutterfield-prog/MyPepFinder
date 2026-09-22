@@ -6,6 +6,7 @@ const COLUMNS = [
     title: "Explore",
     links: [
       { label: "Peptide Finder", href: "/#peptide-finder" },
+      { label: "Peptide Quiz", href: "/quiz" },
       { label: "Dosage Calculator", href: "/calculator" },
       { label: "Research Library", href: "/research-library" },
       { label: "Recommendations", href: "/recommendations" },

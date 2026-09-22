@@ -180,12 +180,20 @@ export default function CalculatorPage() {
         <div className="flex flex-col gap-5">
           <CalculatorToolsSidebar />
           <DosageCalculator />
-          <Link
-            href="/recommendations"
-            className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700 sm:w-auto sm:self-center sm:px-8"
-          >
-            Explore Top Ranked Providers
-          </Link>
+          <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
+            <Link
+              href="/quiz"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl border-2 border-indigo-300 bg-white px-5 py-3 text-center text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50 sm:w-auto sm:px-8"
+            >
+              Take the Peptide Quiz
+            </Link>
+            <Link
+              href="/recommendations"
+              className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition hover:bg-indigo-700 sm:w-auto sm:px-8"
+            >
+              Explore Top Ranked Providers
+            </Link>
+          </div>
         </div>
 
         <section className="mt-14 sm:mt-16">

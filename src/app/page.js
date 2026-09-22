@@ -202,8 +202,14 @@ export default function Home() {
 
               <div className="flex flex-wrap gap-3.5">
                 <Link
-                  href="/research-library"
+                  href="/quiz"
                   className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-indigo-600 px-6 text-base font-semibold text-white shadow-md shadow-indigo-600/25 transition hover:bg-indigo-700"
+                >
+                  Take the Peptide Quiz
+                </Link>
+                <Link
+                  href="/research-library"
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-xl border-2 border-indigo-300 bg-white px-6 text-base font-semibold text-indigo-700 transition hover:bg-indigo-50"
                 >
                   Explore Peptides
                 </Link>

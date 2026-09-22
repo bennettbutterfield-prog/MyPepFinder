@@ -5,7 +5,8 @@ import { useState } from "react";
 
 const NAV = [
   { label: "Peptides", href: "/research-library" },
-  { label: "Goals", href: "/#peptide-finder" },
+  { label: "Goals", href: "/goals" },
+  { label: "Quiz", href: "/quiz" },
   { label: "Providers", href: "/recommendations" },
   { label: "Research", href: "/research-library" },
   { label: "Dosage Calculator", href: "/calculator" },
