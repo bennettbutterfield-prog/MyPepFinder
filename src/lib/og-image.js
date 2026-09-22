@@ -509,6 +509,123 @@ function ProviderCardsPreview() {
   );
 }
 
+function QuizPreview() {
+  const goals = [
+    { label: "Lose weight", prompt: "Appetite and body fat", fill: "blue" },
+    { label: "Build muscle", prompt: "Lean mass and recovery", fill: "white" },
+    { label: "Repair", prompt: "Tendons and tissue", fill: "white" },
+    { label: "Focus and mood", prompt: "Attention and memory", fill: "blue" },
+    { label: "Sleep better", prompt: "Falling and staying asleep", fill: "blue" },
+    { label: "Hair growth", prompt: "Follicles and scalp", fill: "white" },
+  ];
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: 500,
+        height: 420,
+        borderRadius: 18,
+        overflow: "hidden",
+        border: "1px solid #e2e8f0",
+        background: "white",
+        boxShadow: "0 18px 50px rgba(15,23,42,0.12)",
+        padding: 22,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: "#94a3b8",
+          marginBottom: 8,
+        }}
+      >
+        Step 1 of 3
+      </div>
+      <div
+        style={{
+          display: "flex",
+          height: 8,
+          borderRadius: 999,
+          background: "#e2e8f0",
+          overflow: "hidden",
+          marginBottom: 16,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            width: "34%",
+            height: "100%",
+            background: "#4f46e5",
+          }}
+        />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 22,
+          fontWeight: 800,
+          color: "#0f172a",
+          marginBottom: 14,
+          letterSpacing: "-0.03em",
+        }}
+      >
+        What are you trying to optimize?
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 10,
+        }}
+      >
+        {goals.map((goal) => (
+          <div
+            key={goal.label}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: 222,
+              padding: "12px 14px",
+              borderRadius: 14,
+              background: goal.fill === "blue" ? "#e0f2fe" : "#ffffff",
+              border:
+                goal.fill === "blue" ? "1px solid #bae6fd" : "1px solid #e2e8f0",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                fontSize: 16,
+                fontWeight: 700,
+                color: "#0f172a",
+              }}
+            >
+              {goal.label}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 12,
+                color: "#64748b",
+                marginTop: 3,
+              }}
+            >
+              {goal.prompt}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function LibraryPreview() {
   return (
     <div
@@ -619,6 +736,13 @@ function renderPreview({ preview, previewImage, accent }) {
       </PreviewShell>
     );
   }
+  if (preview === "quiz") {
+    return (
+      <PreviewShell>
+        <QuizPreview />
+      </PreviewShell>
+    );
+  }
   if (previewImage) {
     return (
       <PreviewShell>
@@ -663,7 +787,7 @@ function renderPreview({ preview, previewImage, accent }) {
  *   title: string;
  *   description?: string;
  *   badge?: string;
- *   preview?: "calculator-peptide" | "calculator-calorie" | "providers" | "library" | "default";
+ *   preview?: "calculator-peptide" | "calculator-calorie" | "providers" | "library" | "quiz" | "default";
  *   previewImage?: string | null;
  *   accent?: keyof typeof ACCENTS;
  * }} options

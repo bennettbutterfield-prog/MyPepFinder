@@ -7,6 +7,19 @@ export const metadata = {
   title: "Peptide Quiz | MyPepFinder",
   description:
     "Answer two questions about what you want to optimize. We match a peptide based on researched effects — not marketing claims.",
+  openGraph: {
+    title: "Peptide Quiz | MyPepFinder",
+    description:
+      "Choose what to optimize, refine the research effect, and get a peptide match.",
+    type: "website",
+    url: "/quiz",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Peptide Quiz | MyPepFinder",
+    description:
+      "Choose what to optimize, refine the research effect, and get a peptide match.",
+  },
 };
 
 export default function PeptideQuizPage() {
