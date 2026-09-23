@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
+import { getSiteBaseUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -14,23 +15,27 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ||
-      (process.env.VERCEL_PROJECT_PRODUCTION_URL
-        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-        : "http://localhost:3000")
-  ),
+  metadataBase: new URL(getSiteBaseUrl()),
   title: "MyPepFinder — Optimize You",
   description:
     "Research peptides. Compare providers. Optimize with confidence. Educational peptide research and comparison platform.",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    googleBot: {
+      "max-image-preview": "standard",
+    },
+  },
   openGraph: {
     title: "Optimize You. | MyPepFinder",
     description: "Research peptides. Compare providers.",
     type: "website",
     siteName: "MyPepFinder",
+    url: "/",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Optimize You. | MyPepFinder",
     description: "Research peptides. Compare providers.",
   },

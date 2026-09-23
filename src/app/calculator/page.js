@@ -18,7 +18,7 @@ export const metadata = {
     url: "/calculator",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Peptide Dosage Calculator | MyPepFinder",
     description:
       "Calculate reconstitution amounts and injection volumes for your peptide protocol.",

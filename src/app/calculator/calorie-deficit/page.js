@@ -16,7 +16,7 @@ export const metadata = {
     url: "/calculator/calorie-deficit",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Calorie Deficit Calculator | MyPepFinder",
     description:
       "Find your calorie deficit, projected timeline, and macro targets for realistic weight loss.",

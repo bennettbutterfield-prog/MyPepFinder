@@ -2,6 +2,9 @@ import { getAllPeptidePageSlugs } from "@/data/peptide-pages";
 import { getAllGoalSlugs } from "@/data/goal-pages";
 import { POPULAR_PEPTIDES } from "@/data/popular-peptides";
 import { peptideProducts } from "@/data/peptide-taxonomy";
+import { getSiteBaseUrl } from "@/lib/site-url";
+
+export { getSiteBaseUrl, PRODUCTION_SITE_URL } from "@/lib/site-url";
 
 const TAXONOMY_ALIASES = [
   "glow",
@@ -10,15 +13,6 @@ const TAXONOMY_ALIASES = [
   "n-acetyl-selank-amidate",
   "n-acetyl-semax-amidate",
 ];
-
-export function getSiteBaseUrl() {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000")
-  );
-}
 
 /** Slugs that have static peptide profile pages (matches generateStaticParams). */
 export function getPeptideProfileSlugs() {

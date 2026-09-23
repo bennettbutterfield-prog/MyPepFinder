@@ -15,7 +15,7 @@ export const metadata = {
     url: "/quiz",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Peptide Quiz | MyPepFinder",
     description:
       "An adaptive research finder: refine the outcome, see the evidence, and know where it stops.",
