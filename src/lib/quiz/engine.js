@@ -30,9 +30,7 @@ export const RESULT_STATES = {
 };
 
 function resolvedGoal(answers) {
-  if (answers.goal && answers.goal !== "unsure") return answers.goal;
-  if (answers["goal.unsure"]) return answers["goal.unsure"];
-  return null;
+  return answers.goal || null;
 }
 
 function primaryOutcome(answers) {

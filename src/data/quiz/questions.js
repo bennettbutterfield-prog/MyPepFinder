@@ -56,12 +56,6 @@ export const QUIZ_GOALS = [
   },
 ];
 
-export const UNSURE_GOAL = {
-  id: "unsure",
-  label: "I’m not sure — help me narrow it down",
-  prompt: "We’ll start with what you notice most day to day.",
-};
-
 const GOAL_OPTIONS = QUIZ_GOALS.map((goal) => ({
   id: goal.id,
   label: goal.label,
@@ -111,19 +105,9 @@ export const QUIZ_QUESTIONS = [
     text: "What would you like to improve?",
     helper:
       "Choose your main goal. We’ll ask a few focused questions to find the most relevant research.",
-    options: [...GOAL_OPTIONS, UNSURE_GOAL],
+    options: GOAL_OPTIONS,
     when: () => true,
     whyItMatters: "The primary goal selects which research questions we ask next.",
-  }),
-  q({
-    id: "goal.unsure",
-    stage: "goal",
-    text: "Which everyday priority is closest?",
-    helper:
-      "Pick the area that would matter most if you could only research one thing first.",
-    options: GOAL_OPTIONS,
-    when: answerIs("goal", "unsure"),
-    whyItMatters: "Maps an unsure start onto one primary research family.",
   }),
 
   // A. Weight

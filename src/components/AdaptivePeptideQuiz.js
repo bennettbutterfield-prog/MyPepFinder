@@ -12,7 +12,6 @@ import {
   RESULT_STATES,
 } from "@/lib/quiz/engine";
 import { PeptideResultsChart } from "@/components/PeptideResultsChart";
-import { QUESTION_SEQUENCE } from "@/data/quiz/questions";
 import { getPublishedWeightLossChart } from "@/lib/quiz/weight-chart";
 
 const CARD =
@@ -180,18 +179,24 @@ export function AdaptivePeptideQuiz() {
   const question = showResults ? null : getQuestionForContext(currentId, ctx);
   const stage = showResults ? "results" : question?.stage || "goal";
   const results = showResults ? explainResults(answers) : null;
-  const liveChips = useMemo(
-    () => (answers.goal ? explainResults(answers).chips : []),
-    [answers]
-  );
 
   useEffect(() => {
     setProgress(progressPercent(answers, showResults));
   }, [answers, showResults]);
 
   useEffect(() => {
-    headingRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    const toTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    toTop();
+    const frame = window.requestAnimationFrame(toTop);
     headingRef.current?.focus({ preventScroll: true });
+    return () => window.cancelAnimationFrame(frame);
   }, [currentId, showResults]);
 
   function applyAnswer(questionId, optionId) {
@@ -200,9 +205,9 @@ export function AdaptivePeptideQuiz() {
     return merged;
   }
 
-  function continueForward() {
-    if (!question || !picked) return;
-    const nextAnswers = applyAnswer(question.id, picked);
+  function advanceWith(optionId) {
+    if (!question || !optionId) return;
+    const nextAnswers = applyAnswer(question.id, optionId);
     setHistory((prev) => (prev.includes(question.id) ? prev : [...prev, question.id]));
     const nextQuestion = getNextQuestion(nextAnswers);
     if (nextQuestion) {
@@ -243,20 +248,6 @@ export function AdaptivePeptideQuiz() {
     setShowResults(false);
     setExcludedOpen(false);
     setProgress(0);
-  }
-
-  function editChip(questionId) {
-    const index = QUESTION_SEQUENCE.indexOf(questionId);
-    const next = { ...answers };
-    for (const id of QUESTION_SEQUENCE) {
-      if (QUESTION_SEQUENCE.indexOf(id) >= index) delete next[id];
-    }
-    const cleaned = pruneAnswers(next);
-    setAnswers(cleaned);
-    setHistory((prev) => prev.filter((id) => cleaned[id]));
-    setCurrentId(questionId);
-    setPicked(null);
-    setShowResults(false);
   }
 
   return (
@@ -304,26 +295,12 @@ export function AdaptivePeptideQuiz() {
                 {question.helper}
               </p>
             ) : null}
-            {liveChips.length ? (
-              <div className="mt-3 flex flex-wrap gap-2">
-                {liveChips.map((chip) => (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    onClick={() => editChip(chip.questionId)}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-sky-300"
-                  >
-                    {chip.label} ✎
-                  </button>
-                ))}
-              </div>
-            ) : null}
             <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
               {question.options.map((option) => (
                 <button
                   key={option.id}
                   type="button"
-                  onClick={() => setPicked(option.id)}
+                  onClick={() => advanceWith(option.id)}
                   aria-pressed={picked === option.id}
                   className={`${fillClass(picked === option.id)} min-h-14 sm:min-h-[5.5rem]`}
                 >
@@ -351,14 +328,6 @@ export function AdaptivePeptideQuiz() {
             </button>
             <button
               type="button"
-              onClick={continueForward}
-              disabled={!picked}
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Continue
-            </button>
-            <button
-              type="button"
               onClick={restart}
               className="sm:ml-auto text-sm font-semibold text-slate-500 hover:text-slate-800"
             >
@@ -383,18 +352,6 @@ export function AdaptivePeptideQuiz() {
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             {results.summary}
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {results.chips.map((chip) => (
-              <button
-                key={chip.id}
-                type="button"
-                onClick={() => editChip(chip.questionId)}
-                className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-sky-300"
-              >
-                {chip.label} ✎
-              </button>
-            ))}
-          </div>
           {results.careMessage ? (
             <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-slate-700">
               {results.careMessage}
