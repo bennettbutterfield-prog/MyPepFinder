@@ -412,11 +412,11 @@ export function AdaptivePeptideQuiz() {
             ))}
           </div>
 
-          {results.state === RESULT_STATES.GAP && !results.cards.length ? (
+          {results.state === RESULT_STATES.GAP ? (
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
-              No library entry meets these filters without stretching the
-              evidence. You can loosen the evidence preference or read the
-              related work below.
+              No library entry is a well-supported match for these exact
+              filters. The cards below are the closest related research we can
+              show without stretching the evidence.
             </p>
           ) : null}
 

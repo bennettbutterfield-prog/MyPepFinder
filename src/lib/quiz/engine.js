@@ -56,35 +56,20 @@ function evidenceFromAnswers(answers) {
   if (answers["shared.evidence"]) return answers["shared.evidence"];
   if (answers["cognition.scope"] === "human-condition") return "human-only";
   if (answers["cognition.scope"] === "early") return "include-early";
-  if (answers["sleep.scope"] === "human" || answers["sleep.scope"] === "supported") {
-    return "human-only";
-  }
-  if (answers["sleep.scope"] === "early") return "include-early";
-  if (answers["aging.endpoint"] === "cells") return "include-early";
-  if (answers["aging.endpoint"] === "lifespan" || answers["aging.endpoint"] === "function") {
-    return "strongest";
-  }
   return null;
 }
 
 function formulationFromAnswers(answers) {
-  const raw =
-    answers["shared.formulation"] ||
-    answers["skin.form"] ||
-    answers["hair.form"] ||
-    null;
+  const raw = answers["shared.formulation"] || answers["skin.form"] || null;
   if (raw === "none" || raw === "any" || raw === "any-separate") return "any";
   return raw;
 }
 
 function needsClinicalCare(answers) {
   return (
-    answers["recovery.context"] === "unexplained" ||
     answers["recovery.skin"] === "active-wound" ||
     answers["recovery.skin"] === "slow-wound" ||
-    answers["skin.repair"] === "open" ||
-    answers["hair.pattern"] === "sudden" ||
-    answers["hair.pattern"] === "patchy" ||
+    answers["skin.outcome"] === "wound" ||
     answers["cognition.memory"] === "worsening" ||
     answers["sexual.context"] === "medication" ||
     answers["sexual.context"] === "fertility-care" ||
@@ -104,31 +89,20 @@ export function normalizeAnswers(answers = {}) {
   const tags = new Set(
     [
       outcome,
-      answers["weight.appetite"],
-      answers["weight.context"],
       answers["weight.abdomen"],
       answers["weight.metabolic"],
-      answers["muscle.context"],
       answers["muscle.bottleneck"],
-      answers["muscle.recovery"],
       answers["muscle.endurance"],
       answers["muscle.hormone"],
-      answers["recovery.context"],
       answers["recovery.tissue"],
       answers["recovery.endpoint"],
       answers["recovery.skin"],
-      answers["recovery.gut"],
       answers["cognition.pattern"],
-      answers["cognition.priority"],
       answers["cognition.memory"],
       answers["sleep.context"],
       answers["sleep.priority"],
-      answers["hair.pattern"],
       answers["hair.target"],
-      answers["skin.lines"],
-      answers["skin.repair"],
       answers["skin.priority"],
-      answers["skin.pigment"],
       answers["sexual.distinction"],
       answers["sexual.population"],
       answers["sexual.context"],
@@ -136,7 +110,6 @@ export function normalizeAnswers(answers = {}) {
       answers["aging.practical"],
       answers["aging.cell"],
       answers["aging.organ"],
-      answers["aging.endpoint"],
       answers["immune.context"],
       answers["immune.location"],
       answers["immune.endpoint"],
@@ -150,11 +123,8 @@ export function normalizeAnswers(answers = {}) {
     formulation,
     tags,
     answers,
-    plateau: answers["weight.context"] === "plateau",
-    keepMuscle:
-      outcome === "keep-muscle" ||
-      answers["weight.metabolic"] === "keep-muscle" ||
-      answers["muscle.context"] === "cut",
+    plateau: false,
+    keepMuscle: outcome === "keep-muscle" || answers["weight.metabolic"] === "keep-muscle",
     visceralMedical: answers["weight.abdomen"] === "visceral-medical",
     generalBelly:
       outcome === "abdominal" && answers["weight.abdomen"] !== "visceral-medical",
@@ -163,7 +133,7 @@ export function normalizeAnswers(answers = {}) {
     includeEarly: evidence === "include-early",
     topicalOnly: formulation === "topical",
     sexualPopulation: answers["sexual.population"] || null,
-    lifespanAsk: outcome === "lifespan" || answers["aging.endpoint"] === "lifespan",
+    lifespanAsk: outcome === "lifespan",
     fewerInfections:
       outcome === "fewer-infections" ||
       answers["immune.endpoint"] === "fewer-infections",
@@ -190,23 +160,11 @@ export function getEligibleQuestions(answers) {
 
 function hasRequiredContext(ctx) {
   if (!ctx.goal || !ctx.outcome) return false;
-  if (ctx.goal === "weight-loss" && ctx.outcome === "hunger") {
-    return Boolean(ctx.answers["weight.appetite"] && ctx.answers["weight.context"]);
-  }
   if (ctx.goal === "weight-loss" && ctx.outcome === "abdominal") {
     return Boolean(ctx.answers["weight.abdomen"]);
   }
-  if (ctx.goal === "muscle" && ctx.outcome === "recover") {
-    return Boolean(ctx.answers["muscle.recovery"]);
-  }
-  if (ctx.goal === "recovery") {
-    return Boolean(ctx.answers["recovery.context"]);
-  }
   if (ctx.goal === "cognition" && (ctx.outcome === "focus" || ctx.outcome === "clarity")) {
     return Boolean(ctx.answers["cognition.pattern"]);
-  }
-  if (ctx.goal === "skin" && ctx.outcome === "lines") {
-    return Boolean(ctx.answers["skin.lines"]);
   }
   if (ctx.goal === "sexual-health") {
     return Boolean(ctx.answers["sexual.context"]);
@@ -264,8 +222,9 @@ export function pruneAnswers(answers) {
   return next;
 }
 
-function claimMatches(claim, ctx) {
+function claimMatches(claim, ctx, { goalOnly = false } = {}) {
   if (!claim.goals?.includes(ctx.goal)) return false;
+  if (goalOnly) return true;
   if (ctx.lifespanAsk && claim.outcomes.includes("lifespan")) return true;
   if (ctx.outcome && claim.outcomes.includes(ctx.outcome)) return true;
   for (const tag of ctx.tags) {
@@ -299,14 +258,34 @@ function pt141PopulationBlocked(compound, ctx) {
   if (compound.id !== "pt-141") return false;
   if (ctx.goal !== "sexual-health") return false;
   if (ctx.sexualPopulation === "men") return true;
-  if (ctx.outcome === "erections") return true;
+  if (ctx.outcome === "erections" || ctx.outcome === "reproductive") return true;
   return false;
 }
 
 function melanotanBlocked(compound, ctx) {
   if (compound.id !== "melanotan-2") return false;
-  if (ctx.answers["skin.pigment"] === "cosmetic-tan") return true;
+  if (ctx.goal === "skin" && ctx.outcome === "pigment") return true;
   if (ctx.outcome === "erections") return true;
+  return false;
+}
+
+function pickClaim(claims) {
+  return [...claims].sort(
+    (a, b) => (BAND_ORDER[a.evidence] ?? 9) - (BAND_ORDER[b.evidence] ?? 9)
+  )[0];
+}
+
+function isSafetyBlocked(compound, ctx) {
+  if (compound.eligibility === "unavailable" || compound.eligibility === "excluded") {
+    return true;
+  }
+  if (compound.kind === "blend" && compound.eligibility !== "supported") return true;
+  if (compound.id === "kisspeptin-10" && ctx.answers["sexual.reproductive"] === "fertility") {
+    return true;
+  }
+  if (tesamorelinBlocked(compound, ctx)) return true;
+  if (pt141PopulationBlocked(compound, ctx)) return true;
+  if (melanotanBlocked(compound, ctx)) return true;
   return false;
 }
 
@@ -420,6 +399,36 @@ export function evaluateCandidates(answers) {
       }
       continue;
     }
+    if (melanotanBlocked(compound, ctx)) {
+      excludedExamples.push({
+        id: compound.id,
+        name: compound.name,
+        reason:
+          "Melanotan-2 is not presented as a safe tanning method or a default erection treatment.",
+      });
+      continue;
+    }
+    if (pt141PopulationBlocked(compound, ctx)) {
+      excludedExamples.push({
+        id: compound.id,
+        name: compound.name,
+        reason:
+          "The approved desire indication is population-specific and is not generalized to this answer.",
+      });
+      continue;
+    }
+    if (compound.id === "kisspeptin-10" && ctx.answers["sexual.reproductive"] === "fertility") {
+      noteExclusion(
+        compound,
+        "Hormone-signal studies do not establish fertility outcomes.",
+        { front: true }
+      );
+      const claim = pickClaim(compound.claims || []);
+      if (claim) {
+        relatedPool.push({ compound, claim, score: 0, band: "related" });
+      }
+      continue;
+    }
     if (compound.eligibility === "related") {
       const relatedClaim = (compound.claims || []).find((item) => claimMatches(item, ctx));
       if (relatedClaim) {
@@ -446,38 +455,12 @@ export function evaluateCandidates(answers) {
       }
       continue;
     }
-    if (compound.id === "kisspeptin-10" && ctx.answers["sexual.reproductive"] === "fertility") {
-      noteExclusion(
-        compound,
-        "Hormone-signal studies do not establish fertility outcomes.",
-        { front: true }
-      );
-      continue;
-    }
     if (tesamorelinBlocked(compound, ctx)) {
       noteExclusion(
         compound,
         "Tesamorelin’s established evidence is not a general belly-fat or weight-loss treatment.",
         { front: true }
       );
-      continue;
-    }
-    if (pt141PopulationBlocked(compound, ctx)) {
-      excludedExamples.push({
-        id: compound.id,
-        name: compound.name,
-        reason:
-          "The approved desire indication is population-specific and is not generalized to this answer.",
-      });
-      continue;
-    }
-    if (melanotanBlocked(compound, ctx)) {
-      excludedExamples.push({
-        id: compound.id,
-        name: compound.name,
-        reason:
-          "Melanotan-2 is not presented as a safe tanning method or a default erection treatment.",
-      });
       continue;
     }
     if (ctx.lifespanAsk && compound.eligibility !== "related") {
@@ -537,6 +520,12 @@ export function evaluateCandidates(answers) {
           reason:
             "Condition-specific or biomarker immune studies do not establish fewer infections in healthy people.",
         });
+        relatedPool.push({
+          compound,
+          claim,
+          score: 0,
+          band: "related",
+        });
         continue;
       }
     }
@@ -545,6 +534,12 @@ export function evaluateCandidates(answers) {
         id: compound.id,
         name: compound.name,
         reason: "No library entry is presented as proven to extend human lifespan.",
+      });
+      relatedPool.push({
+        compound,
+        claim,
+        score: 0,
+        band: "related",
       });
       continue;
     }
@@ -557,7 +552,32 @@ export function evaluateCandidates(answers) {
     });
   }
 
+  if (!scored.length) {
+    const already = new Set(relatedPool.map((row) => row.compound.id));
+    for (const compound of QUIZ_COMPOUNDS) {
+      if (already.has(compound.id) || isSafetyBlocked(compound, ctx)) continue;
+      const fallbackClaims = (compound.claims || []).filter((claim) =>
+        claimMatches(claim, ctx, { goalOnly: true })
+      );
+      if (!fallbackClaims.length) continue;
+      const claim = pickClaim(fallbackClaims);
+      if (!allowedByFormulation(claim, ctx)) continue;
+      relatedPool.push({
+        compound,
+        claim,
+        score: scoreClaim(claim, ctx, compound),
+        band: bandFor(claim, compound),
+      });
+    }
+  }
+
   scored.sort(
+    (a, b) =>
+      (BAND_ORDER[a.claim.evidence] ?? 9) - (BAND_ORDER[b.claim.evidence] ?? 9) ||
+      b.score - a.score ||
+      a.compound.name.localeCompare(b.compound.name)
+  );
+  relatedPool.sort(
     (a, b) =>
       (BAND_ORDER[a.claim.evidence] ?? 9) - (BAND_ORDER[b.claim.evidence] ?? 9) ||
       b.score - a.score ||
@@ -666,6 +686,17 @@ function chipLabels(ctx) {
   return chips;
 }
 
+function uniqueRows(rows) {
+  const seen = new Set();
+  const next = [];
+  for (const row of rows) {
+    if (!row?.compound?.id || seen.has(row.compound.id)) continue;
+    seen.add(row.compound.id);
+    next.push(row);
+  }
+  return next;
+}
+
 function toCard(row, ctx) {
   const { compound, claim } = row;
   const overview = getPeptideOverview(compound.pageSlug);
@@ -678,9 +709,16 @@ function toCard(row, ctx) {
     eligibility: compound.eligibility,
     band: row.band,
     why: whyConnections(claim, ctx, compound),
-    studied: claim.studied || getPeptideOverviewLead(compound.pageSlug) || overview?.overview,
+    studied:
+      claim.studied ||
+      getPeptideOverviewLead(compound.pageSlug) ||
+      overview?.overview ||
+      `${compound.name} appears in the library for related research.`,
     evidence: evidenceLabel(claim),
-    limitation: claim.limitation,
+    limitation:
+      claim.limitation ||
+      compound.eligibilityReason ||
+      "This is nearby research, not a proven match for this exact request.",
     regulatory: claim.regulatory || null,
     sources: claim.sources || overview?.sources?.slice(0, 2) || [],
     findings: claim.findings,
@@ -693,41 +731,49 @@ export function explainResults(answers) {
   const limited = scored.filter((row) => row.band === "limited-human");
   const early = scored.filter((row) => row.band === "early" || row.band === "related");
 
-  let pool;
-  if (ctx.humanOnly) pool = human;
-  else if (ctx.evidence === "strongest") pool = [...human, ...limited, ...early];
-  else pool = [...human, ...limited, ...early];
+  let pool = ctx.humanOnly ? human : [...human, ...limited, ...early];
+  const usedFallback = !pool.length;
 
-  if (ctx.clinicalCare) {
-    pool = pool.filter((row) => row.compound.eligibility !== "supported" || row.band !== "human-outcome");
+  if (!pool.length) {
+    pool = uniqueRows(relatedPool.filter((row) => row.compound.kind !== "blend")).map((row) => ({
+      ...row,
+      band: row.band === "human-outcome" ? "related" : row.band,
+    }));
   }
 
-  const visible = pool.slice(0, 3).map((row) => toCard(row, ctx));
-  const state = resultState(visible.length ? pool.slice(0, 3) : [], ctx);
+  if (ctx.clinicalCare) {
+    const educational = pool.filter(
+      (row) => row.compound.eligibility !== "supported" || row.band !== "human-outcome"
+    );
+    if (educational.length) pool = educational;
+  }
+
+  const visibleRows = pool.slice(0, 3);
+  const visible = visibleRows.map((row) => toCard(row, ctx));
+  const state =
+    ctx.lifespanAsk || usedFallback || !visible.length
+      ? RESULT_STATES.GAP
+      : resultState(visibleRows, ctx);
 
   const careMessage = ctx.clinicalCare
     ? "This answer points to a situation that needs a qualified clinician, not a peptide ranking. The reading below is general education."
     : null;
 
-  const plateauNote = ctx.plateau
-    ? "A plateau on a current medicine is not a reason to switch, escalate, or add another compound."
-    : null;
+  const visibleIds = new Set(visible.map((card) => card.id));
+  const relatedReading = uniqueRows(relatedPool)
+    .filter((row) => row.compound.kind !== "blend" && !visibleIds.has(row.compound.id))
+    .slice(0, 3)
+    .map((row) => toCard(row, ctx));
 
   return {
     state,
     summary: summarySentence(ctx),
     chips: chipLabels(ctx),
-    cards: state === RESULT_STATES.GAP ? (ctx.includeEarly ? visible : []) : visible,
-    relatedReading:
-      state === RESULT_STATES.GAP
-        ? [...relatedPool, ...scored.filter((row) => row.band === "early" || row.band === "related")]
-            .filter((row) => row.compound.kind !== "blend")
-            .slice(0, 3)
-            .map((row) => toCard(row, ctx))
-        : [],
+    cards: visible,
+    relatedReading,
     excluded: excludedExamples.slice(0, 6),
     careMessage,
-    plateauNote,
+    plateauNote: null,
     clinicalCare: ctx.clinicalCare,
     ctx,
   };

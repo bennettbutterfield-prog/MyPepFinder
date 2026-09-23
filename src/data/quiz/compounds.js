@@ -374,7 +374,7 @@ export const QUIZ_COMPOUNDS = [
       claim({
         id: "dsip-sleep",
         goals: ["sleep"],
-        outcomes: ["falling", "staying", "unrefreshed"],
+        outcomes: ["falling", "staying", "unrefreshed", "early-wake", "irregular"],
         evidence: "human-outcome",
         findings: "mixed",
         studied: "Small human studies of sleep, including falling asleep and sleep quality.",
@@ -527,8 +527,8 @@ export const QUIZ_COMPOUNDS = [
     claims: [
       claim({
         id: "sema-weight",
-        goals: ["weight-loss"],
-        outcomes: ["hunger", "overall-weight", "body-weight", "blood-sugar"],
+        goals: ["weight-loss", "muscle"],
+        outcomes: ["hunger", "overall-weight", "body-weight", "blood-sugar", "keep-muscle"],
         evidence: "human-outcome",
         findings: "positive",
         primary: true,
@@ -558,8 +558,8 @@ export const QUIZ_COMPOUNDS = [
     claims: [
       claim({
         id: "tirz-weight",
-        goals: ["weight-loss"],
-        outcomes: ["hunger", "overall-weight", "body-weight", "blood-sugar"],
+        goals: ["weight-loss", "muscle"],
+        outcomes: ["hunger", "overall-weight", "body-weight", "blood-sugar", "keep-muscle"],
         evidence: "human-outcome",
         findings: "positive",
         primary: true,
@@ -588,8 +588,8 @@ export const QUIZ_COMPOUNDS = [
     claims: [
       claim({
         id: "reta-weight",
-        goals: ["weight-loss"],
-        outcomes: ["overall-weight", "hunger", "body-weight", "blood-sugar"],
+        goals: ["weight-loss", "muscle"],
+        outcomes: ["overall-weight", "hunger", "body-weight", "blood-sugar", "keep-muscle"],
         evidence: "human-outcome",
         findings: "positive",
         primary: true,
@@ -1104,7 +1104,7 @@ export const QUIZ_COMPOUNDS = [
       claim({
         id: "survo-liver",
         goals: ["weight-loss"],
-        outcomes: ["metabolic", "fatty-liver", "overall-weight"],
+        outcomes: ["metabolic", "fatty-liver", "overall-weight", "keep-muscle"],
         evidence: "human-outcome",
         findings: "positive",
         studied: "Body weight and inflammatory fatty-liver changes in human trials.",

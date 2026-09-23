@@ -147,50 +147,6 @@ export const QUIZ_QUESTIONS = [
       "Hunger, scale weight, composition, abdominal fat, and metabolic research are different questions.",
   }),
   q({
-    id: "weight.appetite",
-    stage: "details",
-    text: "Which part is most difficult?",
-    helper:
-      "This refines the explanation. It does not predict how any one medicine would work for you.",
-    options: [
-      { id: "meal-satisfaction", label: "Feeling satisfied after a meal" },
-      { id: "between-meals", label: "Hunger between meals" },
-      { id: "food-thoughts", label: "Frequent thoughts about food" },
-      { id: "keep-off", label: "Keeping weight off after losing it" },
-      { id: "no-pattern", label: "No clear pattern" },
-    ],
-    when: and(goalIs("weight-loss"), answerIs("weight.outcome", "hunger")),
-    whyItMatters:
-      "Appetite patterns change how we describe the research, not which drug is assigned.",
-  }),
-  q({
-    id: "weight.context",
-    stage: "details",
-    text: "Which best describes what you’re researching?",
-    options: [
-      { id: "general", label: "General weight management" },
-      { id: "cosmetic", label: "A small cosmetic change near my usual weight" },
-      {
-        id: "plateau",
-        label: "A plateau while already using a weight-management medicine",
-      },
-      { id: "medical", label: "Studies in a specific medical condition" },
-      { id: "comparing", label: "Just comparing the research" },
-    ],
-    when: and(
-      goalIs("weight-loss"),
-      answerIs(
-        "weight.outcome",
-        "hunger",
-        "overall-weight",
-        "keep-muscle",
-        "unsure"
-      )
-    ),
-    whyItMatters:
-      "A plateau is not a reason to escalate, switch, or stack compounds.",
-  }),
-  q({
     id: "weight.abdomen",
     stage: "details",
     text: "Which question are you trying to answer?",
@@ -220,12 +176,7 @@ export const QUIZ_QUESTIONS = [
       { id: "keep-muscle", label: "Maintaining muscle during weight loss" },
       { id: "unsure", label: "Not sure" },
     ],
-    when: and(
-      goalIs("weight-loss"),
-      (ctx) =>
-        ctx.answers["weight.outcome"] === "metabolic" ||
-        ctx.answers["weight.context"] === "medical"
-    ),
+    when: and(goalIs("weight-loss"), answerIs("weight.outcome", "metabolic")),
     whyItMatters:
       "Weight, glucose, liver fat, and muscle retention are separate study endpoints.",
   }),
@@ -248,24 +199,6 @@ export const QUIZ_QUESTIONS = [
       "Size, strength, recovery, endurance, and hormone-release studies are not interchangeable.",
   }),
   q({
-    id: "muscle.context",
-    stage: "details",
-    text: "What is your current goal?",
-    helper: "This defines the desired outcome, not a diagnosis of hormone deficiency.",
-    options: [
-      { id: "gain", label: "Gain weight and muscle" },
-      { id: "recomp", label: "Improve muscle at a similar body weight" },
-      { id: "cut", label: "Lose weight while keeping muscle" },
-      { id: "age", label: "Maintain muscle with age" },
-      { id: "researching", label: "Just researching" },
-    ],
-    when: and(
-      goalIs("muscle"),
-      answerIs("muscle.outcome", "size", "strength", "keep-muscle")
-    ),
-    whyItMatters: "Cuts, gains, and age-related retention point to different literature.",
-  }),
-  q({
     id: "muscle.bottleneck",
     stage: "details",
     text: "What is getting in the way most?",
@@ -282,25 +215,6 @@ export const QUIZ_QUESTIONS = [
       answerIs("muscle.outcome", "size", "strength", "keep-muscle", "recover")
     ),
     whyItMatters: "Soreness and a known injury need different research paths.",
-  }),
-  q({
-    id: "muscle.recovery",
-    stage: "details",
-    text: "Are you focused on normal workout recovery or an injury?",
-    options: [
-      { id: "soreness", label: "Normal soreness between sessions" },
-      { id: "injury", label: "A known muscle, tendon, or ligament injury" },
-      { id: "joint", label: "Joint discomfort" },
-      { id: "unexplained", label: "Unexplained pain" },
-    ],
-    when: and(
-      goalIs("muscle"),
-      (ctx) =>
-        ctx.answers["muscle.outcome"] === "recover" ||
-        ctx.answers["muscle.bottleneck"] === "injury"
-    ),
-    whyItMatters:
-      "Known injury answers enter tissue-repair research without changing the primary muscle goal.",
   }),
   q({
     id: "muscle.endurance",
@@ -356,23 +270,8 @@ export const QUIZ_QUESTIONS = [
       { id: "unsure", label: "Not sure — help me clarify" },
     ],
     when: (ctx) =>
-      ctx.goal === "recovery" ||
-      ["injury", "joint"].includes(ctx.answers["muscle.recovery"]),
+      ctx.goal === "recovery" || ctx.answers["muscle.bottleneck"] === "injury",
     whyItMatters: "Tissue type determines which repair literature is even relevant.",
-  }),
-  q({
-    id: "recovery.context",
-    stage: "details",
-    text: "Which context fits best?",
-    options: [
-      { id: "soreness", label: "Normal soreness after activity" },
-      { id: "identified", label: "A professionally identified injury or condition" },
-      { id: "unexplained", label: "Persistent unexplained symptoms" },
-      { id: "general", label: "General research, not a current problem" },
-    ],
-    when: (ctx) =>
-      ctx.goal === "recovery" || Boolean(ctx.answers["recovery.area"]),
-    whyItMatters: "Unexplained symptoms are not diagnosed by this quiz.",
   }),
   q({
     id: "recovery.tissue",
@@ -384,10 +283,7 @@ export const QUIZ_QUESTIONS = [
       { id: "muscle", label: "Muscle" },
       { id: "unknown", label: "The cause has not been identified" },
     ],
-    when: and(
-      answerIs("recovery.area", "joint", "unsure"),
-      (ctx) => ctx.answers["recovery.context"]
-    ),
+    when: answerIs("recovery.area", "joint", "unsure"),
     whyItMatters: "Body location alone does not identify the tissue being studied.",
   }),
   q({
@@ -422,19 +318,6 @@ export const QUIZ_QUESTIONS = [
     whyItMatters:
       "Active or nonhealing wounds get a care-oriented explanation, not a self-treatment match.",
   }),
-  q({
-    id: "recovery.gut",
-    stage: "details",
-    text: "Which question interests you?",
-    options: [
-      { id: "lining", label: "Repair of the gut lining" },
-      { id: "ibd", label: "Inflammatory bowel-condition research" },
-      { id: "symptoms", label: "General digestive symptoms without a known cause" },
-      { id: "evidence", label: "Understanding the evidence" },
-    ],
-    when: answerIs("recovery.area", "gut"),
-    whyItMatters: "The quiz does not diagnose a gut condition from symptoms.",
-  }),
 
   // D. Cognition
   q({
@@ -467,22 +350,6 @@ export const QUIZ_QUESTIONS = [
     ],
     when: and(goalIs("cognition"), answerIs("cognition.outcome", "focus", "clarity")),
     whyItMatters: "Stress-linked focus and everyday productivity studies are not the same.",
-  }),
-  q({
-    id: "cognition.priority",
-    stage: "details",
-    text: "Which should we prioritize?",
-    options: [
-      { id: "calmer", label: "Calmer thoughts" },
-      { id: "attention", label: "Attention itself" },
-      { id: "sleep", label: "Sleep quality" },
-    ],
-    when: and(
-      goalIs("cognition"),
-      answerIs("cognition.pattern", "stress", "sleep")
-    ),
-    whyItMatters:
-      "Sleep is only rerouted if you choose it. Anxiety studies are not sleep-efficacy evidence.",
   }),
   q({
     id: "cognition.memory",
@@ -528,7 +395,7 @@ export const QUIZ_QUESTIONS = [
       { id: "irregular", label: "An irregular sleep schedule" },
     ],
     when: (ctx) =>
-      ctx.goal === "sleep" || ctx.answers["cognition.priority"] === "sleep",
+      ctx.goal === "sleep" || ctx.answers["cognition.pattern"] === "sleep",
     whyItMatters: "Onset, maintenance, and schedule problems are different sleep questions.",
   }),
   q({
@@ -557,18 +424,6 @@ export const QUIZ_QUESTIONS = [
     when: answerIs("sleep.context", "racing"),
     whyItMatters: "Keeps anxiety literature from being treated as insomnia treatment.",
   }),
-  q({
-    id: "sleep.scope",
-    stage: "details",
-    text: "What would you like to compare?",
-    options: [
-      { id: "human", label: "What human sleep studies actually found" },
-      { id: "early", label: "Early experimental sleep research too" },
-      { id: "supported", label: "Whether the library contains a well-supported option" },
-    ],
-    when: (ctx) => Boolean(ctx.answers["sleep.outcome"]),
-    whyItMatters: "Can set evidence scope directly for this short branch.",
-  }),
 
   // F. Hair
   q({
@@ -587,21 +442,6 @@ export const QUIZ_QUESTIONS = [
     whyItMatters: "Hair-shaft appearance is not the same as hair regrowth.",
   }),
   q({
-    id: "hair.pattern",
-    stage: "details",
-    text: "Which pattern are you researching?",
-    options: [
-      { id: "gradual", label: "Gradual thinning" },
-      { id: "sudden", label: "Sudden shedding" },
-      { id: "patchy", label: "Patchy loss" },
-      { id: "identified", label: "A medically identified condition" },
-      { id: "unsure", label: "Not sure" },
-    ],
-    when: and(goalIs("hair"), answerIs("hair.outcome", "density", "thinning", "shedding")),
-    whyItMatters:
-      "Sudden or patchy loss should prompt evaluation of the cause, not a confident peptide choice.",
-  }),
-  q({
     id: "hair.target",
     stage: "details",
     text: "What would you want a study to show?",
@@ -615,18 +455,6 @@ export const QUIZ_QUESTIONS = [
     ],
     when: goalIs("hair"),
     whyItMatters: "Human-tissue experiments outside the body stay laboratory evidence.",
-  }),
-  q({
-    id: "hair.form",
-    stage: "details",
-    text: "Which type of research do you want to see?",
-    options: [
-      { id: "topical", label: "Products applied to the scalp" },
-      { id: "any", label: "Any verified formulation" },
-      { id: "none", label: "No preference" },
-    ],
-    when: goalIs("hair"),
-    whyItMatters: "A laboratory follicle experiment is not a successful topical treatment.",
   }),
 
   // G. Skin
@@ -647,36 +475,6 @@ export const QUIZ_QUESTIONS = [
       "Expression lines, structure, irritation, marks, pigment, and wounds are different paths.",
   }),
   q({
-    id: "skin.lines",
-    stage: "details",
-    text: "Which kind of lines are you researching?",
-    options: [
-      { id: "expression", label: "Lines most noticeable when smiling or frowning" },
-      { id: "rest", label: "Lines visible at rest" },
-      { id: "loose", label: "Overall loose or thin-looking skin" },
-      { id: "unsure", label: "Not sure" },
-    ],
-    when: and(goalIs("skin"), answerIs("skin.outcome", "lines")),
-    whyItMatters: "Expression-line and skin-structure research differ.",
-  }),
-  q({
-    id: "skin.repair",
-    stage: "details",
-    text: "Which best describes the area?",
-    options: [
-      { id: "healed", label: "Fully healed with a remaining mark" },
-      { id: "irritated", label: "Currently irritated" },
-      { id: "open", label: "An open wound" },
-      { id: "diagnosed", label: "A diagnosed skin condition" },
-      { id: "general", label: "General research" },
-    ],
-    when: and(
-      goalIs("skin"),
-      answerIs("skin.outcome", "marks", "irritation", "wound")
-    ),
-    whyItMatters: "Open wounds reroute to care-oriented recovery reading.",
-  }),
-  q({
     id: "skin.priority",
     stage: "details",
     text: "Which matters most?",
@@ -685,12 +483,7 @@ export const QUIZ_QUESTIONS = [
       { id: "texture", label: "Improving texture after healing" },
       { id: "both", label: "Understanding both" },
     ],
-    when: and(
-      goalIs("skin"),
-      (ctx) =>
-        ctx.answers["skin.outcome"] === "irritation" ||
-        ctx.answers["skin.repair"] === "irritated"
-    ),
+    when: and(goalIs("skin"), answerIs("skin.outcome", "irritation")),
     whyItMatters: "A blend has not demonstrated both effects together.",
   }),
   q({
@@ -705,20 +498,6 @@ export const QUIZ_QUESTIONS = [
     ],
     when: goalIs("skin"),
     whyItMatters: "Formulation is a hard filter when you restrict it.",
-  }),
-  q({
-    id: "skin.pigment",
-    stage: "details",
-    text: "Which topic are you researching?",
-    options: [
-      { id: "cosmetic-tan", label: "Cosmetic tanning" },
-      { id: "light-sensitivity", label: "A diagnosed light-sensitivity condition" },
-      { id: "spots", label: "Changes in pigmentation or dark spots" },
-      { id: "biology", label: "General pigment biology" },
-    ],
-    when: and(goalIs("skin"), answerIs("skin.outcome", "pigment")),
-    whyItMatters:
-      "Approved implant evidence cannot validate a research vial or cosmetic tanning.",
   }),
 
   // H. Sexual health
@@ -876,19 +655,6 @@ export const QUIZ_QUESTIONS = [
     when: answerIs("aging.cell", "organs"),
     whyItMatters: "Liver research may include Livagen only with its evidence limitation.",
   }),
-  q({
-    id: "aging.endpoint",
-    stage: "details",
-    text: "What would count as convincing evidence for your goal?",
-    options: [
-      { id: "function", label: "People feeling or functioning better" },
-      { id: "disease", label: "Less disease in people" },
-      { id: "lifespan", label: "Longer human lifespan" },
-      { id: "cells", label: "Changes in cells or animals" },
-    ],
-    when: goalIs("aging"),
-    whyItMatters: "Sets endpoint and evidence scope together.",
-  }),
 
   // J. Immune
   q({
@@ -991,10 +757,7 @@ export const QUIZ_QUESTIONS = [
     ],
     when: (ctx) =>
       !ctx.formulation &&
-      (ctx.goal === "skin" ||
-        ctx.goal === "hair" ||
-        ctx.answers["skin.form"] ||
-        ctx.answers["hair.form"]),
+      (ctx.goal === "skin" || ctx.goal === "hair" || ctx.answers["skin.form"]),
     whyItMatters:
       "If a constraint produces no match, we explain that instead of inventing a formulation.",
   }),

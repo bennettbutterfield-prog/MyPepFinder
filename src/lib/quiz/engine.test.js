@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { peptideProducts } from "../../data/peptide-taxonomy.js";
 import { QUIZ_COMPOUNDS } from "../../data/quiz/compounds.js";
+import { QUIZ_GOALS } from "../../data/quiz/questions.js";
 import {
   canFinish,
   coverageAudit,
@@ -33,15 +34,12 @@ function play(steps) {
 const appetiteJourney = [
   ["goal", "weight-loss"],
   ["weight.outcome", "hunger"],
-  ["weight.appetite", "between-meals"],
-  ["weight.context", "general"],
   ["shared.evidence", "human-only"],
 ];
 
 const expressionJourney = [
   ["goal", "skin"],
   ["skin.outcome", "lines"],
-  ["skin.lines", "expression"],
   ["skin.form", "topical"],
   ["shared.evidence", "include-early"],
 ];
@@ -49,7 +47,6 @@ const expressionJourney = [
 const tendonJourney = [
   ["goal", "recovery"],
   ["recovery.area", "tendon"],
-  ["recovery.context", "identified"],
   ["recovery.endpoint", "healing"],
   ["shared.evidence", "human-only"],
 ];
@@ -58,7 +55,6 @@ const focusStressJourney = [
   ["goal", "cognition"],
   ["cognition.outcome", "focus"],
   ["cognition.pattern", "stress"],
-  ["cognition.priority", "calmer"],
   ["shared.evidence", "strongest"],
 ];
 
@@ -72,7 +68,7 @@ describe("adaptive quiz engine", () => {
       ["goal", "weight-loss"],
       ["weight.outcome", "abdominal"],
     ]);
-    assert.equal(hunger.next.id, "weight.appetite");
+    assert.equal(hunger.next.id, "shared.evidence");
     assert.equal(belly.next.id, "weight.abdomen");
   });
 
@@ -90,45 +86,16 @@ describe("adaptive quiz engine", () => {
     );
   });
 
-  it("does not escalate a medication plateau", () => {
-    const result = play([
-      ["goal", "weight-loss"],
-      ["weight.outcome", "overall-weight"],
-      ["weight.context", "plateau"],
-      ["shared.evidence", "strongest"],
-    ]).results;
-    assert.match(result.plateauNote || "", /not a reason to switch/i);
-  });
-
   it("does not add growth-hormone peptides just to keep muscle", () => {
     const result = play([
       ["goal", "weight-loss"],
       ["weight.outcome", "keep-muscle"],
-      ["weight.context", "general"],
       ["shared.evidence", "human-only"],
     ]).results;
     const gh = ["ipamorelin", "cjc-1295-dac", "hexarelin", "sermorelin"];
+    assert.ok(result.cards.length > 0);
     assert.equal(result.cards.some((card) => gh.includes(card.id)), false);
-  });
-
-  it("keeps cravings from selecting a unique drug winner", () => {
-    const meal = play([
-      ...appetiteJourney.slice(0, 2),
-      ["weight.appetite", "meal-satisfaction"],
-      ["weight.context", "general"],
-      ["shared.evidence", "human-only"],
-    ]).results;
-    const thoughts = play([
-      ...appetiteJourney.slice(0, 2),
-      ["weight.appetite", "food-thoughts"],
-      ["weight.context", "general"],
-      ["shared.evidence", "human-only"],
-    ]).results;
-    assert.deepEqual(
-      meal.cards.map((card) => card.id),
-      thoughts.cards.map((card) => card.id)
-    );
-    assert.equal(meal.state === RESULT_STATES.COMPARE || meal.cards.length > 1, true);
+    assert.ok(result.cards.some((card) => ["glp-1-s", "glp-1-t", "retatrutide"].includes(card.id)));
   });
 
   it("splits muscle soreness from tendon injury", () => {
@@ -141,7 +108,6 @@ describe("adaptive quiz engine", () => {
       ["goal", "muscle"],
       ["muscle.outcome", "recover"],
       ["muscle.bottleneck", "injury"],
-      ["muscle.recovery", "injury"],
     ]);
     assert.equal(injury.next.id, "recovery.area");
   });
@@ -150,12 +116,18 @@ describe("adaptive quiz engine", () => {
     const result = play([
       ["goal", "muscle"],
       ["muscle.outcome", "size"],
-      ["muscle.context", "gain"],
       ["muscle.bottleneck", "slow"],
       ["shared.evidence", "human-only"],
     ]).results;
-    assert.equal(result.cards.some((card) => card.id === "cjc-1295-dac"), false);
-    assert.equal(result.cards.some((card) => card.id === "ipamorelin"), false);
+    assert.ok(result.cards.length > 0);
+    assert.equal(
+      result.cards.some((card) => card.id === "cjc-1295-dac" && card.band === "human-outcome"),
+      false
+    );
+    assert.equal(
+      result.cards.some((card) => card.id === "ipamorelin" && card.band === "human-outcome"),
+      false
+    );
   });
 
   it("scopes focus-plus-stress differently from neurological memory research", () => {
@@ -178,7 +150,7 @@ describe("adaptive quiz engine", () => {
       ["goal", "sleep"],
       ["sleep.outcome", "falling"],
       ["sleep.context", "no-pattern"],
-      ["sleep.scope", "human"],
+      ["shared.evidence", "human-only"],
     ]).results;
     const dsip = result.cards.find((card) => card.id === "dsip");
     if (dsip) {
@@ -192,13 +164,17 @@ describe("adaptive quiz engine", () => {
     const result = play([
       ["goal", "hair"],
       ["hair.outcome", "density"],
-      ["hair.pattern", "gradual"],
       ["hair.target", "human-scalp"],
-      ["hair.form", "topical"],
       ["shared.evidence", "human-only"],
+      ["shared.formulation", "topical"],
     ]).results;
-    assert.equal(result.cards.some((card) => card.id === "ahk-cu"), false);
     assert.equal(result.state, RESULT_STATES.GAP);
+    assert.ok(result.cards.length > 0);
+    const ahk = result.cards.find((card) => card.id === "ahk-cu");
+    if (ahk) {
+      assert.notEqual(ahk.band, "human-outcome");
+      assert.match(ahk.limitation, /dish|laboratory|scalp/i);
+    }
   });
 
   it("keeps SNAP-8 topical expression-line research separate from GHK repair", () => {
@@ -224,7 +200,6 @@ describe("adaptive quiz engine", () => {
     const result = play([
       ["goal", "skin"],
       ["skin.outcome", "pigment"],
-      ["skin.pigment", "cosmetic-tan"],
       ["skin.form", "any-separate"],
       ["shared.evidence", "include-early"],
     ]).results;
@@ -257,7 +232,10 @@ describe("adaptive quiz engine", () => {
     assert.equal(desire.cards.some((card) => card.id === "pt-141"), true);
     assert.equal(erections.cards.some((card) => card.id === "pt-141"), false);
     assert.equal(fertility.cards.some((card) => card.id === "pt-141"), false);
-    assert.equal(fertility.cards.some((card) => card.id === "kisspeptin-10"), false);
+    assert.equal(
+      fertility.cards.some((card) => card.id === "kisspeptin-10" && card.band === "human-outcome"),
+      false
+    );
   });
 
   it("does not generalize Vyleesi to men or unspecified erection answers", () => {
@@ -276,11 +254,14 @@ describe("adaptive quiz engine", () => {
     const result = play([
       ["goal", "aging"],
       ["aging.outcome", "lifespan"],
-      ["aging.endpoint", "lifespan"],
       ["shared.evidence", "strongest"],
     ]).results;
     assert.equal(result.state, RESULT_STATES.GAP);
-    assert.equal(result.cards.length, 0);
+    assert.ok(result.cards.length > 0);
+    assert.equal(
+      result.cards.some((card) => card.band === "human-outcome" && card.findings === "positive"),
+      false
+    );
   });
 
   it("does not invent an immune-booster winner for fewer infections", () => {
@@ -291,15 +272,23 @@ describe("adaptive quiz engine", () => {
       ["immune.endpoint", "fewer-infections"],
       ["shared.evidence", "human-only"],
     ]).results;
-    assert.equal(result.cards.some((card) => card.id === "thymosin-alpha-1"), false);
-    assert.equal(result.state === RESULT_STATES.GAP || result.cards.length === 0, true);
+    assert.equal(result.state, RESULT_STATES.GAP);
+    assert.ok(result.cards.length > 0);
+    assert.equal(
+      result.cards.some((card) => card.id === "thymosin-alpha-1" && card.band === "human-outcome"),
+      false
+    );
   });
 
-  it("returns an honest empty state when human-only filters out tendon research", () => {
+  it("returns nearby research when human-only filters out tendon studies", () => {
     const result = play(tendonJourney).results;
     assert.equal(result.state, RESULT_STATES.GAP);
-    assert.equal(result.cards.length, 0);
-    assert.equal(result.relatedReading.some((card) => card.id === "bpc-157"), true);
+    assert.ok(result.cards.length > 0);
+    assert.equal(
+      result.cards.some((card) => card.id === "bpc-157") ||
+        result.relatedReading.some((card) => card.id === "bpc-157"),
+      true
+    );
   });
 
   it("does not let blends inherit ingredient efficacy", () => {
@@ -347,7 +336,6 @@ describe("adaptive quiz engine", () => {
     const pruned = pruneAnswers({
       goal: "sleep",
       "weight.outcome": "hunger",
-      "weight.appetite": "between-meals",
     });
     assert.equal(pruned["weight.outcome"], undefined);
     assert.equal(pruned.goal, "sleep");
@@ -387,5 +375,32 @@ describe("adaptive quiz engine", () => {
 
   it("starts on the goal question when no answers exist", () => {
     assert.equal(getNextQuestion({}).id, "goal");
+  });
+
+  it("never returns an empty result list for a finished path", () => {
+    const walk = (start, pick) => {
+      let answers = { ...start };
+      for (let i = 0; i < 20; i += 1) {
+        const pruned = pruneAnswers(answers);
+        const next = getNextQuestion(pruned);
+        if (!next) return explainResults(pruned);
+        answers = { ...pruned, [next.id]: pick(next).id };
+      }
+      return explainResults(pruneAnswers(answers));
+    };
+
+    for (const goal of QUIZ_GOALS) {
+      const first = walk({ goal: goal.id }, (question) => question.options[0]);
+      assert.ok(first.cards.length > 0, `empty first-option path for ${goal.id}`);
+      assert.ok(
+        first.cards.every((card) => card.name && card.studied && card.limitation && card.evidence),
+        `null card field on first-option path for ${goal.id}`
+      );
+      const last = walk(
+        { goal: goal.id },
+        (question) => question.options[question.options.length - 1]
+      );
+      assert.ok(last.cards.length > 0, `empty last-option path for ${goal.id}`);
+    }
   });
 });
