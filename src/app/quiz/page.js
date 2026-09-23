@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { HomeFooter } from "@/components/HomeFooter";
 import { HomeHeader } from "@/components/HomeHeader";
-import { PeptideEffectsQuiz } from "@/components/PeptideEffectsQuiz";
+import { AdaptivePeptideQuiz } from "@/components/AdaptivePeptideQuiz";
 
 export const metadata = {
   title: "Peptide Quiz | MyPepFinder",
   description:
-    "Answer two questions about what you want to optimize. We match a peptide based on researched effects — not marketing claims.",
+    "Start with a goal, then answer only the follow-ups that change the research question. Matches published research — not a prescription or a promise.",
   openGraph: {
     title: "Peptide Quiz | MyPepFinder",
     description:
-      "Choose what to optimize, refine the research effect, and get a peptide match.",
+      "An adaptive research finder: refine the outcome, see the evidence, and know where it stops.",
     type: "website",
     url: "/quiz",
   },
@@ -18,7 +18,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Peptide Quiz | MyPepFinder",
     description:
-      "Choose what to optimize, refine the research effect, and get a peptide match.",
+      "An adaptive research finder: refine the outcome, see the evidence, and know where it stops.",
   },
 };
 
@@ -45,17 +45,17 @@ export default function PeptideQuizPage() {
             Research-effects match
           </p>
           <h1 className="text-[1.65rem] font-bold leading-[1.15] tracking-tight text-slate-900 sm:mt-1 sm:text-4xl">
-            Find a peptide for your goal
+            Peptide research finder
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-slate-500 sm:mt-3 sm:text-[15px]">
-            Choose what you want to optimize, then refine the research effect.
-            The match is based on how each peptide is studied — not a promise
-            that it works for you.
+            Start with a goal, then answer only the follow-ups that change the
+            research question. Results explain the match, the studies, and where
+            the evidence stops.
           </p>
         </header>
 
         <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mt-8 sm:rounded-3xl sm:p-8">
-          <PeptideEffectsQuiz />
+          <AdaptivePeptideQuiz />
         </div>
       </main>
 

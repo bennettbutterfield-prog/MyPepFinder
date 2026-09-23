@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test": "node --experimental-default-type=module --experimental-strip-types --no-warnings --test src/lib/quiz/engine.test.js",
     "dev": "next dev -H 127.0.0.1 -p 3000",
     "build": "prisma generate && next build",
     "start": "next start",

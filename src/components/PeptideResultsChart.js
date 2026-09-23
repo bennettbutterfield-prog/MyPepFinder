@@ -12,6 +12,10 @@ export function PeptideResultsChart({
   name,
   lossPct = 24,
   startingWeightDefault = 220,
+  weeks = 48,
+  sourceLabel = null,
+  researchCopy = false,
+  inputId = "peptide-start-weight",
 }) {
   const [startLbs, setStartLbs] = useState(() =>
     Math.min(MAX_LBS, Math.max(MIN_LBS, startingWeightDefault))
@@ -25,8 +29,12 @@ export function PeptideResultsChart({
   const end = Math.round(start * (1 - lossPct / 100));
   const loss = start - end;
 
-  const points = [0, 12, 24, 36, 48].map((week) => {
-    const t = week / 48;
+  const horizon = weeks > 0 ? weeks : 48;
+  const weekTicks = [0, 0.25, 0.5, 0.75, 1].map((part) =>
+    Math.round(horizon * part)
+  );
+  const points = weekTicks.map((week) => {
+    const t = week / horizon;
     const progress = 1 - Math.pow(1 - t, 1.55);
     return { week, lbs: start - loss * progress };
   });
@@ -41,7 +49,7 @@ export function PeptideResultsChart({
   const yTicks = [start, Math.round((start + end) / 2), end];
 
   function x(week) {
-    return pad.l + (week / 48) * innerW;
+    return pad.l + (week / horizon) * innerW;
   }
   function y(lbs) {
     return pad.t + ((maxY - lbs) / (maxY - minY)) * innerH;
@@ -58,7 +66,7 @@ export function PeptideResultsChart({
       <div className="border-b border-slate-100 px-4 py-3 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <label
-            htmlFor="peptide-start-weight"
+            htmlFor={inputId}
             className="text-xs font-semibold text-slate-600"
           >
             Starting Weight
@@ -68,7 +76,7 @@ export function PeptideResultsChart({
           </span>
         </div>
         <input
-          id="peptide-start-weight"
+          id={inputId}
           type="range"
           min={MIN_LBS}
           max={MAX_LBS}
@@ -117,7 +125,7 @@ export function PeptideResultsChart({
                 </text>
               </g>
             ))}
-            {[0, 12, 24, 36, 48].map((week) => (
+            {weekTicks.map((week) => (
               <g key={week}>
                 <line
                   x1={x(week)}
@@ -147,9 +155,9 @@ export function PeptideResultsChart({
               strokeLinejoin="round"
             />
             <circle cx={x(0)} cy={y(start)} r="3.5" fill="#7c3aed" />
-            <circle cx={x(48)} cy={y(end)} r="4.5" fill="#7c3aed" />
+            <circle cx={x(horizon)} cy={y(end)} r="4.5" fill="#7c3aed" />
             <text
-              x={x(48) + 8}
+              x={x(horizon) + 8}
               y={y(end) + 4}
               textAnchor="start"
               fontSize="11"
@@ -163,22 +171,25 @@ export function PeptideResultsChart({
 
         <div className="flex h-full flex-col justify-center border-t border-slate-100 bg-violet-50 px-4 py-4 text-left lg:border-l lg:border-t-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">
-            You could lose
+            {researchCopy ? "Published average" : "You could lose"}
           </p>
           <p className="mt-1 text-2xl font-bold tabular-nums text-violet-900">
             ~{loss} lbs ({lossPct}%)
           </p>
-          <p className="mt-1 text-sm text-violet-800">in 48 weeks</p>
+          <p className="mt-1 text-sm text-violet-800">in {horizon} weeks</p>
           <p className="mt-3 text-[11px] leading-relaxed text-violet-700/80">
-            Estimated range based on published average weight-loss percentages.
-            Individual results vary.
+            {sourceLabel
+              ? `${sourceLabel}. Group averages from that trial; individual results vary.`
+              : "Estimated range based on published average weight-loss percentages. Individual results vary."}
           </p>
-          <button
-            type="button"
-            className="mt-3 self-start text-xs font-semibold text-violet-700 underline-offset-2 hover:underline"
-          >
-            How is this calculated?
-          </button>
+          {researchCopy ? null : (
+            <button
+              type="button"
+              className="mt-3 self-start text-xs font-semibold text-violet-700 underline-offset-2 hover:underline"
+            >
+              How is this calculated?
+            </button>
+          )}
         </div>
       </div>
     </div>
