@@ -8,6 +8,7 @@ import {
   getPeptideOgVisual,
   resolvePeptideForOg,
 } from "@/lib/peptide-og";
+import { getPeptideOverviewLead } from "@/data/peptide-overviews";
 
 export const runtime = "nodejs";
 export const size = ogSize;
@@ -21,19 +22,31 @@ export default async function Image({ params }) {
     return createPageOgImage({
       title: "Peptide Research",
       description: "Explore peptide profiles, research, and provider comparisons.",
-      badge: "MyPepFinder",
-      accent: "violet",
+      badge: "Research Library",
+      crumbs: ["Home", "Peptides"],
     });
   }
 
   const visualPath = getPeptideOgVisual(peptide);
   const previewImage = visualPath ? await loadPublicAsset(visualPath) : null;
+  const description =
+    getPeptideOverviewLead(slug) ||
+    getPeptideOverviewLead(peptide.slug) ||
+    peptide.summary;
 
   return createPageOgImage({
     title: peptide.name,
-    description: peptide.summary,
+    description,
     badge: peptide.rankBadge || "Peptide Profile",
+    preview: "peptide",
     previewImage,
-    accent: "violet",
+    crumbs: [
+      "Home",
+      "Goals",
+      peptide.goalLabel || "Goals",
+      peptide.name,
+    ],
+    tags: peptide.tags || [],
+    callouts: peptide.moleculeCallouts || [],
   });
 }

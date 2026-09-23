@@ -16,6 +16,6 @@ export default async function Image() {
     description:
       "Questions about the site, research summaries, provider listings, or privacy?",
     badge: "Get in touch",
-    accent: "indigo",
+    crumbs: ["Home", "Contact"],
   });
 }

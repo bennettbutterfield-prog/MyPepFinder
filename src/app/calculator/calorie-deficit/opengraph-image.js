@@ -16,9 +16,9 @@ export const contentType = ogContentType;
 export default async function Image() {
   return createPageOgImage({
     title: "Calorie Deficit Calculator",
-    description: "Plan daily intake, timeline, and macros to reach your goal weight.",
-    badge: "Free Tool",
+    description:
+      "Plan daily intake, timeline, and macros to reach your goal weight.",
     preview: "calculator-calorie",
-    accent: "indigo",
+    crumbs: ["Home", "Tools", "Calorie Deficit Calculator"],
   });
 }

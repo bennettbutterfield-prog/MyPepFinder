@@ -20,6 +20,14 @@ const TOOLS = [
     description: "Weight-loss timeline & macros",
     icon: "scale",
   },
+  {
+    id: "quiz",
+    href: "/quiz",
+    label: "Peptide Quiz",
+    shortLabel: "Quiz",
+    description: "Match research to your goal",
+    icon: "quiz",
+  },
 ];
 
 export function CalculatorToolsSidebar() {
@@ -34,7 +42,9 @@ export function CalculatorToolsSidebar() {
         const active =
           tool.href === "/calculator"
             ? pathname === "/calculator"
-            : pathname.startsWith(tool.href);
+            : tool.href === "/quiz"
+              ? pathname.startsWith("/quiz")
+              : pathname.startsWith(tool.href);
         return (
           <Link
             key={tool.id}
@@ -88,6 +98,15 @@ function ToolIcon({ name }) {
         <path d="M7 7 5 12h4L7 7Z" />
         <path d="M17 7l2 5h-4l2-5Z" />
         <path d="M8 21h8" />
+      </svg>
+    );
+  }
+  if (name === "quiz") {
+    return (
+      <svg {...c}>
+        <path d="M9 5h10v16H5V9l4-4Z" />
+        <path d="M9 5v4H5" />
+        <path d="M9 13h6M9 17h4" />
       </svg>
     );
   }

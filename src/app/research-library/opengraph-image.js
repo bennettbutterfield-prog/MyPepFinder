@@ -15,8 +15,7 @@ export default async function Image() {
     title: "Research Library",
     description:
       "Browse peptide compounds and open research profiles with provider comparisons.",
-    badge: "Reference Index",
     preview: "library",
-    accent: "violet",
+    crumbs: ["Home", "Research Library"],
   });
 }

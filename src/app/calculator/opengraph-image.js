@@ -16,9 +16,9 @@ export const contentType = ogContentType;
 export default async function Image() {
   return createPageOgImage({
     title: "Peptide Dosage Calculator",
-    description: "Calculate reconstitution amounts and injection volumes.",
-    badge: "Free Tool",
+    description:
+      "Calculate accurate peptide dosages, reconstitution amounts, and injection volumes based on your specific protocol.",
     preview: "calculator-peptide",
-    accent: "indigo",
+    crumbs: ["Home", "Tools", "Peptide Dosage Calculator"],
   });
 }

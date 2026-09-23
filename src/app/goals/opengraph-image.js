@@ -6,16 +6,16 @@ import {
 } from "@/lib/og-image";
 
 export const runtime = "nodejs";
-export const alt = createOgAlt("Frequently asked questions");
+export const alt = createOgAlt("Peptide Goals");
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
   return createPageOgImage({
-    title: "Frequently asked questions",
+    title: "What do you want to improve?",
     description:
-      "Answers about MyPepFinder, peptide research, calculators, and safety.",
-    badge: "Help Center",
-    crumbs: ["Home", "FAQ"],
+      "Browse peptides by research goal, including weight loss, muscle, sleep, hair, skin, cognition, and longevity.",
+    preview: "goals",
+    crumbs: ["Home", "Goals"],
   });
 }

@@ -16,9 +16,8 @@ export default async function Image() {
 
   return createPageOgImage({
     title: "Optimize You.",
-    description: "Research peptides. Compare providers.",
-    badge: "MyPepFinder",
+    description: "Research peptides. Compare providers. Optimize with confidence.",
+    preview: "home",
     previewImage: heroImage,
-    accent: "indigo",
   });
 }

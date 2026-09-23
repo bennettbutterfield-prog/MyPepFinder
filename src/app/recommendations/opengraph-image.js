@@ -15,8 +15,7 @@ export default async function Image() {
   return createPageOgImage({
     title: PROVIDER_DIRECTORY.title,
     description: PROVIDER_DIRECTORY.description,
-    badge: "Provider Directory",
     preview: "providers",
-    accent: "indigo",
+    crumbs: ["Home", "Providers"],
   });
 }

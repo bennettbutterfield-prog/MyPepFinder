@@ -21,21 +21,25 @@ export default async function Image({ params }) {
 
   if (!page) {
     return createPageOgImage({
-      title: "Peptide Goals",
-      description: "Explore peptides by research goal.",
-      badge: "Goals",
-      accent: "violet",
+      title: "What do you want to improve?",
+      description: "Browse peptides by research goal.",
+      preview: "goals",
+      crumbs: ["Home", "Goals"],
     });
   }
 
-  const heroPath = GOAL_HERO_IMAGES[resolved];
+  const heroPath = GOAL_HERO_IMAGES[resolved] || page.heroImage;
   const previewImage = heroPath ? await loadPublicAsset(heroPath) : null;
+  const stats = (page.stats || []).filter(
+    (stat) => stat.label !== "Reviews" && stat.label !== "Provider Partners"
+  );
 
   return createPageOgImage({
-    title: `${page.title} Peptides`,
+    title: page.title,
     description: page.description,
-    badge: "Research Goal",
+    preview: "goal",
     previewImage,
-    accent: "violet",
+    crumbs: ["Home", "Goals", page.title],
+    stats,
   });
 }

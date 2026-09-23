@@ -16,6 +16,6 @@ export default async function Image() {
     description:
       "How MyPepFinder collects, uses, and protects information when you use our tools.",
     badge: "Legal",
-    accent: "indigo",
+    crumbs: ["Home", "Privacy Policy"],
   });
 }

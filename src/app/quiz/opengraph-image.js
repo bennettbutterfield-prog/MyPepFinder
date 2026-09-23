@@ -6,20 +6,16 @@ import {
 } from "@/lib/og-image";
 
 export const runtime = "nodejs";
-export const alt = createOgAlt(
-  "Peptide Quiz",
-  "Find a peptide for your goal"
-);
+export const alt = createOgAlt("Peptide Quiz", "Find research for your goal");
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default async function Image() {
   return createPageOgImage({
-    title: "Find a peptide for your goal",
+    title: "Peptide research finder",
     description:
-      "Choose what to optimize, refine the research effect, and get a match.",
-    badge: "Peptide Quiz",
+      "Start with a goal, then answer only the follow-ups that change the research question.",
     preview: "quiz",
-    accent: "indigo",
+    crumbs: ["Home", "Peptide Quiz"],
   });
 }

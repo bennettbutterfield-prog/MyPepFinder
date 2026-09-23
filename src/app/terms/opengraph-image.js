@@ -16,6 +16,6 @@ export default async function Image() {
     description:
       "Terms governing your use of MyPepFinder research tools, calculators, and educational content.",
     badge: "Legal",
-    accent: "indigo",
+    crumbs: ["Home", "Terms of Service"],
   });
 }
