@@ -10,10 +10,13 @@ import {
   getGoalPage,
 } from "@/data/goal-pages";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "Peptide Goals | MyPepFinder",
   description:
     "Browse peptides by research goal, including weight loss, muscle, sleep, hair, skin, cognition, and longevity.",
+  ...pageShareMeta("/goals"),
 };
 
 const GOAL_TONES = {

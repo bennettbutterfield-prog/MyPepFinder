@@ -3,10 +3,13 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { HomeFooter } from "@/components/HomeFooter";
 import { peptideProducts } from "@/data/peptide-taxonomy";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "About Us | MyPepFinder",
   description:
     "Learn about MyPepFinder — an educational platform for peptide research, provider comparison, and evidence-based tools.",
+  ...pageShareMeta("/about"),
 };
 
 const VALUES = [

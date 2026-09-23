@@ -5,11 +5,13 @@ import { CalculatorFooter } from "@/components/CalculatorFooter";
 import { CalculatorToolsSidebar } from "@/components/CalculatorToolsSidebar";
 import { DosageCalculator } from "@/components/DosageCalculator";
 import { peptideProducts } from "@/data/peptide-taxonomy";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const metadata = {
   title: "Peptide Dosage Calculator | MyPepFinder",
   description:
     "Calculate accurate peptide dosages, reconstitution amounts, and injection volumes based on your specific protocol.",
+  ...pageShareMeta("/calculator"),
   openGraph: {
     title: "Peptide Dosage Calculator | MyPepFinder",
     description:
@@ -18,7 +20,7 @@ export const metadata = {
     url: "/calculator",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Peptide Dosage Calculator | MyPepFinder",
     description:
       "Calculate reconstitution amounts and injection volumes for your peptide protocol.",

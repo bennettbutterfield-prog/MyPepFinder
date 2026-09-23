@@ -4,10 +4,13 @@ import { GoalToolsSidebar } from "@/components/GoalToolsSidebar";
 import { HomeFooter } from "@/components/HomeFooter";
 import { ResearchLibraryPanel } from "@/components/ResearchLibraryPanel";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "Research Library | MyPepFinder",
   description:
     "Browse peptide compounds and open research profiles with provider comparison placeholders.",
+  ...pageShareMeta("/research-library"),
 };
 
 export default async function ResearchLibraryPage({ searchParams }) {

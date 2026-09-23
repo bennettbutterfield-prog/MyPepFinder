@@ -4,11 +4,16 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { HomeFooter } from "@/components/HomeFooter";
 import { HomeHeroMan } from "@/components/HomeHeroMan";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { pageShareMeta } from "@/lib/site-url";
 import { getPeptidePage } from "@/data/peptide-pages";
 import {
   getProviderToneClass,
   getTopProviders,
 } from "@/data/peptide-providers";
+
+export const metadata = {
+  ...pageShareMeta("/"),
+};
 
 function getArticleVisuals(tag) {
   if (tag === "Preclinical") {

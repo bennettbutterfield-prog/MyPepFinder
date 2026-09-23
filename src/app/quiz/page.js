@@ -2,11 +2,13 @@ import Link from "next/link";
 import { HomeFooter } from "@/components/HomeFooter";
 import { HomeHeader } from "@/components/HomeHeader";
 import { AdaptivePeptideQuiz } from "@/components/AdaptivePeptideQuiz";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const metadata = {
   title: "Peptide Quiz | MyPepFinder",
   description:
     "Start with a goal, then answer only the follow-ups that change the research question. Matches published research — not a prescription or a promise.",
+  ...pageShareMeta("/quiz"),
   openGraph: {
     title: "Peptide Quiz | MyPepFinder",
     description:
@@ -15,7 +17,7 @@ export const metadata = {
     url: "/quiz",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Peptide Quiz | MyPepFinder",
     description:
       "An adaptive research finder: refine the outcome, see the evidence, and know where it stops.",

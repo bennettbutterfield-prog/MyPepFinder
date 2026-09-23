@@ -3,10 +3,13 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { HomeFooter } from "@/components/HomeFooter";
 import { ContactForm } from "@/components/ContactForm";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "Contact | MyPepFinder",
   description:
     "Get in touch with MyPepFinder for website questions, research feedback, provider inquiries, and privacy requests.",
+  ...pageShareMeta("/contact"),
 };
 
 const HELP_LINKS = [

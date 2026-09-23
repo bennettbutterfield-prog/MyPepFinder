@@ -31,3 +31,20 @@ export function getSiteBaseUrl() {
   }
   return PRODUCTION_SITE_URL;
 }
+
+/**
+ * Per-page share identity. Root layout must not set a site-wide canonical or
+ * og:url — Google's share.google wrapper treats mismatched pages as missing.
+ */
+export function pageShareMeta(path) {
+  const canonical = path.startsWith("/") ? path : `/${path}`;
+  return {
+    alternates: { canonical },
+    openGraph: {
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+  };
+}

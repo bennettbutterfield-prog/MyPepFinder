@@ -30,6 +30,7 @@ import {
   getPeptideOverview,
   getPeptideOverviewLead,
 } from "@/data/peptide-overviews";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const dynamicParams = false;
 
@@ -60,6 +61,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${peptide.pageTitle || peptide.name} | MyPepFinder`,
     description: overviewLead || peptide.summary,
+    ...pageShareMeta(`/peptides/${peptide.slug}`),
   };
 }
 

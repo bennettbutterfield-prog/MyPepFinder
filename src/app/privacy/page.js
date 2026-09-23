@@ -1,9 +1,12 @@
 import { LegalDocumentPage } from "@/components/LegalDocumentPage";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "Privacy Policy | MyPepFinder",
   description:
     "How MyPepFinder collects, uses, and protects information when you use our peptide research and comparison tools.",
+  ...pageShareMeta("/privacy"),
 };
 
 const LAST_UPDATED = "August 31, 2026";

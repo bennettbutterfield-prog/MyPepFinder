@@ -5,10 +5,13 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { PEPTIDE_CALCULATOR_FAQ } from "@/data/peptide-calculator-faq";
 import { SITE_FAQ_SECTIONS, buildSiteFaqJsonLd } from "@/data/site-faq";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "FAQ | MyPepFinder",
   description:
     "Frequently asked questions about MyPepFinder, peptide research, dosage calculators, provider comparisons, and safety.",
+  ...pageShareMeta("/faq"),
 };
 
 const faqJsonLd = buildSiteFaqJsonLd(PEPTIDE_CALCULATOR_FAQ);

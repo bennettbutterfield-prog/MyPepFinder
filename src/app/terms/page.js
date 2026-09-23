@@ -1,9 +1,12 @@
 import { LegalDocumentPage } from "@/components/LegalDocumentPage";
 
+import { pageShareMeta } from "@/lib/site-url";
+
 export const metadata = {
   title: "Terms of Service | MyPepFinder",
   description:
     "Terms governing your use of MyPepFinder peptide research tools, calculators, provider comparisons, and educational content.",
+  ...pageShareMeta("/terms"),
 };
 
 const LAST_UPDATED = "August 31, 2026";

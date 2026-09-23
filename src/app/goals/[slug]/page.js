@@ -12,6 +12,7 @@ import { GoalPageHeader } from "@/components/GoalPageHeader";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { HomeFooter } from "@/components/HomeFooter";
 import { NewsletterSignupForm } from "@/components/NewsletterSignupForm";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const dynamicParams = false;
 
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }) {
   return {
     title: `${page.title} Peptides | MyPepFinder`,
     description: page.description,
+    ...pageShareMeta(`/goals/${resolved}`),
   };
 }
 

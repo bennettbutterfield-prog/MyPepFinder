@@ -21,12 +21,14 @@ import {
 } from "@/data/peptide-providers";
 import { optimizationGoalById } from "@/data/optimization-goals";
 import { getPeptideRecommendations } from "@/lib/peptide-recommendations";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Best Peptide Vendors 2026: Top 4 Companies Compared | MyPepFinder",
   description: PROVIDER_DIRECTORY.description,
+  ...pageShareMeta("/recommendations"),
 };
 
 function parseNumber(raw) {

@@ -19,23 +19,14 @@ export const metadata = {
   title: "MyPepFinder — Optimize You",
   description:
     "Research peptides. Compare providers. Optimize with confidence. Educational peptide research and comparison platform.",
-  alternates: {
-    canonical: "/",
-  },
-  robots: {
-    googleBot: {
-      "max-image-preview": "standard",
-    },
-  },
   openGraph: {
     title: "Optimize You. | MyPepFinder",
     description: "Research peptides. Compare providers.",
     type: "website",
     siteName: "MyPepFinder",
-    url: "/",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Optimize You. | MyPepFinder",
     description: "Research peptides. Compare providers.",
   },

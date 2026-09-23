@@ -4,7 +4,7 @@
       "source": "/:path*",
       "has": [{ "type": "host", "value": "mypepfinder.com" }],
       "destination": "https://www.mypepfinder.com/:path*",
-      "permanent": true
+      "statusCode": 301
     }
   ]
 }

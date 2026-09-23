@@ -3,11 +3,13 @@ import { CalculatorHeader } from "@/components/CalculatorHeader";
 import { CalculatorFooter } from "@/components/CalculatorFooter";
 import { CalculatorToolsSidebar } from "@/components/CalculatorToolsSidebar";
 import { CalorieDeficitCalculator } from "@/components/CalorieDeficitCalculator";
+import { pageShareMeta } from "@/lib/site-url";
 
 export const metadata = {
   title: "Calorie Deficit Calculator | MyPepFinder",
   description:
     "Calculate daily calorie intake, weight-loss timeline, and macros to reach your goal weight with realistic metabolic modeling.",
+  ...pageShareMeta("/calculator/calorie-deficit"),
   openGraph: {
     title: "Calorie Deficit Calculator | MyPepFinder",
     description:
@@ -16,7 +18,7 @@ export const metadata = {
     url: "/calculator/calorie-deficit",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Calorie Deficit Calculator | MyPepFinder",
     description:
       "Find your calorie deficit, projected timeline, and macro targets for realistic weight loss.",
