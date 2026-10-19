@@ -866,9 +866,9 @@ export const PEPTIDE_OVERVIEWS = {
   },
   "tb-500": {
     overview:
-      "Thymosin beta-4 is a naturally occurring peptide studied for wound healing and tissue repair. One research focus is how it helps cells change shape and move into an injured area, an important step in rebuilding damaged tissue. The name TB-500 is used inconsistently for products related to thymosin beta-4, including shorter pieces of it. Those products should not automatically be treated as the same compound.",
+      "TB-500 is a research peptide name most often used for a short, lab-made piece of thymosin beta-4 (Ac-LKKTETQ), not the full 43-amino-acid parent hormone. Researchers are interested in it because that fragment sits in a region of thymosin beta-4 involved in how cells move and reorganize during tissue repair, so it is discussed for recovery, wounds, and soft-tissue healing. Those uses remain experimental: available human evidence is for full-length thymosin beta-4, not for this shorter TB-500 peptide, and no clinical study has established that TB-500 was administered to people.",
     evidence:
-      "Some human wound studies tested full-length thymosin beta-4. They do not establish that every TB-500 product speeds muscle or tendon recovery.",
+      "Potential TB-500 benefits for recovery are not established in humans. Direct fragment research is mainly product identity, horse and rat metabolism, and cell assays. Human wound studies of full-length thymosin beta-4 do not transfer to TB-500.",
     sources: [
       {
         label: "Human wound trial of full-length thymosin beta-4",

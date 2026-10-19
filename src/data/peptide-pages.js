@@ -312,6 +312,8 @@ function makePeptide(overrides) {
     tags: overrides.tags ?? RETATRUTIDE.tags,
     dosageGuide: overrides.dosageGuide ?? null,
     pageTitle: overrides.pageTitle ?? null,
+    metaDescription: overrides.metaDescription ?? null,
+    canonicalSlug: overrides.canonicalSlug ?? null,
     sideEffects: overrides.sideEffects ?? null,
     dosage: overrides.dosage ?? null,
   };
@@ -2705,14 +2707,16 @@ export const PEPTIDE_PAGES = {
   }),
   "tb-500": makePeptide({
     slug: "tb-500",
+    canonicalSlug: "tb-500-thymosin-beta-4",
     name: "TB-500",
-    pageTitle:
-      "TB-500 Dosage: Human Evidence, Research Protocol, and Reconstitution",
+    pageTitle: "TB-500 Peptide: Benefits, Research, Dosage & Safety",
+    metaDescription:
+      "What is TB-500? Explore its potential benefits, research findings, experimental dosing, side effects, and how it differs from thymosin beta-4.",
     goalSlug: "recovery",
     goalLabel: "Recovery",
     rankBadge: "Ac-LKKTETQ · No Human Dose",
     summary:
-      "Review TB-500 dosage claims, direct fragment research, animal exposures, community protocols, reconstitution math, safety, and the critical difference between TB-500 and thymosin beta-4.",
+      "What is TB-500? Explore its potential benefits, research findings, experimental dosing, side effects, and how it differs from thymosin beta-4.",
     rating: "4.5",
     reviewCount: "1,180",
     researchedBadge: "No Human Dose Identified",
@@ -2733,12 +2737,12 @@ export const PEPTIDE_PAGES = {
         body: "Horse 10 mg SC once; rat 50 mg/kg IP once; in vitro 50 mcg/mL — analytical/metabolism, not injury healing.",
       },
       {
-        label: "Fictional NCT",
-        body: "NCT07487363 states it is a fictional ClinicalTrials.gov example — not human trial evidence or established dose cohorts.",
+        label: "Human evidence",
+        body: "No published study was identified in which TB-500 free base or acetate was administered to people. Full-length Tβ4 trials do not transfer.",
       },
     ],
     about:
-      "TB-500 is the synthetic N-acetylated seven-amino-acid fragment Ac-LKKTETQ (thymosin-β4 residues 17–23), not full-length thymosin-β4. FDA’s 2026 review found no clinical study in which TB-500 free base or acetate was administered to humans. Direct dosing evidence is primarily analytical and metabolism work in horses, rats, and laboratory systems. The commonly repeated 2–2.5 mg twice-weekly schedule is a community protocol without clinical validation.",
+      "TB-500 is a research peptide name most often used for the synthetic N-acetylated seven-amino-acid fragment Ac-LKKTETQ (thymosin-β4 residues 17–23), not full-length thymosin-β4. Researchers discuss it for recovery and tissue-repair pathways, but FDA’s 2026 review found no clinical study in which TB-500 free base or acetate was administered to humans. Direct dosing evidence is primarily analytical and metabolism work in horses, rats, and laboratory systems. The commonly repeated 2–2.5 mg twice-weekly schedule is a community protocol without clinical validation.",
     facts: [
       { label: "Type", value: "Peptide fragment", icon: "type" },
       { label: "Sequence", value: "Ac-LKKTETQ", icon: "flask" },
@@ -2751,11 +2755,11 @@ export const PEPTIDE_PAGES = {
       "Rat 50 mg/kg IP once — urinary metabolite identification",
       "Parent inactive at 50 mcg/mL in FDA-reviewed scratch assay; Ac-LKKTE metabolite active",
       "No published human-administered dose identified by FDA 2026 review",
-      "NCT07487363 is explicitly fictional — not trial evidence",
+      "Full-length Tβ4 human trials do not establish TB-500 benefits",
       "WADA S2 prohibited at all times as thymosin-β4 derivative",
     ],
     howItWorks:
-      "TB-500 contains part of the actin-binding region of thymosin-β4. Effects may depend on C-terminal truncated metabolites (Ac-LKKTET → Ac-LK cascade). Parent fragment did not increase scratch closure at 50 mcg/mL in the FDA-reviewed assay.",
+      "TB-500 is being researched because it contains part of the actin-binding region of thymosin beta-4, a pathway involved in how cells move into injured tissue. Effects may depend on C-terminal truncated metabolites (Ac-LKKTET → Ac-LK cascade) rather than the parent fragment alone. Parent TB-500 did not increase scratch closure at 50 mcg/mL in the FDA-reviewed assay, so recovery claims remain unproven in humans.",
     mechanisms: [
       {
         title: "Actin-Region Fragment",
@@ -2802,7 +2806,7 @@ export const PEPTIDE_PAGES = {
       { label: "Horse exposure", value: "10 mg SC once" },
       { label: "Anecdotal protocol", value: "2–2.5 mg BIW × 4–6 wk" },
       { label: "Scratch assay", value: "Parent inactive @ 50 mcg/mL" },
-      { label: "NCT07487363", value: "Fictional example" },
+      { label: "Human trials", value: "None identified" },
       { label: "WADA", value: "S2 — always prohibited" },
     ],
     compare: {
@@ -2878,14 +2882,6 @@ export const PEPTIDE_PAGES = {
           "No human exposure identified; staff recommended against 503A listing; identity and toxicology gaps.",
         cite: "FDA, 2026",
         href: "https://www.fda.gov/media/193349/download",
-      },
-      {
-        tag: "Registry",
-        title: "NCT07487363 — fictional example record",
-        summary:
-          "Explicitly states it is a fictional ClinicalTrials.gov-style example — not actual trial evidence.",
-        cite: "ClinicalTrials.gov",
-        href: "https://clinicaltrials.gov/study/NCT07487363",
       },
     ],
   }),

@@ -60,8 +60,8 @@ export async function generateMetadata({ params }) {
   const overviewLead = getPeptideOverviewLead(slug) || getPeptideOverviewLead(peptide.slug);
   return {
     title: `${peptide.pageTitle || peptide.name} | MyPepFinder`,
-    description: overviewLead || peptide.summary,
-    ...pageShareMeta(`/peptides/${peptide.slug}`),
+    description: peptide.metaDescription || overviewLead || peptide.summary,
+    ...pageShareMeta(`/peptides/${peptide.canonicalSlug || peptide.slug}`),
   };
 }
 

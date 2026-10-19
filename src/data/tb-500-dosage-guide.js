@@ -174,7 +174,6 @@ export const TB500_HUMAN_STATUS = [
   ["Published wound-healing trial", "None identified"],
   ["Published muscle/tendon/ligament trial", "None identified"],
   ["Verified interventional trial with usable dose", "None verified"],
-  ["NCT07487363 registry record", "Explicitly fictional example — not actual trial evidence"],
   ["Full-length Tβ4 human dosing", "Exists separately — cannot transfer to fragment"],
   ["Common anecdotal amount", "2–2.5 mg per administration (unvalidated)"],
   ["Common anecdotal frequency", "Twice weekly × 4–6 weeks, then often once weekly"],
@@ -457,7 +456,7 @@ export const TB500_EVIDENCE_LADDER = [
   },
   {
     level: "Human TB-500 clinical-trial dosing",
-    exists: "None verified — NCT07487363 is explicitly fictional",
+    exists: "None verified",
     confidence: "None",
   },
   {
@@ -623,10 +622,10 @@ export const TB500_REGULATORY = [
 ];
 
 export const TB500_DOSAGE_GUIDE = {
-  title: "TB-500 Dosage: Human Evidence, Research Protocol, and Reconstitution",
-  updated: "Updated August 2026",
+  title: "TB-500 Peptide: Research, Dosage, and Safety",
+  updated: "Updated October 2026",
   callout:
-    "**Research status:** TB-500 means the synthetic N-acetylated seven-amino-acid fragment **Ac-LKKTETQ** (thymosin-β4 residues 17–23) — not full-length 43-amino-acid thymosin-β4. FDA's 2026 review found **no clinical study in which TB-500 free base or acetate was administered to humans**. Direct dosing evidence is primarily analytical and metabolism work in horses, rats, and laboratory systems. Modern injection schedules are **community protocols**, not clinically validated doses. **NCT07487363 is a fictional ClinicalTrials.gov example record — not human evidence.**",
+    "**Research status:** TB-500 means the synthetic N-acetylated seven-amino-acid fragment **Ac-LKKTETQ** (thymosin-β4 residues 17–23) — not full-length 43-amino-acid thymosin-β4. FDA's 2026 review found **no clinical study in which TB-500 free base or acetate was administered to humans**. Direct dosing evidence is primarily analytical and metabolism work in horses, rats, and laboratory systems. Modern injection schedules are **community protocols**, not clinically validated doses.",
   intro: [
     "There is **no established human dosage** for the TB-500 fragment. The most common online protocol — **2–2.5 mg subcutaneously twice weekly for 4–6 weeks**, often followed by once-weekly use — is **anecdotal** and lacks a traceable clinical origin.",
     "Direct animal exposure differs sharply: two thoroughbred geldings received a **single 10 mg SC dose** for doping-control analysis; six-week-old rats received **50 mg/kg IP once** for metabolism research. Neither study tested injury healing. At **50 mcg/mL in vitro**, parent TB-500 did not increase fibroblast scratch closure; the truncated metabolite **Ac-LKKTE** showed activity.",
@@ -641,7 +640,6 @@ export const TB500_DOSAGE_GUIDE = {
       "**Direct rat exposure:** 50 mg/kg IP once (metabolism — not efficacy)",
       "**Direct cell concentration:** 50 mcg/mL — parent inactive; Ac-LKKTE active in one assay",
       "**Full-length Tβ4 doses cannot transfer** to the seven-residue fragment",
-      "**NCT07487363 is fictional** — not an actual trial or human dose evidence",
       "**WADA S2:** prohibited at all times as a thymosin-β4 derivative",
     ],
     table: {
@@ -663,8 +661,8 @@ export const TB500_DOSAGE_GUIDE = {
       id: "what-is",
       title: "What Is TB-500?",
       paragraphs: [
-        "TB-500 is a nonstandardized commercial name most consistently associated with **Ac-LKKTETQ**, an N-terminally acetylated heptapeptide corresponding to amino acids 17–23 of human thymosin-β4. The fragment was identified in a seized or suspected doping product and chemically synthesized for confirmation.",
-        "Full-length thymosin-β4 is a 43-amino-acid intracellular peptide involved in actin regulation. A seven-residue fragment can have different binding, degradation, distribution, active metabolites, immunogenicity, and dose-response behavior than the parent peptide.",
+        "TB-500 is a research peptide. The name is not standardized, but published analytical work most consistently identifies it as **Ac-LKKTETQ**, an N-terminally acetylated heptapeptide corresponding to amino acids 17–23 of human thymosin beta-4. The fragment was identified in a seized or suspected doping product and chemically synthesized for confirmation.",
+        "Full-length thymosin beta-4 is a 43-amino-acid intracellular peptide involved in actin regulation. A seven-residue fragment can have different binding, degradation, distribution, active metabolites, immunogenicity, and dose-response behavior than the parent peptide. Unacetylated [TB-500 Fragment (17–23)](/peptides/tb-500-fragment-17-23) is a related but chemically different product.",
       ],
       tables: [
         {
@@ -685,6 +683,23 @@ export const TB500_DOSAGE_GUIDE = {
         "Naming is not reliably standardized. FDA found submitted documents mixed free base and acetate, used mismatched CAS numbers, and provided certificates for different forms from the nominated substance. A vial labeled only “TB-500” is not adequately identified without sequence, acetylation, salt, and assay confirmation.",
       ],
       widgetAfter: "tb500-identity-gate",
+    },
+    {
+      id: "researched-for",
+      title: "What Is TB-500 Being Researched For?",
+      paragraphs: [
+        "TB-500 peptide research is discussed mainly in the context of **recovery**: cell movement into injured tissue, wound-related assays, and soft-tissue repair. Those interests come from the fragment’s overlap with the actin-binding region of thymosin beta-4, plus anti-doping detections of Ac-LKKTETQ in sport.",
+        "That is not the same as proven TB-500 benefits. Direct published work characterizes identity, metabolism, and laboratory concentrations. It does not establish that TB-500 heals muscle, tendon, ligament, or skin in people. Browse related [recovery research](/goals/recovery) for other compounds studied in the same conversation.",
+      ],
+    },
+    {
+      id: "benefits-evidence",
+      title: "TB-500 Benefits: What Does the Evidence Show?",
+      paragraphs: [
+        "Online lists of TB-500 benefits — faster recovery, mobility, or wound repair — usually mix community reports with biology taken from **full-length thymosin beta-4**. Those parent-peptide findings cannot be treated as fragment results.",
+        "What the TB-500 evidence actually shows is narrower: some products contain Ac-LKKTETQ; a single 10 mg SC horse dose and a 50 mg/kg IP rat dose mapped metabolites; and at 50 mcg/mL the parent fragment did not increase fibroblast scratch closure in an FDA-reviewed assay, while a truncated metabolite did. No controlled human outcome study supports a recovery benefit.",
+        "See [BPC-157](/peptides/bpc-157) and the [BPC-157 + TB-500 combination](/peptides/bpc-157-tb-500) for related recovery research. Experimental reconstitution math is in the [peptide dosage calculator](/calculator).",
+      ],
     },
     {
       id: "assay-checks",
@@ -733,17 +748,18 @@ export const TB500_DOSAGE_GUIDE = {
     },
     {
       id: "human-dose",
-      title: "Dosage Used in Human Clinical Research",
+      title: "Human Clinical Evidence and Research Limitations",
       paragraphs: [
-        "**No published human-administered dose was identified.** FDA searched PubMed, Embase, ClinicalTrials.gov, DailyMed, Drugs@FDA, and other sources and did not find clinical studies in which TB-500 free base or acetate was administered to patients. It also reported no human exposure data for drug products containing the fragment by any route.",
+        "**No published human-administered TB-500 dose was identified.** FDA searched PubMed, Embase, ClinicalTrials.gov, DailyMed, Drugs@FDA, and other sources and did not find clinical studies in which TB-500 free base or acetate was administered to patients. It also reported no human exposure data for drug products containing the fragment by any route.",
       ],
       widget: "tb500-human-status",
       subsections: [
         {
-          title: "The ClinicalTrials.gov fictional study record",
+          title: "Clinical Trial Verification and Research Limitations",
           paragraphs: [
-            "**NCT07487363** is titled “TB-500 (Thymosin Beta 4 17-23 Fragment) for Cardiovascular Biomarkers in Stable ASCVD.” Its public modules display Phase 1/2, recruiting, 80 participants, and dose cohorts — but the record's own brief summary states: **“This fictional study is an example of a ClinicalTrials.gov-style record.”**",
-            "It should **not** be counted as an actual trial, proof of enrollment, human exposure, or evidence that a sponsor has established safe dose levels. Dose levels in the record are not public.",
+            "Some third-party write-ups cite ClinicalTrials.gov identifier **NCT07487363**, described there as a Phase 1/2 TB-500 (thymosin beta-4 17–23 fragment) study in stable atherosclerotic cardiovascular disease.",
+            "Checked on [ClinicalTrials.gov](https://clinicaltrials.gov/study/NCT07487363), the record’s own brief summary states it is **a fictional ClinicalTrials.gov-style example**. Public modules may still display recruiting status, 80 participants, and unnamed dose cohorts, but dose levels are not published. The identifier should not be treated as verified clinical evidence, enrollment, human exposure, or an established TB-500 dose.",
+            "Full-length thymosin beta-4 has been studied in people in separate programs. Those trials do not show that the shorter TB-500 fragment has been given to humans or that it shares the parent peptide’s results.",
           ],
         },
         {
@@ -769,7 +785,7 @@ export const TB500_DOSAGE_GUIDE = {
       id: "research-dose",
       title: "TB-500 Research Dosage",
       paragraphs: [
-        "The schedules below document what researchers encounter online. They are **not established treatment directions**.",
+        "The schedules below document what researchers encounter online. They are **not established treatment directions**. Use the [peptide dosage calculator](/calculator) only for reconstitution arithmetic, not as a clinical dose.",
       ],
       tables: [
         {
@@ -938,7 +954,7 @@ export const TB500_DOSAGE_GUIDE = {
     },
     {
       id: "safety",
-      title: "Safety and Monitoring",
+      title: "TB-500 Side Effects and Safety",
       paragraphs: [
         "Direct human adverse-event rates are unavailable because an adequate molecule-specific human dataset has not been identified. Full-length Tβ4 tolerability **cannot** establish TB-500 safety.",
       ],
@@ -955,8 +971,9 @@ export const TB500_DOSAGE_GUIDE = {
     },
     {
       id: "mechanism",
-      title: "Mechanism: TB-500 vs Full-Length Tβ4",
+      title: "TB-500 vs. Thymosin Beta-4",
       paragraphs: [
+        "TB-500 vs thymosin beta-4 is a molecule question, not a brand-name question. Full-length thymosin beta-4 has 43 amino acids; TB-500 is usually the seven-residue N-acetylated fragment **Ac-LKKTETQ**. Doses, human trials, and safety findings from the parent peptide do not transfer.",
         "The scientifically accurate mechanism view treats **three separate nodes** — full-length thymosin-β4, parent TB-500/Ac-LKKTETQ, and TB-500 metabolites — rather than one continuous pathway from actin binding to healed tendon.",
       ],
       widgetAfter: "tb500-metabolism",
@@ -994,9 +1011,14 @@ export const TB500_DOSAGE_GUIDE = {
     title: "Frequently Asked Questions",
     items: [
       {
-        question: "What is the standard TB-500 dose?",
+        question: "What is TB-500 used for in research?",
         answer:
-          "There is no established human standard. The most common online claim is 2–2.5 mg SC twice weekly for 4–6 weeks, but no published human dose-ranging trial validates that schedule.",
+          "TB-500 is discussed in recovery research because the fragment overlaps an actin-binding region of thymosin beta-4. Published work is mainly identity, metabolism, and cell assays—not proven human tissue healing.",
+      },
+      {
+        question: "Is there an established human dosage for TB-500?",
+        answer:
+          "No. There is no established human dosage for TB-500 free base or acetate. The most common online claim is 2–2.5 mg SC twice weekly for 4–6 weeks, but no published human dose-ranging trial validates that schedule.",
       },
       {
         question: "What is the TB-500 loading dose?",
@@ -1059,9 +1081,14 @@ export const TB500_DOSAGE_GUIDE = {
           "At 50 mcg/mL, parent Ac-LKKTETQ did not increase fibroblast scratch closure in the FDA-reviewed study. The Ac-LKKTE metabolite showed activity.",
       },
       {
+        question: "Has TB-500 been studied in humans?",
+        answer:
+          "No verified study was identified in which TB-500 free base or acetate was administered to people. Human trials of full-length thymosin beta-4 are a different molecule and do not count as TB-500 evidence.",
+      },
+      {
         question: "Is there a real TB-500 clinical trial?",
         answer:
-          "No verified administered-human trial with usable dosing was identified. NCT07487363 explicitly says it is a fictional ClinicalTrials.gov-style example and must not be treated as evidence.",
+          "No verified administered-human trial with usable dosing was identified. A ClinicalTrials.gov example record sometimes cited online states that it is fictional and must not be treated as evidence.",
       },
       {
         question: "How many U-100 units is 2.5 mg from a 10 mg vial at 2 mL?",
@@ -1084,9 +1111,14 @@ export const TB500_DOSAGE_GUIDE = {
           "Only if the label reports the same active-moiety equivalent and the assay confirms it. Gross acetate salt mass and free-base peptide mass are not automatically equal.",
       },
       {
+        question: "What is the difference between TB-500 and BPC-157?",
+        answer:
+          "They are different sequences with different evidence. TB-500 is usually the seven-residue Tβ4 fragment Ac-LKKTETQ; BPC-157 is a 15-amino-acid experimental peptide. Neither has an established human recovery dose. See the [BPC-157 page](/peptides/bpc-157) and the [BPC-157 + TB-500 combination](/peptides/bpc-157-tb-500).",
+      },
+      {
         question: "Can TB-500 be combined with BPC-157?",
         answer:
-          "No controlled human study establishes a safe or effective ratio, schedule, or advantage for the “Wolverine stack.”",
+          "No controlled human study establishes a safe or effective ratio, schedule, or advantage for the “Wolverine stack.” See the [BPC-157 + TB-500 combination](/peptides/bpc-157-tb-500).",
       },
       {
         question: "What are the side effects of TB-500?",
@@ -1140,8 +1172,8 @@ export const TB500_DOSAGE_GUIDE = {
       },
       {
         authors: "ClinicalTrials.gov",
-        title: "NCT07487363 — fictional example record",
-        detail: "Explicitly not an actual trial.",
+        title: "NCT07487363 ClinicalTrials.gov example record",
+        detail: "The record’s brief summary states it is a fictional example, not an actual trial.",
         href: "https://clinicaltrials.gov/study/NCT07487363",
       },
       {
@@ -1162,7 +1194,7 @@ export const TB500_DOSAGE_GUIDE = {
     title: "Important Safety Information",
     paragraphs: [
       "TB-500 is usually the experimental 7-amino-acid fragment **Ac-LKKTETQ**. It is **not** full-length thymosin-β4, **not FDA approved**, and has **no established human dosage**.",
-      "Direct fragment research documents **10 mg SC once in horses**, **50 mg/kg IP once in rats**, and **50 mcg/mL in vitro** — for detection, metabolism, and cell screening, not injury recovery. **NCT07487363 is a fictional registry example, not human evidence.**",
+      "Direct fragment research documents **10 mg SC once in horses**, **50 mg/kg IP once in rats**, and **50 mcg/mL in vitro** — for detection, metabolism, and cell screening, not injury recovery.",
       "This page is an evidence reference for educational purposes. It is **not a dosing, injection, loading, or stack guide.** WADA S2 prohibits TB-500 at all times in tested sport.",
     ],
   },

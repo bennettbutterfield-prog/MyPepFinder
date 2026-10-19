@@ -636,13 +636,32 @@ import {
 
 function parseRichText(text) {
   if (!text) return null;
-  const parts = String(text).split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  const parts = String(text)
+    .split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g)
+    .filter(Boolean);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
         <strong key={i} className="font-semibold text-slate-900">
           {part.slice(2, -2)}
         </strong>
+      );
+    }
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link) {
+      const href = link[2];
+      const external = /^https?:\/\//i.test(href);
+      return (
+        <a
+          key={i}
+          href={href}
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+          className="font-semibold text-violet-700 underline decoration-violet-200 underline-offset-2 hover:text-violet-800"
+        >
+          {link[1]}
+        </a>
       );
     }
     return <Fragment key={i}>{part}</Fragment>;

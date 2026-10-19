@@ -8,7 +8,6 @@ import {
   TB500_COMPARE,
   TB500_DIRECT_EVIDENCE,
   TB500_EVIDENCE_LADDER,
-  TB500_FICTIONAL_NCT,
   TB500_HUMAN_STATUS,
   TB500_METABOLITES,
   TB500_MOLECULES,
@@ -119,30 +118,8 @@ export function Tb500HumanStatus() {
   return (
     <ModuleShell
       kicker="Human evidence status"
-      title="No published human TB-500 dose — fictional NCT is not evidence"
+      title="No published human TB-500 dose identified"
     >
-      <div className="border-b border-red-100 bg-red-50 px-4 py-4">
-        <p className="text-[10px] font-bold uppercase tracking-wide text-red-700">
-          Fictional registry record — do not cite as trial evidence
-        </p>
-        <p className="mt-1 text-xs font-bold text-red-950">
-          {TB500_FICTIONAL_NCT.nct}: {TB500_FICTIONAL_NCT.title}
-        </p>
-        <p className="mt-2 text-[11px] italic text-red-900">
-          “{TB500_FICTIONAL_NCT.disclaimer}”
-        </p>
-        <p className="mt-2 text-[11px] leading-relaxed text-red-800">
-          {TB500_FICTIONAL_NCT.note}
-        </p>
-        <a
-          href={TB500_FICTIONAL_NCT.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 inline-block text-[11px] font-semibold text-red-700 hover:underline"
-        >
-          View record →
-        </a>
-      </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[420px] border-collapse text-left text-xs">
           <thead>
@@ -496,7 +473,7 @@ export function Tb500ClaimChecker() {
   return (
     <ModuleShell
       kicker="Claim checker"
-      title="Half-life, loading, local IM, Tβ4 transfer, fictional NCT, and stack claims"
+      title="Half-life, loading, local IM, Tβ4 transfer, and stack claims"
     >
       <ul className="divide-y divide-slate-100">
         {TB500_CLAIMS.map((c) => {

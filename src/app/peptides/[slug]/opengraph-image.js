@@ -30,6 +30,7 @@ export default async function Image({ params }) {
   const visualPath = getPeptideOgVisual(peptide);
   const previewImage = visualPath ? await loadPublicAsset(visualPath) : null;
   const description =
+    peptide.metaDescription ||
     getPeptideOverviewLead(slug) ||
     getPeptideOverviewLead(peptide.slug) ||
     peptide.summary;
